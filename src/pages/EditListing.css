@@ -1,0 +1,49 @@
+.edit-container {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.edit-container h2 {
+  color: #6200ea;
+}
+
+.edit-container input, .edit-container textarea, .edit-container select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: block;
+}
+
+.edit-container .preview-image {
+  width: 100%;
+  max-height: 300px;
+  margin: 10px 0;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.edit-container button {
+  background: #6200ea;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.edit-container label {
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+}
+
+.error {
+  color: red;
+}

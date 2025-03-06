@@ -1,0 +1,277 @@
+/* Main container */
+.listings-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Page heading */
+.page-heading {
+  text-align: center;
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 20px;
+  margin-top: 60px;
+}
+
+/* Controls Bar */
+.controls-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+/* Search Wrapper */
+.search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Search Box */
+.search-box {
+  padding: 12px 40px 12px 15px;
+  width: 250px;
+  border-radius: 25px;
+  border: 2px solid #6200ea;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.search-box:focus {
+  border-color: #3700b3;
+  box-shadow: 0px 0px 12px rgba(98, 0, 234, 0.2);
+}
+
+/* Clear Filters Button */
+.clear-filters-button {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #ff4757;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.3s ease;
+}
+
+.clear-filters-button:hover {
+  opacity: 0.8;
+}
+
+.clear-filters-button svg {
+  font-size: 20px;
+}
+
+/* Filter and Sort Dropdowns */
+.filter-container select,
+.sort-container select {
+  padding: 10px 15px;
+  border-radius: 25px;
+  border: 2px solid #6200ea;
+  font-size: 14px;
+  background-color: white;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.filter-container select:focus,
+.sort-container select:focus {
+  border-color: #3700b3;
+  box-shadow: 0px 0px 12px rgba(98, 0, 234, 0.2);
+}
+
+/* Listings Grid */
+.listings-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Listing Card */
+.listing-card {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  text-align: left;
+  width: 280px;
+  padding: 15px;
+  cursor: pointer;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.listing-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Listing Image */
+.listing-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* Listing Details */
+.listing-details {
+  padding: 10px;
+}
+
+.listing-details h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.listing-details p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+/* Price, Category, Date */
+.price {
+  display: block;
+  font-weight: bold;
+  color: #6200ea;
+  margin-top: 8px;
+}
+
+.category {
+  display: inline-block;
+  background: #f8f8f8;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-size: 12px;
+  color: #555;
+  margin-top: 8px;
+}
+
+.date-listed {
+  display: block;
+  font-size: 12px;
+  color: #888;
+  margin-top: 8px;
+}
+
+/* Back to Top Button */
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  padding: 12px;
+  border: none;
+  border-radius: 50%;
+  background: #6200ea;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-to-top:hover {
+  background: #3700b3;
+  transform: scale(1.1);
+}
+
+.back-to-top svg {
+  font-size: 20px;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  text-align: center;
+  font-size: 20px;
+  color: #6200ea;
+  margin-top: 50px;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Category Filter */
+.category-filter {
+  padding: 10px 15px;
+  border-radius: 25px;
+  border: 2px solid #6200ea;
+  font-size: 14px;
+  background-color: white;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.category-filter:focus {
+  border-color: #3700b3;
+  box-shadow: 0px 0px 12px rgba(98, 0, 234, 0.2);
+}
+
+/* Listing Actions */
+.listing-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.edit-button,
+.delete-button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 25px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.3s ease;
+}
+
+.edit-button {
+  background-color: #6200ea;
+  color: white;
+}
+
+.edit-button:hover {
+  background-color: #3700b3;
+}
+
+.delete-button {
+  background-color: #ff4757;
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #ff6b81;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  text-align: center;
+  font-size: 20px;
+  color: #6200ea;
+  margin-top: 50px;
+}
+
+/* No Listings Message */
+.no-listings {
+  text-align: center;
+  font-size: 18px;
+  color: #777;
+}

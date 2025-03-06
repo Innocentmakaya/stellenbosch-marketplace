@@ -1,0 +1,136 @@
+.listing-details-container {
+  max-width: 600px;
+  margin: 80px auto 20px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.listing-detail-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+h2 {
+  font-size: 24px;
+  color: #333;
+  margin-top: 10px;
+}
+
+.listing-description {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.listing-price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #6200ea;
+}
+
+.listing-category {
+  font-size: 16px;
+  color: #777;
+}
+
+/* Contact & Action Buttons */
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.contact-button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.3s ease;
+}
+
+.whatsapp {
+  background-color: #25D366;
+}
+
+.call {
+  background-color: #007bff;
+}
+
+.chat {
+  background-color: #ff9100;
+}
+
+.contact-button:hover {
+  opacity: 0.8;
+}
+
+/* Extra Actions */
+.extra-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.action-button {
+  background: #eee;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.favorite {
+  color: #6200ea;
+}
+
+.report {
+  color: #d32f2f;
+}
+
+.action-button:hover {
+  opacity: 0.8;
+}
+
+/* Payment Section */
+.payment-section {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.payment-button {
+  background: #28a745;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.payment-button:hover {
+  opacity: 0.8;
+}
+
+/* Chat Section */
+.chat-section {
+  margin-top: 20px;
+  text-align: center;
+}

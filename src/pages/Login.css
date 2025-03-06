@@ -1,0 +1,91 @@
+/* Login.css */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f8f9fa; /* Light neutral background */
+  padding: 20px;
+}
+
+.login-box {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* Subtle shadow */
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+}
+
+.login-box h2 {
+  color: #2d2d2d; /* Dark gray for professionalism */
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.login-box p {
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666; /* Neutral icon color */
+  font-size: 1.1rem;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 12px 12px 12px 40px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.login-box input:focus {
+  border-color: #6200ea; /* Brand color on focus */
+  outline: none;
+}
+
+.login-box button {
+  width: 100%;
+  padding: 12px;
+  background: #6200ea; /* Brand color for the button */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.login-box button:hover {
+  background: #4a00a3; /* Darker shade on hover */
+}
+
+.error {
+  color: #dc3545; /* Standard error red */
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.forgot-password a {
+  color: #6200ea; /* Brand color for links */
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
