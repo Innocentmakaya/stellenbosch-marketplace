@@ -49,7 +49,7 @@ const UpdatePassword = () => {
         await supabase.auth.signOut();
 
         // Redirect to the login page in the same tab
-        window.location.href = "http://localhost:5173/login"; // Use full URL to ensure a hard redirect
+        window.location.href = "https://stellenbosch-marketplace.vercel.app/login"; // Use full URL to ensure a hard redirect
       }
     } catch (err) {
       setError("Failed to update password. Please try again.");
