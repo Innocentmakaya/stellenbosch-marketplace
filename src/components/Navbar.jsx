@@ -1,138 +1,81 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import supabase from "../supabaseClient";
 
 function Navbar() {
   const [user, setUser] = useState(null);
-  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isLoggingIn, setIsLoggingIn] = useState(false);
-  const location = useLocation();
-  const navigate = useNavigate();
+  const location = useLocation(); // Get the current route
 
   useEffect(() => {
     const getUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+      const { data: { user } } = await supabase.auth.getUser();
       setUser(user);
     };
 
     getUser();
 
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setUser(session?.user || null);
-        setIsLoggingIn(false); // Reset login state
-        if (session?.user) {
-          closeMobileMenu(); // Close mobile menu on successful login
-          navigate("/listings");
-        }
-      }
-    );
+    // Listen for auth changes
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user || null);
+    });
 
     return () => {
       authListener?.subscription?.unsubscribe();
     };
-  }, [navigate]);
+  }, []);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setUser(null);
-    setMobileMenuOpen(false); // Close menu on logout
-    navigate("/login"); // Redirect to login page on logout
-  };
-
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  const closeMobileMenu = () => {
-    setMobileMenuOpen(false);
   };
 
   return (
     <nav style={styles.navbar}>
       <h1 style={styles.logo}>Student Marketplace</h1>
+      
+      {/* Navbar links (only shown when user is logged in) */}
+      {user && (
+        <div style={styles.navLinks}>
+          <Link 
+            to="/listings" 
+            style={location.pathname === "/listings" ? { ...styles.link, ...styles.activeLink } : styles.link}
+          >
+            Browse Listings
+          </Link>
+          <Link 
+            to="/my-listings" 
+            style={location.pathname === "/my-listings" ? { ...styles.link, ...styles.activeLink } : styles.link}
+          >
+            My Listings
+          </Link>
+          <Link 
+            to="/sell" 
+            style={location.pathname === "/sell" ? { ...styles.link, ...styles.activeLink } : styles.link}
+          >
+            Sell Item
+          </Link>
+          <Link 
+            to="/profile" 
+            style={location.pathname === "/profile" ? { ...styles.link, ...styles.activeLink } : styles.link}
+          >
+            Profile
+          </Link>
+        </div>
+      )}
 
-      {/* Hamburger Menu Button for Mobile */}
-      <button style={styles.menuButton} onClick={toggleMobileMenu}>
-        ☰
-      </button>
-
-      <div
-        style={{
-          ...styles.navLinks,
-          ...(isMobileMenuOpen ? styles.navLinksMobile : {}),
-        }}
-      >
-        {user && (
-          <>
-            <Link
-              to="/listings"
-              style={
-                location.pathname === "/listings"
-                  ? { ...styles.link, ...styles.activeLink }
-                  : styles.link
-              }
-              onClick={closeMobileMenu}
-            >
-              Browse Listings
-            </Link>
-            <Link
-              to="/my-listings"
-              style={
-                location.pathname === "/my-listings"
-                  ? { ...styles.link, ...styles.activeLink }
-                  : styles.link
-              }
-              onClick={closeMobileMenu}
-            >
-              My Listings
-            </Link>
-            <Link
-              to="/sell"
-              style={
-                location.pathname === "/sell"
-                  ? { ...styles.link, ...styles.activeLink }
-                  : styles.link
-              }
-              onClick={closeMobileMenu}
-            >
-              Sell Item
-            </Link>
-            <Link
-              to="/profile"
-              style={
-                location.pathname === "/profile"
-                  ? { ...styles.link, ...styles.activeLink }
-                  : styles.link
-              }
-              onClick={closeMobileMenu}
-            >
-              Profile
-            </Link>
-          </>
-        )}
-
+      {/* Auth buttons (always on the right) */}
+      <div style={styles.authSection}>
         {user ? (
           <div style={styles.userSection}>
             <span style={styles.userEmail}>{user.email}</span>
-            <button onClick={handleLogout} style={styles.logoutButton}>
-              Logout
-            </button>
+            <button onClick={handleLogout} style={styles.logoutButton}>Logout</button>
           </div>
         ) : (
           <div style={styles.authButtons}>
-            <Link to="/login" onClick={closeMobileMenu}>
-              <button
-                style={styles.authButton}
-                disabled={isLoggingIn}
-                onClick={() => setIsLoggingIn(true)}
-              >
-                {isLoggingIn ? "Logging in..." : "Login"}
-              </button>
+            <Link to="/login">
+              <button style={styles.authButton}>Login</button>
             </Link>
-            <Link to="/signup" onClick={closeMobileMenu}>
+            <Link to="/signup">
               <button style={styles.authButton}>Sign Up</button>
             </Link>
           </div>
@@ -161,32 +104,11 @@ const styles = {
     fontSize: "24px",
     fontWeight: "bold",
   },
-  menuButton: {
-    background: "none",
-    border: "none",
-    color: "white",
-    fontSize: "24px",
-    cursor: "pointer",
-    display: "none",
-    "@media (max-width: 768px)": {
-      display: "block",
-    },
-  },
   navLinks: {
     display: "flex",
     gap: "20px",
-    flex: 1,
-    justifyContent: "center", // Center the items on desktop
-  },
-  navLinksMobile: {
-    flexDirection: "column",
-    position: "absolute",
-    top: "60px",
-    left: 0,
-    width: "100%",
-    backgroundColor: "#6200ea",
-    padding: "10px",
-    zIndex: 1001,
+    flex: 1, // Take up remaining space
+    marginLeft: "20px", // Add some spacing
   },
   link: {
     color: "white",
@@ -197,8 +119,17 @@ const styles = {
     transition: "background 0.3s ease",
   },
   activeLink: {
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
-    borderBottom: "2px solid white",
+    backgroundColor: "rgba(255, 255, 255, 0.2)", // Highlight active link
+    borderBottom: "2px solid white", // Add an underline
+  },
+  authSection: {
+    display: "flex",
+    alignItems: "center",
+    gap: "10px",
+  },
+  authButtons: {
+    display: "flex",
+    gap: "10px",
   },
   userSection: {
     display: "flex",
@@ -208,10 +139,6 @@ const styles = {
   userEmail: {
     color: "white",
     fontSize: "16px",
-  },
-  authButtons: {
-    display: "flex",
-    gap: "10px",
   },
   authButton: {
     background: "white",
