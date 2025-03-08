@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import supabase from "../supabaseClient";
 
 function Navbar() {
   const [user, setUser] = useState(null);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getUser = async () => {
@@ -20,18 +22,24 @@ function Navbar() {
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (event, session) => {
         setUser(session?.user || null);
+        setIsLoggingIn(false); // Reset login state
+        if (session?.user) {
+          closeMobileMenu(); // Close mobile menu on successful login
+          navigate("/listings");
+        }
       }
     );
 
     return () => {
       authListener?.subscription?.unsubscribe();
     };
-  }, []);
+  }, [navigate]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setUser(null);
     setMobileMenuOpen(false); // Close menu on logout
+    navigate("/login"); // Redirect to login page on logout
   };
 
   const toggleMobileMenu = () => {
@@ -116,7 +124,13 @@ function Navbar() {
         ) : (
           <div style={styles.authButtons}>
             <Link to="/login" onClick={closeMobileMenu}>
-              <button style={styles.authButton}>Login</button>
+              <button
+                style={styles.authButton}
+                disabled={isLoggingIn}
+                onClick={() => setIsLoggingIn(true)}
+              >
+                {isLoggingIn ? "Logging in..." : "Login"}
+              </button>
             </Link>
             <Link to="/signup" onClick={closeMobileMenu}>
               <button style={styles.authButton}>Sign Up</button>
@@ -162,8 +176,7 @@ const styles = {
     display: "flex",
     gap: "20px",
     flex: 1,
-    justifyContent: "flex-end",
-    marginRight: "20px",
+    justifyContent: "center", // Center the items on desktop
   },
   navLinksMobile: {
     flexDirection: "column",
