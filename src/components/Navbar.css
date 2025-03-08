@@ -108,12 +108,12 @@
   @media (max-width: 768px) {
     .nav-links {
       position: fixed;
-      top: 60px; /* Align below the navbar */
+      top: 70px; /* Adjusted to prevent overlap with navbar */
       right: 0;
       flex-direction: column;
       background-color: #6200ea;
       width: 60%; /* Cover only 60% of the screen */
-      height: calc(100vh - 60px); /* Full height minus navbar */
+      height: calc(100vh - 70px); /* Adjusted height to match new top value */
       align-items: flex-start; /* Align links to the left */
       justify-content: flex-start; /* Start from the top */
       padding: 20px; /* Add padding for spacing */
