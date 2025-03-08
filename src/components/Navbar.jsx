@@ -31,16 +31,22 @@ function Navbar() {
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setUser(null);
+    setMobileMenuOpen(false); // Close menu on logout
   };
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+  };
+
   return (
     <nav style={styles.navbar}>
       <h1 style={styles.logo}>Student Marketplace</h1>
 
+      {/* Hamburger Menu Button for Mobile */}
       <button style={styles.menuButton} onClick={toggleMobileMenu}>
         ☰
       </button>
@@ -60,7 +66,7 @@ function Navbar() {
                   ? { ...styles.link, ...styles.activeLink }
                   : styles.link
               }
-              onClick={toggleMobileMenu}
+              onClick={closeMobileMenu}
             >
               Browse Listings
             </Link>
@@ -71,7 +77,7 @@ function Navbar() {
                   ? { ...styles.link, ...styles.activeLink }
                   : styles.link
               }
-              onClick={toggleMobileMenu}
+              onClick={closeMobileMenu}
             >
               My Listings
             </Link>
@@ -82,7 +88,7 @@ function Navbar() {
                   ? { ...styles.link, ...styles.activeLink }
                   : styles.link
               }
-              onClick={toggleMobileMenu}
+              onClick={closeMobileMenu}
             >
               Sell Item
             </Link>
@@ -93,12 +99,13 @@ function Navbar() {
                   ? { ...styles.link, ...styles.activeLink }
                   : styles.link
               }
-              onClick={toggleMobileMenu}
+              onClick={closeMobileMenu}
             >
               Profile
             </Link>
           </>
         )}
+
         {user ? (
           <div style={styles.userSection}>
             <span style={styles.userEmail}>{user.email}</span>
@@ -108,10 +115,10 @@ function Navbar() {
           </div>
         ) : (
           <div style={styles.authButtons}>
-            <Link to="/login" onClick={toggleMobileMenu}>
+            <Link to="/login" onClick={closeMobileMenu}>
               <button style={styles.authButton}>Login</button>
             </Link>
-            <Link to="/signup" onClick={toggleMobileMenu}>
+            <Link to="/signup" onClick={closeMobileMenu}>
               <button style={styles.authButton}>Sign Up</button>
             </Link>
           </div>
@@ -146,7 +153,10 @@ const styles = {
     color: "white",
     fontSize: "24px",
     cursor: "pointer",
-    display: "none", // Hidden by default on desktop
+    display: "none",
+    "@media (max-width: 768px)": {
+      display: "block",
+    },
   },
   navLinks: {
     display: "flex",
@@ -209,16 +219,6 @@ const styles = {
     cursor: "pointer",
     fontSize: "16px",
     fontWeight: "bold",
-  },
-
-  // Media Query for Mobile Screens
-  "@media (max-width: 768px)": {
-    navLinks: {
-      display: "none",
-    },
-    menuButton: {
-      display: "block",
-    },
   },
 };
 
