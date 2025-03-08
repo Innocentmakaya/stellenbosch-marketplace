@@ -146,16 +146,16 @@ const styles = {
     color: "white",
     fontSize: "24px",
     cursor: "pointer",
-    display: "none", // Hidden on desktop
+    display: "none", // Hidden by default on desktop
   },
   navLinks: {
     display: "flex",
     gap: "20px",
     flex: 1,
-    marginLeft: "20px",
+    justifyContent: "flex-end",
+    marginRight: "20px",
   },
   navLinksMobile: {
-    display: "flex",
     flexDirection: "column",
     position: "absolute",
     top: "60px",
@@ -177,15 +177,6 @@ const styles = {
     backgroundColor: "rgba(255, 255, 255, 0.2)",
     borderBottom: "2px solid white",
   },
-  authSection: {
-    display: "flex",
-    alignItems: "center",
-    gap: "10px",
-  },
-  authButtons: {
-    display: "flex",
-    gap: "10px",
-  },
   userSection: {
     display: "flex",
     alignItems: "center",
@@ -194,6 +185,10 @@ const styles = {
   userEmail: {
     color: "white",
     fontSize: "16px",
+  },
+  authButtons: {
+    display: "flex",
+    gap: "10px",
   },
   authButton: {
     background: "white",
