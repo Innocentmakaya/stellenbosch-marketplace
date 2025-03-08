@@ -101,28 +101,36 @@
     font-size: 24px;
     color: white;
     cursor: pointer;
-    margin-right: 20px;
+    margin-right: 20px; /* Space between hamburger and email/logout button */
   }
   
   /* Mobile Styles */
   @media (max-width: 768px) {
     .nav-links {
       position: fixed;
-      top: 60px;
+      top: 60px; /* Align below the navbar */
       right: 0;
       flex-direction: column;
       background-color: #6200ea;
-      width: 100%;
-      height: calc(100vh - 60px);
-      align-items: center;
-      justify-content: center;
-      transform: translateX(100%);
+      width: 60%; /* Cover only 60% of the screen */
+      height: calc(100vh - 60px); /* Full height minus navbar */
+      align-items: flex-start; /* Align links to the left */
+      justify-content: flex-start; /* Start from the top */
+      padding: 20px; /* Add padding for spacing */
+      transform: translateX(100%); /* Start off-screen */
       transition: transform 0.3s ease-in-out;
       z-index: 999; /* Ensure it appears below the navbar */
+      box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
     }
   
     .nav-links.active {
-      transform: translateX(0);
+      transform: translateX(0); /* Slide in from the right */
+    }
+  
+    .nav-links .link {
+      width: 100%; /* Full width for links */
+      padding: 15px 0; /* Add padding for touch targets */
+      font-size: 18px; /* Larger font for readability */
     }
   
     .mobile-menu-toggle {
