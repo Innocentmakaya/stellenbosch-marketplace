@@ -19,7 +19,7 @@ const ResetPassword = () => {
     try {
       // Send password reset email
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: "http://localhost:5173/update-password", // Update in production
+        redirectTo: "https://stellenbosch-marketplace.vercel.app/update-password", // Update in production
       });
 
       if (error) {
