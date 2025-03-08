@@ -104,16 +104,16 @@
     margin-right: 20px; /* Space between hamburger and email/logout button */
   }
   
-  /* Mobile Styles */
+ /* Mobile Styles */
 @media (max-width: 768px) {
     .nav-links {
       position: fixed;
-      top: 80px; /* Increased to prevent overlap with navbar */
+      top: 90px; /* Increased further to prevent overlap with navbar */
       right: 0;
       flex-direction: column;
       background-color: #6200ea;
       width: 60%; /* Cover only 60% of the screen */
-      height: calc(100vh - 80px); /* Adjusted height to match new top value */
+      height: calc(100vh - 90px); /* Adjusted height to match new top value */
       align-items: flex-start; /* Align links to the left */
       justify-content: flex-start; /* Start from the top */
       padding: 20px; /* Add padding for spacing */
