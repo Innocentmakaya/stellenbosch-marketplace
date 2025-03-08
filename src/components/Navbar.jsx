@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import supabase from "../supabaseClient";
-import { FaBars, FaTimes } from "react-icons/fa"; // Import icons for mobile menu
-import "./Navbar.css"; // We'll add CSS for responsiveness
+import { FaBars, FaTimes } from "react-icons/fa";
+import "./Navbar.css";
 
 function Navbar() {
   const [user, setUser] = useState(null);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // State for mobile menu
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -17,7 +17,6 @@ function Navbar() {
 
     getUser();
 
-    // Listen for auth changes
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user || null);
     });
@@ -36,15 +35,20 @@ function Navbar() {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  // Hide hamburger menu on login and signup pages
+  const isAuthPage = location.pathname === "/login" || location.pathname === "/signup";
+
   return (
     <nav className="navbar">
       {/* Logo */}
       <h1 className="logo">Student Marketplace</h1>
 
-      {/* Mobile Menu Toggle */}
-      <div className="mobile-menu-toggle" onClick={toggleMobileMenu}>
-        {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
-      </div>
+      {/* Mobile Menu Toggle (Hidden on auth pages) */}
+      {!isAuthPage && (
+        <div className="mobile-menu-toggle" onClick={toggleMobileMenu}>
+          {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
+        </div>
+      )}
 
       {/* Navbar Links (Desktop) */}
       <div className={`nav-links ${isMobileMenuOpen ? "active" : ""}`}>
@@ -92,14 +96,16 @@ function Navbar() {
             </button>
           </div>
         ) : (
-          <div className="auth-buttons">
-            <Link to="/login">
-              <button className="auth-button">Login</button>
-            </Link>
-            <Link to="/signup">
-              <button className="auth-button">Sign Up</button>
-            </Link>
-          </div>
+          !isAuthPage && ( // Hide auth buttons on login/signup pages
+            <div className="auth-buttons">
+              <Link to="/login">
+                <button className="auth-button">Login</button>
+              </Link>
+              <Link to="/signup">
+                <button className="auth-button">Sign Up</button>
+              </Link>
+            </div>
+          )
         )}
       </div>
     </nav>
