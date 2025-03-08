@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import supabase from "../supabaseClient";
+import { FaBars, FaTimes } from "react-icons/fa"; // Import icons for mobile menu
+import "./Navbar.css"; // We'll add CSS for responsiveness
 
 function Navbar() {
   const [user, setUser] = useState(null);
-  const location = useLocation(); // Get the current route
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // State for mobile menu
+  const location = useLocation();
 
   useEffect(() => {
     const getUser = async () => {
@@ -29,54 +32,72 @@ function Navbar() {
     setUser(null);
   };
 
-  return (
-    <nav style={styles.navbar}>
-      <h1 style={styles.logo}>Student Marketplace</h1>
-      
-      {/* Navbar links (only shown when user is logged in) */}
-      {user && (
-        <div style={styles.navLinks}>
-          <Link 
-            to="/listings" 
-            style={location.pathname === "/listings" ? { ...styles.link, ...styles.activeLink } : styles.link}
-          >
-            Browse Listings
-          </Link>
-          <Link 
-            to="/my-listings" 
-            style={location.pathname === "/my-listings" ? { ...styles.link, ...styles.activeLink } : styles.link}
-          >
-            My Listings
-          </Link>
-          <Link 
-            to="/sell" 
-            style={location.pathname === "/sell" ? { ...styles.link, ...styles.activeLink } : styles.link}
-          >
-            Sell Item
-          </Link>
-          <Link 
-            to="/profile" 
-            style={location.pathname === "/profile" ? { ...styles.link, ...styles.activeLink } : styles.link}
-          >
-            Profile
-          </Link>
-        </div>
-      )}
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
-      {/* Auth buttons (always on the right) */}
-      <div style={styles.authSection}>
+  return (
+    <nav className="navbar">
+      {/* Logo */}
+      <h1 className="logo">Student Marketplace</h1>
+
+      {/* Mobile Menu Toggle */}
+      <div className="mobile-menu-toggle" onClick={toggleMobileMenu}>
+        {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
+      </div>
+
+      {/* Navbar Links (Desktop) */}
+      <div className={`nav-links ${isMobileMenuOpen ? "active" : ""}`}>
+        {user && (
+          <>
+            <Link
+              to="/listings"
+              className={location.pathname === "/listings" ? "link active-link" : "link"}
+              onClick={toggleMobileMenu}
+            >
+              Browse Listings
+            </Link>
+            <Link
+              to="/my-listings"
+              className={location.pathname === "/my-listings" ? "link active-link" : "link"}
+              onClick={toggleMobileMenu}
+            >
+              My Listings
+            </Link>
+            <Link
+              to="/sell"
+              className={location.pathname === "/sell" ? "link active-link" : "link"}
+              onClick={toggleMobileMenu}
+            >
+              Sell Item
+            </Link>
+            <Link
+              to="/profile"
+              className={location.pathname === "/profile" ? "link active-link" : "link"}
+              onClick={toggleMobileMenu}
+            >
+              Profile
+            </Link>
+          </>
+        )}
+      </div>
+
+      {/* Auth Section */}
+      <div className="auth-section">
         {user ? (
-          <div style={styles.userSection}>
-            <span style={styles.userEmail}>{user.email}</span>
-            <button onClick={handleLogout} style={styles.logoutButton}>Logout</button>
+          <div className="user-section">
+            <span className="user-email">{user.email}</span>
+            <button onClick={handleLogout} className="logout-button">
+              Logout
+            </button>
           </div>
         ) : (
-          <div style={styles.authButtons}>
+          <div className="auth-buttons">
             <Link to="/login">
-              <button style={styles.authButton}>Login</button>
+              <button className="auth-button">Login</button>
             </Link>
             <Link to="/signup">
-              <button style={styles.authButton}>Sign Up</button>
+              <button className="auth-button">Sign Up</button>
             </Link>
           </div>
         )}
@@ -84,82 +105,5 @@ function Navbar() {
     </nav>
   );
 }
-
-const styles = {
-  navbar: {
-    width: "100%",
-    backgroundColor: "#6200ea",
-    padding: "15px 20px",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-    position: "fixed",
-    top: 0,
-    left: 0,
-    zIndex: 1000,
-  },
-  logo: {
-    color: "white",
-    fontSize: "24px",
-    fontWeight: "bold",
-  },
-  navLinks: {
-    display: "flex",
-    gap: "20px",
-    flex: 1, // Take up remaining space
-    marginLeft: "20px", // Add some spacing
-  },
-  link: {
-    color: "white",
-    textDecoration: "none",
-    fontSize: "18px",
-    padding: "5px 10px",
-    borderRadius: "5px",
-    transition: "background 0.3s ease",
-  },
-  activeLink: {
-    backgroundColor: "rgba(255, 255, 255, 0.2)", // Highlight active link
-    borderBottom: "2px solid white", // Add an underline
-  },
-  authSection: {
-    display: "flex",
-    alignItems: "center",
-    gap: "10px",
-  },
-  authButtons: {
-    display: "flex",
-    gap: "10px",
-  },
-  userSection: {
-    display: "flex",
-    alignItems: "center",
-    gap: "10px",
-  },
-  userEmail: {
-    color: "white",
-    fontSize: "16px",
-  },
-  authButton: {
-    background: "white",
-    color: "#6200ea",
-    padding: "10px 15px",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-    fontSize: "16px",
-    fontWeight: "bold",
-  },
-  logoutButton: {
-    background: "#ff4d4d",
-    color: "white",
-    padding: "10px 15px",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-    fontSize: "16px",
-    fontWeight: "bold",
-  },
-};
 
 export default Navbar;
