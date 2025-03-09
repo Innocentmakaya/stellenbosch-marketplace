@@ -69,7 +69,7 @@ const Login = () => {
       }
 
       console.log("Login successful! Redirecting to Home page...");
-      navigate("/"); // Redirect to the Home page after successful login
+      navigate("/listings"); // Redirect to the Home page after successful login
     } catch (error) {
       console.error("❌ Error during login:", error);
       setError(error.message);
