@@ -35,8 +35,16 @@ function Navbar() {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  // Hide navbar on login and signup pages
+  const isAuthPage = location.pathname === "/login" || location.pathname === "/signup";
+
   // Hide hamburger menu on the Home page
   const isHomePage = location.pathname === "/";
+
+  // Do not render the navbar on login and signup pages
+  if (isAuthPage) {
+    return null;
+  }
 
   return (
     <nav className="navbar">
@@ -96,8 +104,8 @@ function Navbar() {
             </button>
           </div>
         ) : (
-          // Show Login/Sign Up buttons on the Home page and other pages (except login/signup)
-          !(location.pathname === "/login" || location.pathname === "/signup") && (
+          // Show Login/Sign Up buttons on the Home page
+          isHomePage && (
             <div className="auth-buttons">
               <Link to="/login">
                 <button className="auth-button">Login</button>
