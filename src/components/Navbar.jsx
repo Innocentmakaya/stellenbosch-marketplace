@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import supabase from "../supabaseClient";
 import { FaBars, FaTimes } from "react-icons/fa";
 import "./Navbar.css";
@@ -8,8 +8,10 @@ function Navbar() {
   const [user, setUser] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    // Fetch the current user on component mount
     const getUser = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       setUser(user);
@@ -17,18 +19,26 @@ function Navbar() {
 
     getUser();
 
+    // Listen for authentication state changes
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user || null);
+
+      // Redirect to the Home page after login
+      if (event === "SIGNED_IN") {
+        navigate("/"); // Redirect to the Home page after successful login
+      }
     });
 
+    // Cleanup the listener on component unmount
     return () => {
       authListener?.subscription?.unsubscribe();
     };
-  }, []);
+  }, [navigate]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setUser(null);
+    navigate("/"); // Redirect to the Home page after logout
   };
 
   const toggleMobileMenu = () => {
