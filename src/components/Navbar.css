@@ -1,152 +1,162 @@
 /* Navbar Container */
 .navbar {
-    width: 100%;
-    background-color: #6200ea;
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-  }
-  
-  /* Logo */
-  .logo {
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  /* Navbar Links */
-  .nav-links {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-  }
-  
-  .nav-links .link {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-    padding: 5px 10px;
-    border-radius: 5px;
-    transition: background 0.3s ease;
-  }
-  
-  .nav-links .link:hover {
-    background: rgba(255, 255, 255, 0.2);
-  }
-  
-  .nav-links .active-link {
-    background: rgba(255, 255, 255, 0.2);
-    border-bottom: 2px solid white;
-  }
-  
-  /* Auth Section */
-  .auth-section {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .auth-buttons {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .user-section {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .user-email {
-    color: white;
-    font-size: 16px;
-    white-space: nowrap; /* Prevent email from wrapping */
-  }
-  
-  .auth-button,
-  .logout-button {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    transition: background 0.3s ease;
-  }
-  
-  .auth-button {
-    background: white;
-    color: #6200ea;
-  }
-  
-  .logout-button {
-    background: #ff4d4d;
-    color: white;
-  }
-  
-  .auth-button:hover,
-  .logout-button:hover {
-    opacity: 0.9;
-  }
-  
-  /* Mobile Menu Toggle */
-  .mobile-menu-toggle {
-    display: none;
-    font-size: 24px;
-    color: white;
-    cursor: pointer;
-    margin-right: 20px; /* Space between hamburger and email/logout button */
-  }
-  
- /* Mobile Styles */
+  width: 100%;
+  background-color: #6200ea;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+/* Logo */
+.logo {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Navbar Links */
+.nav-links {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.nav-links .link {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+.nav-links .link:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.nav-links .active-link {
+  background: rgba(255, 255, 255, 0.2);
+  border-bottom: 2px solid white;
+}
+
+/* Auth Section */
+.auth-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-email {
+  color: white;
+  font-size: 16px;
+  white-space: nowrap; /* Prevent email from wrapping */
+}
+
+.auth-button,
+.logout-button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background 0.3s ease;
+  white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.auth-button {
+  background: white;
+  color: #6200ea;
+}
+
+.logout-button {
+  background: #ff4d4d;
+  color: white;
+}
+
+.auth-button:hover,
+.logout-button:hover {
+  opacity: 0.9;
+}
+
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+  display: none;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+  margin-right: 20px; /* Space between hamburger and email/logout button */
+}
+
+/* Mobile Styles */
 @media (max-width: 768px) {
-    .nav-links {
-      position: fixed;
-      top: 100px; /* Increased further to prevent overlap with navbar */
-      right: 0;
-      flex-direction: column;
-      background-color: #6200ea;
-      width: 60%; /* Cover only 60% of the screen */
-      height: calc(100vh - 100px); /* Adjusted height to match new top value */
-      align-items: flex-start; /* Align links to the left */
-      justify-content: flex-start; /* Start from the top */
-      padding: 20px; /* Add padding for spacing */
-      transform: translateX(100%); /* Start off-screen */
-      transition: transform 0.3s ease-in-out;
-      z-index: 999; /* Ensure it appears below the navbar */
-      box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
-    }
-  
-    .nav-links.active {
-      transform: translateX(0); /* Slide in from the right */
-    }
-  
-    .nav-links .link {
-      width: 100%; /* Full width for links */
-      padding: 15px 0; /* Add padding for touch targets */
-      font-size: 18px; /* Larger font for readability */
-    }
-  
-    .mobile-menu-toggle {
-      display: block;
-    }
-  
-    .auth-section {
-      margin-left: auto; /* Push auth section to the right */
-    }
-  
-    .user-section {
-      flex-direction: column; /* Stack email and logout button vertically */
-      gap: 5px;
-    }
-  
-    .logout-button {
-      width: 100%; /* Full width for logout button */
-    }
+  .nav-links {
+    position: fixed;
+    top: 100px; /* Increased further to prevent overlap with navbar */
+    right: 0;
+    flex-direction: column;
+    background-color: #6200ea;
+    width: 60%; /* Cover only 60% of the screen */
+    height: calc(100vh - 100px); /* Adjusted height to match new top value */
+    align-items: flex-start; /* Align links to the left */
+    justify-content: flex-start; /* Start from the top */
+    padding: 20px; /* Add padding for spacing */
+    transform: translateX(100%); /* Start off-screen */
+    transition: transform 0.3s ease-in-out;
+    z-index: 999; /* Ensure it appears below the navbar */
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
   }
+
+  .nav-links.active {
+    transform: translateX(0); /* Slide in from the right */
+  }
+
+  .nav-links .link {
+    width: 100%; /* Full width for links */
+    padding: 15px 0; /* Add padding for touch targets */
+    font-size: 18px; /* Larger font for readability */
+  }
+
+  .mobile-menu-toggle {
+    display: block;
+  }
+
+  .auth-section {
+    margin-left: auto; /* Push auth section to the right */
+  }
+
+  .user-section {
+    flex-direction: column; /* Stack email and logout button vertically */
+    gap: 5px;
+  }
+
+  .logout-button {
+    width: 100%; /* Full width for logout button */
+  }
+
+  /* Ensure auth buttons stay in a single line */
+  .auth-buttons {
+    flex-direction: row; /* Ensure buttons are in a row */
+  }
+
+  .auth-button {
+    white-space: nowrap; /* Prevent text from wrapping */
+  }
+}
