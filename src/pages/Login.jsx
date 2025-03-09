@@ -17,10 +17,15 @@ const Login = () => {
     setIsLoading(true); // Start loading
 
     try {
+      console.log("Attempting to log in...");
+
+      // Step 1: Sign in the user
       const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
+
+      console.log("Sign-in response:", signInData, signInError);
 
       if (signInError) throw new Error(signInError.message);
 
@@ -29,16 +34,18 @@ const Login = () => {
 
       console.log("🔑 User signed in:", user);
 
+      // Step 2: Check if the user has a profile
       const { data: profile, error: profileError } = await supabase
         .from("profiles")
         .select("id")
         .eq("id", user.id)
         .maybeSingle();
 
+      console.log("Profile check result:", profile, profileError);
+
       if (profileError) throw new Error(profileError.message);
 
-      console.log("🔍 Profile check result:", profile);
-
+      // Step 3: If the user doesn't have a profile, create one
       if (!profile) {
         console.log("➕ Inserting user into profiles table...");
 
@@ -54,12 +61,14 @@ const Login = () => {
           },
         ]);
 
+        console.log("Insert result:", insertError);
+
         if (insertError) throw new Error(insertError.message);
 
         console.log("✅ User inserted into profiles table.");
       }
 
-      alert("Login successful!");
+      console.log("Login successful! Redirecting to Home page...");
       navigate("/"); // Redirect to the Home page after successful login
     } catch (error) {
       console.error("❌ Error during login:", error);
