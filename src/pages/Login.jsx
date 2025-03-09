@@ -60,7 +60,7 @@ const Login = () => {
       }
 
       alert("Login successful!");
-      navigate("/");
+      navigate("/listings");
     } catch (error) {
       console.error("❌ Error during login:", error);
       setError(error.message);
