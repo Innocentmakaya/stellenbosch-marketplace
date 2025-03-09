@@ -35,16 +35,16 @@ function Navbar() {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  // Hide hamburger menu on the Home page
-  const isHomePage = location.pathname === "/";
+  // Hide hamburger menu on login and signup pages
+  const isAuthPage = location.pathname === "/login" || location.pathname === "/signup";
 
   return (
     <nav className="navbar">
       {/* Logo */}
       <h1 className="logo">Student Marketplace</h1>
 
-      {/* Mobile Menu Toggle (Hidden on the Home page) */}
-      {!isHomePage && (
+      {/* Mobile Menu Toggle (Hidden on auth pages) */}
+      {!isAuthPage && (
         <div className="mobile-menu-toggle" onClick={toggleMobileMenu}>
           {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
         </div>
@@ -52,7 +52,7 @@ function Navbar() {
 
       {/* Navbar Links (Desktop) */}
       <div className={`nav-links ${isMobileMenuOpen ? "active" : ""}`}>
-        {user && !isHomePage && ( // Only show links if user is logged in and not on the Home page
+        {user && (
           <>
             <Link
               to="/listings"
@@ -96,8 +96,7 @@ function Navbar() {
             </button>
           </div>
         ) : (
-          // Show Login/Sign Up buttons on the Home page and other pages (except login/signup)
-          !(location.pathname === "/login" || location.pathname === "/signup") && (
+          !isAuthPage && ( // Hide auth buttons on login/signup pages
             <div className="auth-buttons">
               <Link to="/login">
                 <button className="auth-button">Login</button>
