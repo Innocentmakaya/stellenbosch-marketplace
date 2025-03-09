@@ -169,7 +169,8 @@
 .back-to-top {
   position: fixed;
   bottom: 30px;
-  right: 30px;
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Adjust for exact centering */
   padding: 12px;
   border: none;
   border-radius: 50%;
@@ -185,7 +186,7 @@
 
 .back-to-top:hover {
   background: #3700b3;
-  transform: scale(1.1);
+  transform: translateX(-50%) scale(1.1); /* Maintain centering while scaling */
 }
 
 .back-to-top svg {
