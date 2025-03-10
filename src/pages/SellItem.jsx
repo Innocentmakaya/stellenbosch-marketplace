@@ -91,14 +91,6 @@ const SellItem = () => {
       setPrice("");
       setCategory(categories[0]);
       setImage(null);
-
-      // ✅ Send a browser notification for the new listing
-      if (Notification.permission === "granted") {
-        new Notification("New Listing Available!", {
-          body: `${title} is now available for sale.`,
-          icon: imageUrl,
-        });
-      }
     }
   };
 
