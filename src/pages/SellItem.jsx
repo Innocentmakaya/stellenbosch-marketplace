@@ -78,7 +78,7 @@ const SellItem = () => {
         price,
         category,
         image_url: imageUrl,
-        user_id: user.id, // ✅ Include user_id when inserting
+        user_id: user.id, // Include user_id when inserting
       },
     ]);
 
@@ -91,6 +91,14 @@ const SellItem = () => {
       setPrice("");
       setCategory(categories[0]);
       setImage(null);
+
+      // Trigger a browser notification
+      if (Notification.permission === "granted") {
+        new Notification("New Listing Added", {
+          body: `A new item "${title}" has been listed in the ${category} category.`,
+          icon: imageUrl,
+        });
+      }
     }
   };
 
