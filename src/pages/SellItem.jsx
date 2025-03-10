@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import supabase from "../supabaseClient";
-import { sendPushNotification } from "../firebase";
 import "./SellItem.css";
 
 const categories = ["Electronics", "Clothing", "Books", "Furniture", "Accessories", "Sports", "Other"];
@@ -21,7 +20,7 @@ const SellItem = () => {
       if (data?.user) {
         setUser(data.user);
       } else {
-        navigate("/login");
+        navigate("/login"); // Redirect to login if not logged in
       }
     };
 
@@ -42,7 +41,7 @@ const SellItem = () => {
     };
   }, [navigate]);
 
-  if (!user) return null;
+  if (!user) return null; // Prevent rendering until authentication is checked
 
   const handleImageChange = (event) => {
     setImage(event.target.files[0]);
@@ -79,7 +78,7 @@ const SellItem = () => {
         price,
         category,
         image_url: imageUrl,
-        user_id: user.id,
+        user_id: user.id, // ✅ Include user_id when inserting
       },
     ]);
 
@@ -87,20 +86,6 @@ const SellItem = () => {
       console.error("Error adding listing:", error);
     } else {
       alert("Listing added successfully!");
-
-      // Fetch all user FCM tokens
-      const { data: users, error: tokenError } = await supabase
-        .from("users")
-        .select("fcm_token")
-        .not("fcm_token", "is", null);
-
-      if (tokenError) {
-        console.error("Error fetching FCM tokens:", tokenError);
-      } else {
-        const tokens = users.map((user) => user.fcm_token);
-        await sendPushNotification(tokens, "New Item Listed!", `Check out ${title} now!`);
-      }
-
       setTitle("");
       setDescription("");
       setPrice("");
