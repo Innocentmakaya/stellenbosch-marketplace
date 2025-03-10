@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import supabase from "./supabaseClient"; // Import Supabase client
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Listings from "./pages/Listings";
@@ -11,9 +13,44 @@ import "./styles.css";
 import EditListing from "./pages/EditListing";
 import ResetPassword from "./pages/ResetPassword";
 import UpdatePassword from "./pages/UpdatePassword";
-import Profile from "./pages/Profile"; // Import the Profile component
+import Profile from "./pages/Profile";
 
 function App() {
+  useEffect(() => {
+    // Request notification permission when the app loads
+    if (Notification.permission !== "granted") {
+      Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+          console.log("Notification permission granted.");
+        }
+      });
+    }
+
+    // Subscribe to Supabase Realtime for new listings
+    const listingsSubscription = supabase
+      .channel("listings") // Create a channel for listings
+      .on(
+        "postgres_changes", // Listen for PostgreSQL changes
+        { event: "INSERT", schema: "public", table: "listings" }, // Only listen for INSERT events on the "listings" table
+        (payload) => {
+          // When a new listing is added, trigger a notification
+          const newListing = payload.new;
+          if (Notification.permission === "granted") {
+            new Notification("New Listing Added", {
+              body: `A new item "${newListing.title}" has been listed in the ${newListing.category} category.`,
+              icon: newListing.image_url, // Use the listing image as the notification icon
+            });
+          }
+        }
+      )
+      .subscribe(); // Subscribe to the channel
+
+    // Cleanup the subscription when the component unmounts
+    return () => {
+      listingsSubscription.unsubscribe();
+    };
+  }, []); // Run this effect only once when the component mounts
+
   return (
     <Router>
       <Navbar />
@@ -29,7 +66,7 @@ function App() {
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/update-password" element={<UpdatePassword />} />
           <Route path="/listing/:id" element={<ListingDetails />} />
-          <Route path="/profile" element={<Profile />} /> {/* Add Profile route */}
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </div>
     </Router>
