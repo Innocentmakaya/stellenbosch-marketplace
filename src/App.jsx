@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
@@ -12,22 +11,9 @@ import "./styles.css";
 import EditListing from "./pages/EditListing";
 import ResetPassword from "./pages/ResetPassword";
 import UpdatePassword from "./pages/UpdatePassword";
-import Profile from "./pages/Profile";
+import Profile from "./pages/Profile"; // Import the Profile component
 
 function App() {
-  useEffect(() => {
-    if (window.OneSignal) {
-      window.OneSignalDeferred = window.OneSignalDeferred || [];
-      window.OneSignalDeferred.push(function (OneSignal) {
-        OneSignal.isPushNotificationsEnabled().then(function (isEnabled) {
-          if (!isEnabled) {
-            OneSignal.showSlidedownPrompt();
-          }
-        });
-      });
-    }
-  }, []);
-
   return (
     <Router>
       <Navbar />
@@ -43,7 +29,7 @@ function App() {
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/update-password" element={<UpdatePassword />} />
           <Route path="/listing/:id" element={<ListingDetails />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile" element={<Profile />} /> {/* Add Profile route */}
         </Routes>
       </div>
     </Router>
