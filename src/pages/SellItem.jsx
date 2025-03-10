@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import OneSignal from "react-onesignal";
 import supabase from "../supabaseClient";
 import "./SellItem.css";
 
@@ -21,7 +20,7 @@ const SellItem = () => {
       if (data?.user) {
         setUser(data.user);
       } else {
-        navigate("/login");
+        navigate("/login"); // Redirect to login if not logged in
       }
     };
 
@@ -42,19 +41,10 @@ const SellItem = () => {
     };
   }, [navigate]);
 
-  if (!user) return null;
+  if (!user) return null; // Prevent rendering until authentication is checked
 
   const handleImageChange = (event) => {
     setImage(event.target.files[0]);
-  };
-
-  const sendNotification = async () => {
-    await OneSignal.sendSelfNotification(
-      "🛒 New Item for Sale!",
-      `${title} is now available in the ${category} category.`,
-      "https://stellenbosch-marketplace.vercel.app/listings", // 🔗 Update with your actual listings page URL
-      "https://stellenbosch-marketplace.vercel.app/icon.png" // 🖼️ Update with a logo/image URL
-    );
   };
 
   const handleSubmit = async (event) => {
@@ -88,7 +78,7 @@ const SellItem = () => {
         price,
         category,
         image_url: imageUrl,
-        user_id: user.id,
+        user_id: user.id, // ✅ Include user_id when inserting
       },
     ]);
 
@@ -101,7 +91,6 @@ const SellItem = () => {
       setPrice("");
       setCategory(categories[0]);
       setImage(null);
-      await sendNotification(); // 🔥 Send notification after posting
     }
   };
 
@@ -130,14 +119,23 @@ const SellItem = () => {
             onChange={(e) => setPrice(e.target.value)}
             required
           />
-          <select value={category} onChange={(e) => setCategory(e.target.value)} required>
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            required
+          >
             {categories.map((cat, index) => (
               <option key={index} value={cat}>
                 {cat}
               </option>
             ))}
           </select>
-          <input type="file" accept="image/*" onChange={handleImageChange} required />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            required
+          />
           <button type="submit">Submit</button>
         </form>
       </div>

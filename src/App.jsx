@@ -1,6 +1,4 @@
-import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import OneSignal from "react-onesignal";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Listings from "./pages/Listings";
@@ -9,26 +7,13 @@ import Signup from "./pages/Signup";
 import MyListings from "./pages/MyListings";
 import ListingDetails from "./pages/ListingDetails";
 import Login from "./pages/Login";
+import "./styles.css";
 import EditListing from "./pages/EditListing";
 import ResetPassword from "./pages/ResetPassword";
 import UpdatePassword from "./pages/UpdatePassword";
-import Profile from "./pages/Profile";
-import "./styles.css";
+import Profile from "./pages/Profile"; // Import the Profile component
 
 function App() {
-  useEffect(() => {
-    const initOneSignal = async () => {
-      await OneSignal.init({
-        appId: "878d45a3-c6bc-490c-9e1f-14d881af6769", // 🔴 Replace with your OneSignal App ID
-        allowLocalhostAsSecureOrigin: true,
-      });
-
-      OneSignal.showSlidedownPrompt(); // 🔥 Ask user for notification permission
-    };
-
-    initOneSignal();
-  }, []);
-
   return (
     <Router>
       <Navbar />
@@ -44,7 +29,7 @@ function App() {
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/update-password" element={<UpdatePassword />} />
           <Route path="/listing/:id" element={<ListingDetails />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile" element={<Profile />} /> {/* Add Profile route */}
         </Routes>
       </div>
     </Router>
