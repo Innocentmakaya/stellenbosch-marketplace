@@ -1,17 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import supabase from "../supabaseClient";
+import { sendNotification, requestNotificationPermission } from "../utils/notification";
 import "./SellItem.css";
 
-const categories = [
-  "Electronics",
-  "Clothing",
-  "Books",
-  "Furniture",
-  "Accessories",
-  "Sports",
-  "Other",
-];
+const categories = ["Electronics", "Clothing", "Books", "Furniture", "Accessories", "Sports", "Other"];
 
 const SellItem = () => {
   const [title, setTitle] = useState("");
@@ -23,12 +16,15 @@ const SellItem = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Request notification permission when the page loads
+    requestNotificationPermission();
+
     const checkUser = async () => {
       const { data } = await supabase.auth.getUser();
       if (data?.user) {
         setUser(data.user);
       } else {
-        navigate("/login");
+        navigate("/login"); // Redirect to login if not logged in
       }
     };
 
@@ -49,7 +45,7 @@ const SellItem = () => {
     };
   }, [navigate]);
 
-  if (!user) return null;
+  if (!user) return null; // Prevent rendering until authentication is checked
 
   const handleImageChange = (event) => {
     setImage(event.target.files[0]);
@@ -63,7 +59,6 @@ const SellItem = () => {
       return;
     }
 
-    // Upload image to Supabase Storage
     const fileName = `${Date.now()}_${image.name}`;
     const { data: imageData, error: imageError } = await supabase.storage
       .from("listing-images")
@@ -80,7 +75,6 @@ const SellItem = () => {
 
     const imageUrl = publicUrlData.publicUrl;
 
-    // Add listing to the Supabase database
     const { error } = await supabase.from("listings").insert([
       {
         title,
@@ -94,16 +88,17 @@ const SellItem = () => {
 
     if (error) {
       console.error("Error adding listing:", error);
-      return;
-    }
+    } else {
+      alert("Listing added successfully!");
+      setTitle("");
+      setDescription("");
+      setPrice("");
+      setCategory(categories[0]);
+      setImage(null);
 
-    alert("Listing added successfully!");
-    setTitle("");
-    setDescription("");
-    setPrice("");
-    setCategory(categories[0]);
-    setImage(null);
-   
+      // 🔔 Send a notification when a new listing is added
+      sendNotification("New Item for Sale!", `Check out ${title} in ${category}.`);
+    }
   };
 
   return (

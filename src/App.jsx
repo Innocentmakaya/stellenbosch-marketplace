@@ -7,13 +7,17 @@ import Signup from "./pages/Signup";
 import MyListings from "./pages/MyListings";
 import ListingDetails from "./pages/ListingDetails";
 import Login from "./pages/Login";
-import "./styles.css";
 import EditListing from "./pages/EditListing";
 import ResetPassword from "./pages/ResetPassword";
 import UpdatePassword from "./pages/UpdatePassword";
-import Profile from "./pages/Profile"; // Import the Profile component
+import Profile from "./pages/Profile";
+import { requestNotificationPermission } from "./utils/notification";
+import "./styles.css";
 
 function App() {
+  // Request notification permission when the app starts
+  requestNotificationPermission();
+
   return (
     <Router>
       <Navbar />
@@ -29,7 +33,7 @@ function App() {
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/update-password" element={<UpdatePassword />} />
           <Route path="/listing/:id" element={<ListingDetails />} />
-          <Route path="/profile" element={<Profile />} /> {/* Add Profile route */}
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </div>
     </Router>
