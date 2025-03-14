@@ -17,18 +17,9 @@ import Profile from "./pages/Profile";
 
 function App() {
   useEffect(() => {
-    // Log the environment variable to verify it's being loaded
-    console.log("OneSignal App ID:", process.env.REACT_APP_ONESIGNAL_APP_ID);
-
-    // Check if the appId is defined
-    if (!process.env.REACT_APP_ONESIGNAL_APP_ID) {
-      console.error("OneSignal App ID is missing. Please check your environment variables.");
-      return;
-    }
-
-    // Initialize OneSignal
+    // Initialize OneSignal (for subscription prompts only)
     OneSignal.init({
-      appId: process.env.REACT_APP_ONESIGNAL_APP_ID, // Use environment variable
+      appId: "0e5bc7cf-a989-495a-96d8-178e2508d076", // Hardcoded for now
     }).then(() => {
       // Prompt the user to allow notifications
       OneSignal.showSlidedownPrompt();
