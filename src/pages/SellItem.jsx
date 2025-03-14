@@ -92,22 +92,14 @@ const SellItem = () => {
       setCategory(categories[0]);
       setImage(null);
 
-      // 🔔 Send a push notification via OneSignal
-      const notificationData = {
-        app_id: process.env.REACT_APP_ONESIGNAL_APP_ID, // Use environment variable
-        headings: { en: "New Listing Added!" },
-        contents: { en: `Check out the new ${title} listed for sale in ${category}!` },
-        included_segments: ["All"], // Send to all subscribed users
-      };
-
+      // 🔔 Send a push notification via the serverless function
       try {
-        const response = await fetch("https://onesignal.com/api/v1/notifications", {
+        const response = await fetch("/api/sendNotification", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Basic ${process.env.REACT_APP_ONESIGNAL_API_KEY}`, // Use environment variable
           },
-          body: JSON.stringify(notificationData),
+          body: JSON.stringify({ title, category }),
         });
 
         const result = await response.json();
