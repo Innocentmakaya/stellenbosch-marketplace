@@ -3,7 +3,15 @@ import { useNavigate } from "react-router-dom";
 import supabase from "../supabaseClient";
 import "./SellItem.css";
 
-const categories = ["Electronics", "Clothing", "Books", "Furniture", "Accessories", "Sports", "Other"];
+const categories = [
+  "Electronics",
+  "Clothing",
+  "Books",
+  "Furniture",
+  "Accessories",
+  "Sports",
+  "Other",
+];
 
 const SellItem = () => {
   const [title, setTitle] = useState("");
@@ -20,7 +28,7 @@ const SellItem = () => {
       if (data?.user) {
         setUser(data.user);
       } else {
-        navigate("/login"); // Redirect to login if not logged in
+        navigate("/login");
       }
     };
 
@@ -41,7 +49,7 @@ const SellItem = () => {
     };
   }, [navigate]);
 
-  if (!user) return null; // Prevent rendering until authentication is checked
+  if (!user) return null;
 
   const handleImageChange = (event) => {
     setImage(event.target.files[0]);
@@ -55,7 +63,8 @@ const SellItem = () => {
       return;
     }
 
-    const fileName = ${Date.now()}_${image.name};
+    // Upload image to Supabase Storage
+    const fileName = `${Date.now()}_${image.name}`;
     const { data: imageData, error: imageError } = await supabase.storage
       .from("listing-images")
       .upload(fileName, image);
@@ -71,6 +80,7 @@ const SellItem = () => {
 
     const imageUrl = publicUrlData.publicUrl;
 
+    // Add listing to the Supabase database
     const { error } = await supabase.from("listings").insert([
       {
         title,
@@ -78,19 +88,50 @@ const SellItem = () => {
         price,
         category,
         image_url: imageUrl,
-        user_id: user.id, // ✅ Include user_id when inserting
+        user_id: user.id,
       },
     ]);
 
     if (error) {
       console.error("Error adding listing:", error);
-    } else {
-      alert("Listing added successfully!");
-      setTitle("");
-      setDescription("");
-      setPrice("");
-      setCategory(categories[0]);
-      setImage(null);
+      return;
+    }
+
+    alert("Listing added successfully!");
+    setTitle("");
+    setDescription("");
+    setPrice("");
+    setCategory(categories[0]);
+    setImage(null);
+
+    // Fetch all user FCM tokens
+    const { data: users, error: fetchError } = await supabase
+      .from("profiles")
+      .select("fcm_token")
+      .neq("fcm_token", null);
+
+    if (fetchError) {
+      console.error("Error fetching tokens:", fetchError.message);
+      return;
+    }
+
+    const tokens = users.map((user) => user.fcm_token);
+
+    // Call the Vercel serverless function to send notifications
+    try {
+      const response = await fetch("/api/sendNotification", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, price, tokens }),
+      });
+
+      if (!response.ok) {
+        console.error("Failed to send notifications:", await response.text());
+      } else {
+        console.log("Notifications sent successfully!");
+      }
+    } catch (error) {
+      console.error("Error sending notifications:", error);
     }
   };
 
