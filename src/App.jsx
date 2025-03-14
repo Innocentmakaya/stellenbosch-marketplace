@@ -17,6 +17,9 @@ import Profile from "./pages/Profile";
 
 function App() {
   useEffect(() => {
+    // Log the environment variable to verify it's being loaded
+    console.log("OneSignal App ID:", process.env.REACT_APP_ONESIGNAL_APP_ID);
+
     // Initialize OneSignal
     OneSignal.init({
       appId: process.env.REACT_APP_ONESIGNAL_APP_ID, // Use environment variable
