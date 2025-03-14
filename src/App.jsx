@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import OneSignal from "react-onesignal";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
@@ -7,16 +9,22 @@ import Signup from "./pages/Signup";
 import MyListings from "./pages/MyListings";
 import ListingDetails from "./pages/ListingDetails";
 import Login from "./pages/Login";
+import "./styles.css";
 import EditListing from "./pages/EditListing";
 import ResetPassword from "./pages/ResetPassword";
 import UpdatePassword from "./pages/UpdatePassword";
 import Profile from "./pages/Profile";
-import { requestNotificationPermission } from "./utils/notification";
-import "./styles.css";
 
 function App() {
-  // Request notification permission when the app starts
-  requestNotificationPermission();
+  useEffect(() => {
+    // Initialize OneSignal
+    OneSignal.init({
+      appId: process.env.REACT_APP_ONESIGNAL_APP_ID, // Use environment variable
+    }).then(() => {
+      // Prompt the user to allow notifications
+      OneSignal.showSlidedownPrompt();
+    });
+  }, []);
 
   return (
     <Router>

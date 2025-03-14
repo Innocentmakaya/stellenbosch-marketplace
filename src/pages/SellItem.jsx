@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import supabase from "../supabaseClient";
-import { sendNotification, requestNotificationPermission } from "../utils/notification";
 import "./SellItem.css";
 
 const categories = ["Electronics", "Clothing", "Books", "Furniture", "Accessories", "Sports", "Other"];
@@ -16,9 +15,6 @@ const SellItem = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Request notification permission when the page loads
-    requestNotificationPermission();
-
     const checkUser = async () => {
       const { data } = await supabase.auth.getUser();
       if (data?.user) {
@@ -96,8 +92,29 @@ const SellItem = () => {
       setCategory(categories[0]);
       setImage(null);
 
-      // 🔔 Send a notification when a new listing is added
-      sendNotification("New Item for Sale!", `Check out ${title} in ${category}.`);
+      // 🔔 Send a push notification via OneSignal
+      const notificationData = {
+        app_id: process.env.REACT_APP_ONESIGNAL_APP_ID, // Use environment variable
+        headings: { en: "New Listing Added!" },
+        contents: { en: `Check out the new ${title} listed for sale in ${category}!` },
+        included_segments: ["All"], // Send to all subscribed users
+      };
+
+      try {
+        const response = await fetch("https://onesignal.com/api/v1/notifications", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Basic ${process.env.REACT_APP_ONESIGNAL_API_KEY}`, // Use environment variable
+          },
+          body: JSON.stringify(notificationData),
+        });
+
+        const result = await response.json();
+        console.log("Notification sent:", result);
+      } catch (error) {
+        console.error("Error sending notification:", error);
+      }
     }
   };
 
