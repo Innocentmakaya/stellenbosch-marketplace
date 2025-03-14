@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
@@ -8,41 +7,13 @@ import Signup from "./pages/Signup";
 import MyListings from "./pages/MyListings";
 import ListingDetails from "./pages/ListingDetails";
 import Login from "./pages/Login";
+import "./styles.css";
 import EditListing from "./pages/EditListing";
 import ResetPassword from "./pages/ResetPassword";
 import UpdatePassword from "./pages/UpdatePassword";
-import Profile from "./pages/Profile";
-import supabase from "./supabaseClient";
-import { requestForToken, onMessageListener } from "./firebase";
-import "./styles.css";
+import Profile from "./pages/Profile"; // Import the Profile component
 
 function App() {
-  useEffect(() => {
-    const getUserToken = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      
-      if (user) {
-        const token = await requestForToken();
-        if (token) {
-          await supabase
-            .from("profiles")
-            .update({ fcm_token: token })
-            .eq("id", user.id);
-          console.log("FCM Token saved:", token);
-        }
-      }
-    };
-
-    getUserToken();
-
-    // Listen for foreground notifications
-    onMessageListener()
-      .then((payload) => {
-        alert(`Notification: ${payload.notification.title} - ${payload.notification.body}`);
-      })
-      .catch((err) => console.log("Failed to receive message: ", err));
-  }, []);
-
   return (
     <Router>
       <Navbar />
@@ -58,7 +29,7 @@ function App() {
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/update-password" element={<UpdatePassword />} />
           <Route path="/listing/:id" element={<ListingDetails />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile" element={<Profile />} /> {/* Add Profile route */}
         </Routes>
       </div>
     </Router>
