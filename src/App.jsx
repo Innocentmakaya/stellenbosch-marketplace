@@ -20,6 +20,12 @@ function App() {
     // Log the environment variable to verify it's being loaded
     console.log("OneSignal App ID:", process.env.REACT_APP_ONESIGNAL_APP_ID);
 
+    // Check if the appId is defined
+    if (!process.env.REACT_APP_ONESIGNAL_APP_ID) {
+      console.error("OneSignal App ID is missing. Please check your environment variables.");
+      return;
+    }
+
     // Initialize OneSignal
     OneSignal.init({
       appId: process.env.REACT_APP_ONESIGNAL_APP_ID, // Use environment variable
