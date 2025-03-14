@@ -17,9 +17,10 @@ import Profile from "./pages/Profile";
 
 function App() {
   useEffect(() => {
-    // Initialize OneSignal (for subscription prompts only)
+    // Initialize OneSignal
     OneSignal.init({
-      appId: "0e5bc7cf-a989-495a-96d8-178e2508d076", // Hardcoded for now
+      appId: "0e5bc7cf-a989-495a-96d8-178e2508d076", // Replace with your OneSignal App ID
+      allowLocalhostAsSecureOrigin: true, // Allow localhost for development
     }).then(() => {
       // Prompt the user to allow notifications
       OneSignal.showSlidedownPrompt();
