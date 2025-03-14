@@ -103,36 +103,7 @@ const SellItem = () => {
     setPrice("");
     setCategory(categories[0]);
     setImage(null);
-
-    // Fetch all user FCM tokens
-    const { data: users, error: fetchError } = await supabase
-      .from("profiles")
-      .select("fcm_token")
-      .neq("fcm_token", null);
-
-    if (fetchError) {
-      console.error("Error fetching tokens:", fetchError.message);
-      return;
-    }
-
-    const tokens = users.map((user) => user.fcm_token);
-
-    // Call the Vercel serverless function to send notifications
-    try {
-      const response = await fetch("/api/sendNotification", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, price, tokens }),
-      });
-
-      if (!response.ok) {
-        console.error("Failed to send notifications:", await response.text());
-      } else {
-        console.log("Notifications sent successfully!");
-      }
-    } catch (error) {
-      console.error("Error sending notifications:", error);
-    }
+   
   };
 
   return (
