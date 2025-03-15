@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import supabase from "../supabaseClient";
 import "./ListingDetails.css";
-import { FaWhatsapp, FaPhone, FaHeart, FaFlag, FaComment, FaMoneyBillWave } from "react-icons/fa";
+import { FaWhatsapp, FaPhone, FaHeart, FaFlag, FaMoneyBillWave, FaUser } from "react-icons/fa";
 
 const ListingDetails = () => {
   const { id } = useParams();
@@ -34,49 +34,39 @@ const ListingDetails = () => {
   const callLink = `tel:${listing.contact_number}`;
 
   return (
-    <div className="listing-details-container">
-      <div className="image-container">
-        <img src={listing.image_url} alt={listing.title} className="listing-detail-image" />
+    <div className="listing-card">
+      {/* Image */}
+      <div className="image-section">
+        <img src={listing.image_url} alt={listing.title} className="listing-image" />
       </div>
 
-      <div className="listing-info">
+      {/* Details Section */}
+      <div className="details-section">
         <h2 className="listing-title">{listing.title}</h2>
+
+        <div className="listing-info">
+          <p><strong>Price:</strong> R{listing.price}</p>
+          <p><strong>Category:</strong> {listing.category}</p>
+          <p><strong>Seller:</strong> <FaUser /> {listing.seller_name || "Unknown"}</p>
+        </div>
+
         <p className="listing-description">{listing.description}</p>
-
-        <div className="price-category">
-          <p className="listing-price">R{listing.price}</p>
-          <p className="listing-category">{listing.category}</p>
-        </div>
       </div>
 
-      <div className="seller-actions">
-        <h3>Contact Seller</h3>
-        <div className="button-group">
-          <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="contact-button whatsapp">
-            <FaWhatsapp /> WhatsApp
-          </a>
-          <a href={callLink} className="contact-button call">
-            <FaPhone /> Call
-          </a>
-        </div>
+      {/* Action Buttons */}
+      <div className="button-section">
+        <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="contact-button whatsapp">
+          <FaWhatsapp /> WhatsApp
+        </a>
+        <a href={callLink} className="contact-button call">
+          <FaPhone /> Call
+        </a>
       </div>
 
+      {/* Extra Actions */}
       <div className="extra-actions">
         <button className="action-button favorite"><FaHeart /> Save</button>
         <button className="action-button report"><FaFlag /> Report</button>
-      </div>
-
-      <div className="payment-options">
-        <h3>Payment Options</h3>
-        <div className="button-group">
-          <button className="payment-button"><FaMoneyBillWave /> EFT</button>
-          <button className="payment-button"><FaMoneyBillWave /> SnapScan</button>
-        </div>
-      </div>
-
-      <div className="chat-section">
-        <h3>Message Seller</h3>
-        <button className="contact-button chat"><FaComment /> Chat</button>
       </div>
     </div>
   );
