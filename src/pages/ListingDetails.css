@@ -1,6 +1,6 @@
 /* General Styles */
 .listing-details-container {
-  max-width: 800px;
+  max-width: 600px;
   margin: 40px auto;
   padding: 20px;
   background: #ffffff;
@@ -31,14 +31,14 @@
 }
 
 .listing-title {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 700;
   color: #333;
   margin-bottom: 10px;
 }
 
 .listing-price {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 700;
   color: #6200ea;
   margin-bottom: 15px;
