@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"; 
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import supabase from "../supabaseClient";
 import "./ListingDetails.css";
@@ -36,12 +36,14 @@ const ListingDetails = () => {
 
   return (
     <div className="listing-details-container">
-      <img src={listing.image_url} alt={listing.title} className="listing-detail-image" />
+      <div className="listing-header">
+        <img src={listing.image_url} alt={listing.title} className="listing-detail-image" />
+        <h1>{listing.title}</h1>
+        <p className="listing-price">R{listing.price}</p>
+      </div>
 
       <div className="listing-info">
-        <h2>{listing.title}</h2>
         <p className="listing-description">{listing.description}</p>
-        <p className="listing-price"><strong>Price:</strong> R{listing.price}</p>
         <p className="listing-category"><strong>Category:</strong> {listing.category}</p>
       </div>
 

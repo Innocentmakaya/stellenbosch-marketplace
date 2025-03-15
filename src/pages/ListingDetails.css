@@ -1,5 +1,5 @@
 .listing-details-container {
-  max-width: 600px;
+  max-width: 800px;
   margin: 80px auto 20px auto;
   padding: 20px;
   background: white;
@@ -8,29 +8,40 @@
   text-align: center;
 }
 
+.listing-header {
+  margin-bottom: 20px;
+}
+
 .listing-detail-image {
   width: 100%;
-  height: auto;
+  height: 300px;
+  object-fit: cover;
   border-radius: 10px;
   margin-bottom: 15px;
 }
 
-h2 {
-  font-size: 24px;
+h1 {
+  font-size: 28px;
   color: #333;
   margin-top: 10px;
+}
+
+.listing-price {
+  font-size: 24px;
+  font-weight: bold;
+  color: #6200ea;
+  margin-top: 10px;
+}
+
+.listing-info {
+  text-align: left;
+  margin-bottom: 20px;
 }
 
 .listing-description {
   font-size: 16px;
   color: #555;
   margin-bottom: 10px;
-}
-
-.listing-price {
-  font-size: 18px;
-  font-weight: bold;
-  color: #6200ea;
 }
 
 .listing-category {
