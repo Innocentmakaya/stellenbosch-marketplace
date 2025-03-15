@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import supabase from "../supabaseClient";
 import "./ListingDetails.css";
-import { FaWhatsapp, FaPhone, FaHeart, FaFlag, FaComment, FaMoneyBillWave } from "react-icons/fa";
+import { FaWhatsapp, FaPhone, FaHeart, FaFlag, FaComment, FaMoneyBillWave, FaUser } from "react-icons/fa";
 
 const ListingDetails = () => {
   const { id } = useParams();
@@ -41,8 +41,20 @@ const ListingDetails = () => {
         <img src={listing.image_url} alt={listing.title} className="hero-image" />
         <div className="hero-overlay">
           <h1>{listing.title}</h1>
-          <p className="hero-price">R{listing.price}</p>
-          <p className="hero-category">{listing.category}</p>
+          <div className="hero-details">
+            <div className="detail-tag">
+              <span className="tag-label">Price:</span>
+              <span className="tag-value">R{listing.price}</span>
+            </div>
+            <div className="detail-tag">
+              <span className="tag-label">Category:</span>
+              <span className="tag-value">{listing.category}</span>
+            </div>
+            <div className="detail-tag">
+              <span className="tag-label">Seller:</span>
+              <span className="tag-value">{listing.seller_name}</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -50,6 +62,21 @@ const ListingDetails = () => {
       <div className="description-section">
         <h2>About This Listing</h2>
         <p className="description-text">{listing.description}</p>
+      </div>
+
+      {/* Seller Info Section */}
+      <div className="seller-info-section">
+        <h2>Seller Information</h2>
+        <div className="seller-details">
+          <div className="seller-avatar">
+            <FaUser className="avatar-icon" />
+          </div>
+          <div className="seller-text">
+            <p className="seller-name">{listing.seller_name}</p>
+            <p className="seller-rating">⭐️⭐️⭐️⭐️⭐️ (5/5)</p>
+            <p className="seller-location">📍 Stellenbosch, South Africa</p>
+          </div>
+        </div>
       </div>
 
       {/* Contact & Actions Section */}

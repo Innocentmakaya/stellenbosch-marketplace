@@ -39,17 +39,31 @@
   font-weight: bold;
 }
 
-.hero-price {
-  font-size: 24px;
-  font-weight: bold;
-  color: #ffdd57;
-  margin: 5px 0;
+.hero-details {
+  display: flex;
+  gap: 20px;
+  margin-top: 10px;
 }
 
-.hero-category {
+.detail-tag {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 8px 15px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.tag-label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #ffdd57;
+}
+
+.tag-value {
   font-size: 16px;
-  color: #ccc;
-  margin: 0;
+  font-weight: bold;
+  color: white;
 }
 
 /* Description Section */
@@ -67,6 +81,65 @@
   font-size: 16px;
   color: #555;
   line-height: 1.6;
+}
+
+/* Seller Info Section */
+.seller-info-section {
+  margin-bottom: 30px;
+}
+
+.seller-info-section h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.seller-details {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.seller-avatar {
+  width: 50px;
+  height: 50px;
+  background: #6200ea;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-icon {
+  color: white;
+  font-size: 24px;
+}
+
+.seller-text {
+  flex: 1;
+}
+
+.seller-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+.seller-rating {
+  font-size: 14px;
+  color: #ff9100;
+  margin: 5px 0;
+}
+
+.seller-location {
+  font-size: 14px;
+  color: #777;
+  margin: 0;
 }
 
 /* Actions Section */
