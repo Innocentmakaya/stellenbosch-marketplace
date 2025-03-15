@@ -39,8 +39,8 @@ const ListingDetails = () => {
       <img src={listing.image_url} alt={listing.title} className="listing-detail-image" />
 
       <div className="listing-info">
-        <h2>{listing.title}</h2>
-        <p className="listing-description">{listing.description}</p>
+        <h2 className="listing-item"><strong>Item:</strong> {listing.title}</h2>
+        <p><strong>Description:</strong> {listing.description}</p>
         <p className="listing-price"><strong>Price:</strong> R{listing.price}</p>
         <p className="listing-category"><strong>Category:</strong> {listing.category}</p>
       </div>

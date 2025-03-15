@@ -15,30 +15,52 @@
   margin-bottom: 15px;
 }
 
-h2 {
+/* Updated h2 for Item */
+h2.listing-item {
   font-size: 24px;
-  color: #333;
+  color: black; /* Updated to black */
   margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+h2.listing-item strong {
+  font-weight: 600;
+  color: #333; /* Slightly darker for the label */
 }
 
 .listing-description {
   font-size: 16px;
-  color: #555;
+  color: black; /* Updated to black */
   margin-bottom: 10px;
-  line-height: 1.6; /* Improved readability */
+  line-height: 1.6;
+}
+
+.listing-description strong {
+  font-weight: 600;
+  color: #333; /* Slightly darker for the label */
 }
 
 .listing-price {
   font-size: 18px;
   font-weight: bold;
-  color: #6200ea;
+  color: black; /* Updated to black */
   margin-bottom: 10px;
+}
+
+.listing-price strong {
+  font-weight: 600;
+  color: #333; /* Slightly darker for the label */
 }
 
 .listing-category {
   font-size: 16px;
-  color: #777;
+  color: black; /* Updated to black */
   margin-bottom: 20px;
+}
+
+.listing-category strong {
+  font-weight: 600;
+  color: #333; /* Slightly darker for the label */
 }
 
 /* Contact & Action Buttons */
