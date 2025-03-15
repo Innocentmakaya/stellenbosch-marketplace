@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"; 
 import { useParams } from "react-router-dom";
 import supabase from "../supabaseClient";
 import "./ListingDetails.css";
-import { FaWhatsapp, FaPhone, FaHeart, FaFlag, FaComment, FaMoneyBillWave, FaUser } from "react-icons/fa";
+import { FaWhatsapp, FaPhone, FaHeart, FaFlag, FaComment, FaMoneyBillWave } from "react-icons/fa";
 
 const ListingDetails = () => {
   const { id } = useParams();
@@ -36,86 +36,46 @@ const ListingDetails = () => {
 
   return (
     <div className="listing-details-container">
-      {/* Hero Section */}
-      <div className="hero-section">
-        <img src={listing.image_url} alt={listing.title} className="hero-image" />
-        <div className="hero-overlay">
-          <h1>{listing.title}</h1>
-          <div className="hero-details">
-            <div className="detail-tag">
-              <span className="tag-label">Price:</span>
-              <span className="tag-value">R{listing.price}</span>
-            </div>
-            <div className="detail-tag">
-              <span className="tag-label">Category:</span>
-              <span className="tag-value">{listing.category}</span>
-            </div>
-            <div className="detail-tag">
-              <span className="tag-label">Seller:</span>
-              <span className="tag-value">{listing.seller_name}</span>
-            </div>
-          </div>
-        </div>
+      <img src={listing.image_url} alt={listing.title} className="listing-detail-image" />
+
+      <div className="listing-info">
+        <h2>{listing.title}</h2>
+        <p className="listing-description">{listing.description}</p>
+        <p className="listing-price"><strong>Price:</strong> R{listing.price}</p>
+        <p className="listing-category"><strong>Category:</strong> {listing.category}</p>
       </div>
 
-      {/* Description Section */}
-      <div className="description-section">
-        <h2>About This Listing</h2>
-        <p className="description-text">{listing.description}</p>
-      </div>
-
-      {/* Seller Info Section */}
-      <div className="seller-info-section">
-        <h2>Seller Information</h2>
-        <div className="seller-details">
-          <div className="seller-avatar">
-            <FaUser className="avatar-icon" />
-          </div>
-          <div className="seller-text">
-            <p className="seller-name">{listing.seller_name}</p>
-            <p className="seller-rating">⭐️⭐️⭐️⭐️⭐️ (5/5)</p>
-            <p className="seller-location">📍 Stellenbosch, South Africa</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Contact & Actions Section */}
-      <div className="actions-section">
-        <h2>Get in Touch</h2>
-        <div className="action-buttons">
-          <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="action-button whatsapp">
-            <FaWhatsapp /> WhatsApp
+      {/* Contact & Actions */}
+      <div className="actions-container">
+        <h3>Contact Seller</h3>
+        <div className="button-group">
+          <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="contact-button whatsapp">
+            <FaWhatsapp /> WhatsApp Seller
           </a>
-          <a href={callLink} className="action-button call">
-            <FaPhone /> Call
+          <a href={callLink} className="contact-button call">
+            <FaPhone /> Call Seller
           </a>
-          <button className="action-button chat">
-            <FaComment /> Chat
-          </button>
-        </div>
-      </div>
-
-      {/* Payment Options */}
-      <div className="payment-section">
-        <h2>Payment Options</h2>
-        <div className="payment-buttons">
-          <button className="payment-button eft">
-            <FaMoneyBillWave /> Pay via EFT
-          </button>
-          <button className="payment-button snapscan">
-            <FaMoneyBillWave /> Pay via SnapScan
-          </button>
         </div>
       </div>
 
       {/* Additional Actions */}
       <div className="extra-actions">
-        <button className="extra-button favorite">
-          <FaHeart /> Save for Later
-        </button>
-        <button className="extra-button report">
-          <FaFlag /> Report Listing
-        </button>
+        <button className="action-button favorite"><FaHeart /> Save for Later</button>
+        <button className="action-button report"><FaFlag /> Report Listing</button>
+      </div>
+
+      {/* Payment & Chat Options */}
+      <div className="payment-section">
+        <h3>Payment Options</h3>
+        <div className="button-group">
+          <button className="payment-button"><FaMoneyBillWave /> Pay via EFT</button>
+          <button className="payment-button"><FaMoneyBillWave /> Pay via SnapScan</button>
+        </div>
+      </div>
+
+      <div className="chat-section">
+        <h3>Message Seller</h3>
+        <button className="contact-button chat"><FaComment /> Start Chat</button>
       </div>
     </div>
   );

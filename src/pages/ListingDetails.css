@@ -1,183 +1,63 @@
-/* General Styles */
 .listing-details-container {
-  max-width: 1200px;
+  max-width: 600px;
   margin: 80px auto 20px auto;
   padding: 20px;
-  background: #f9f9f9;
-  border-radius: 15px;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-  font-family: 'Arial', sans-serif;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
-/* Hero Section */
-.hero-section {
-  position: relative;
-  border-radius: 15px;
-  overflow: hidden;
-  margin-bottom: 30px;
-}
-
-.hero-image {
+.listing-detail-image {
   width: 100%;
-  height: 300px;
-  object-fit: cover;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 15px;
 }
 
-.hero-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
-  padding: 20px;
-  color: white;
-}
-
-.hero-overlay h1 {
-  font-size: 32px;
-  margin: 0;
-  font-weight: bold;
-}
-
-.hero-details {
-  display: flex;
-  gap: 20px;
+h2 {
+  font-size: 24px;
+  color: #333;
   margin-top: 10px;
 }
 
-.detail-tag {
-  background: rgba(255, 255, 255, 0.2);
-  padding: 8px 15px;
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.tag-label {
-  font-size: 14px;
-  font-weight: bold;
-  color: #ffdd57;
-}
-
-.tag-value {
-  font-size: 16px;
-  font-weight: bold;
-  color: white;
-}
-
-/* Description Section */
-.description-section {
-  margin-bottom: 30px;
-}
-
-.description-section h2 {
-  font-size: 24px;
-  color: #333;
-  margin-bottom: 15px;
-}
-
-.description-text {
+.listing-description {
   font-size: 16px;
   color: #555;
-  line-height: 1.6;
+  margin-bottom: 10px;
 }
 
-/* Seller Info Section */
-.seller-info-section {
-  margin-bottom: 30px;
-}
-
-.seller-info-section h2 {
-  font-size: 24px;
-  color: #333;
-  margin-bottom: 15px;
-}
-
-.seller-details {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.seller-avatar {
-  width: 50px;
-  height: 50px;
-  background: #6200ea;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.avatar-icon {
-  color: white;
-  font-size: 24px;
-}
-
-.seller-text {
-  flex: 1;
-}
-
-.seller-name {
+.listing-price {
   font-size: 18px;
   font-weight: bold;
-  color: #333;
-  margin: 0;
+  color: #6200ea;
 }
 
-.seller-rating {
-  font-size: 14px;
-  color: #ff9100;
-  margin: 5px 0;
-}
-
-.seller-location {
-  font-size: 14px;
+.listing-category {
+  font-size: 16px;
   color: #777;
-  margin: 0;
 }
 
-/* Actions Section */
-.actions-section {
-  margin-bottom: 30px;
-}
-
-.actions-section h2 {
-  font-size: 24px;
-  color: #333;
-  margin-bottom: 15px;
-}
-
-.action-buttons {
+/* Contact & Action Buttons */
+.button-group {
   display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
 }
 
-.action-button {
-  flex: 1;
-  padding: 15px;
+.contact-button {
+  padding: 10px 15px;
   border: none;
-  border-radius: 10px;
+  border-radius: 5px;
   text-decoration: none;
   color: white;
   font-size: 16px;
   font-weight: bold;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  transition: transform 0.2s ease, opacity 0.2s ease;
-}
-
-.action-button:hover {
-  transform: scale(1.05);
-  opacity: 0.9;
+  gap: 8px;
+  transition: background 0.3s ease;
 }
 
 .whatsapp {
@@ -192,70 +72,28 @@
   background-color: #ff9100;
 }
 
-/* Payment Section */
-.payment-section {
-  margin-bottom: 30px;
-}
-
-.payment-section h2 {
-  font-size: 24px;
-  color: #333;
-  margin-bottom: 15px;
-}
-
-.payment-buttons {
-  display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-
-.payment-button {
-  flex: 1;
-  padding: 15px;
-  border: none;
-  border-radius: 10px;
-  background-color: #28a745;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  transition: transform 0.2s ease, opacity 0.2s ease;
-}
-
-.payment-button:hover {
-  transform: scale(1.05);
-  opacity: 0.9;
+.contact-button:hover {
+  opacity: 0.8;
 }
 
 /* Extra Actions */
 .extra-actions {
+  margin-top: 20px;
   display: flex;
+  justify-content: center;
   gap: 15px;
-  margin-bottom: 30px;
 }
 
-.extra-button {
-  flex: 1;
-  padding: 15px;
+.action-button {
+  background: #eee;
   border: none;
-  border-radius: 10px;
-  background-color: #eee;
-  color: #333;
-  font-size: 16px;
-  font-weight: bold;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 14px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  transition: transform 0.2s ease, opacity 0.2s ease;
-}
-
-.extra-button:hover {
-  transform: scale(1.05);
-  opacity: 0.9;
+  gap: 5px;
+  cursor: pointer;
 }
 
 .favorite {
@@ -264,4 +102,35 @@
 
 .report {
   color: #d32f2f;
+}
+
+.action-button:hover {
+  opacity: 0.8;
+}
+
+/* Payment Section */
+.payment-section {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.payment-button {
+  background: #28a745;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.payment-button:hover {
+  opacity: 0.8;
+}
+
+/* Chat Section */
+.chat-section {
+  margin-top: 20px;
+  text-align: center;
 }
