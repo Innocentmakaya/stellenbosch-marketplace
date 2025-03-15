@@ -36,57 +36,58 @@ const ListingDetails = () => {
 
   return (
     <div className="listing-details-container">
-      <div className="listing-header">
-        <img src={listing.image_url} alt={listing.title} className="listing-detail-image" />
-        <div className="listing-header-info">
-          <h2>{listing.title}</h2>
-          <p className="listing-price">R{listing.price}</p>
-          <p className="listing-category">{listing.category}</p>
+      {/* Hero Section */}
+      <div className="hero-section">
+        <img src={listing.image_url} alt={listing.title} className="hero-image" />
+        <div className="hero-overlay">
+          <h1>{listing.title}</h1>
+          <p className="hero-price">R{listing.price}</p>
+          <p className="hero-category">{listing.category}</p>
         </div>
       </div>
 
-      <div className="listing-description-section">
-        <h3>Description</h3>
-        <p className="listing-description">{listing.description}</p>
+      {/* Description Section */}
+      <div className="description-section">
+        <h2>About This Listing</h2>
+        <p className="description-text">{listing.description}</p>
       </div>
 
-      <div className="contact-actions">
-        <h3>Contact Seller</h3>
-        <div className="button-group">
-          <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="contact-button whatsapp">
+      {/* Contact & Actions Section */}
+      <div className="actions-section">
+        <h2>Get in Touch</h2>
+        <div className="action-buttons">
+          <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="action-button whatsapp">
             <FaWhatsapp /> WhatsApp
           </a>
-          <a href={callLink} className="contact-button call">
+          <a href={callLink} className="action-button call">
             <FaPhone /> Call
           </a>
-        </div>
-      </div>
-
-      <div className="additional-actions">
-        <button className="action-button favorite">
-          <FaHeart /> Save
-        </button>
-        <button className="action-button report">
-          <FaFlag /> Report
-        </button>
-      </div>
-
-      <div className="payment-options">
-        <h3>Payment Options</h3>
-        <div className="button-group">
-          <button className="payment-button">
-            <FaMoneyBillWave /> EFT
-          </button>
-          <button className="payment-button">
-            <FaMoneyBillWave /> SnapScan
+          <button className="action-button chat">
+            <FaComment /> Chat
           </button>
         </div>
       </div>
 
-      <div className="chat-section">
-        <h3>Message Seller</h3>
-        <button className="contact-button chat">
-          <FaComment /> Start Chat
+      {/* Payment Options */}
+      <div className="payment-section">
+        <h2>Payment Options</h2>
+        <div className="payment-buttons">
+          <button className="payment-button eft">
+            <FaMoneyBillWave /> Pay via EFT
+          </button>
+          <button className="payment-button snapscan">
+            <FaMoneyBillWave /> Pay via SnapScan
+          </button>
+        </div>
+      </div>
+
+      {/* Additional Actions */}
+      <div className="extra-actions">
+        <button className="extra-button favorite">
+          <FaHeart /> Save for Later
+        </button>
+        <button className="extra-button report">
+          <FaFlag /> Report Listing
         </button>
       </div>
     </div>
