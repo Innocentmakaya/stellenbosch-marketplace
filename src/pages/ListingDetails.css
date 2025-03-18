@@ -1,12 +1,39 @@
-/* Container */
+/* General Container */
 .listing-details-container {
   max-width: 600px;
   margin: 80px auto 20px auto;
   padding: 20px;
   background: white;
-  border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   text-align: center;
+  overflow: hidden;
+}
+
+/* Section Divider */
+.section {
+  padding: 20px;
+  margin-bottom: 20px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Section Heading */
+.section h3 {
+  color: #333;
+  font-size: 18px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+/* Divider Line */
+.divider {
+  border: 0;
+  height: 1px;
+  background: #e0e0e0;
+  margin: 20px 0;
 }
 
 /* Image */
@@ -15,6 +42,7 @@
   height: auto;
   border-radius: 10px;
   margin-bottom: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Item Title */
@@ -30,39 +58,16 @@ h2.listing-item strong {
   color: #333;
 }
 
-/* Description */
-.listing-description {
+/* Item Info */
+.listing-description, .listing-price, .listing-category {
   font-size: 16px;
   color: black;
   margin-bottom: 10px;
   line-height: 1.6;
 }
 
-.listing-description strong {
-  font-weight: 600;
-  color: #333;
-}
-
-/* Price */
-.listing-price {
-  font-size: 18px;
-  font-weight: bold;
-  color: black;
-  margin-bottom: 10px;
-}
-
-.listing-price strong {
-  font-weight: 600;
-  color: #333;
-}
-
-/* Category */
-.listing-category {
-  font-size: 16px;
-  color: black;
-  margin-bottom: 20px;
-}
-
+.listing-description strong,
+.listing-price strong,
 .listing-category strong {
   font-weight: 600;
   color: #333;
@@ -78,7 +83,7 @@ h2.listing-item strong {
 
 /* Contact Buttons */
 .contact-button {
-  padding: 10px 15px;
+  padding: 12px 15px;
   border: none;
   border-radius: 8px;
   text-decoration: none;
@@ -91,7 +96,8 @@ h2.listing-item strong {
   gap: 5px;
   transition: all 0.3s ease;
   cursor: pointer;
-  width: 120px; /* Ensures all buttons have the same width */
+  width: 120px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Button Colors */
@@ -114,12 +120,6 @@ h2.listing-item strong {
 }
 
 /* Payment Section */
-.payment-section {
-  margin-top: 20px;
-  text-align: center;
-}
-
-/* Payment Options - Radio Buttons */
 .payment-options {
   display: flex;
   justify-content: center;
