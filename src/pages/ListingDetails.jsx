@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import supabase from "../supabaseClient";
 import "./ListingDetails.css";
-import { FaWhatsapp, FaPhone, FaHeart, FaFlag, FaComment, FaMoneyBillWave } from "react-icons/fa";
+import { FaWhatsapp, FaPhone, FaHeart, FaFlag, FaMoneyBillWave, FaComment } from "react-icons/fa";
 
 const ListingDetails = () => {
   const { id } = useParams();
   const [listing, setListing] = useState(null);
+  const [selectedPayment, setSelectedPayment] = useState("");
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -55,27 +56,43 @@ const ListingDetails = () => {
           <a href={callLink} className="contact-button call">
             <FaPhone /> Call Seller
           </a>
+          <button className="contact-button chat">
+            <FaComment /> In-App Chat
+          </button>
         </div>
       </div>
 
-      {/* Additional Actions */}
+      {/* Payment Options */}
+      <div className="payment-section">
+        <h3>Payment Options</h3>
+        <div className="payment-options">
+          <label>
+            <input 
+              type="radio" 
+              name="payment" 
+              value="EFT" 
+              checked={selectedPayment === "EFT"} 
+              onChange={(e) => setSelectedPayment(e.target.value)} 
+            />
+            Pay via EFT
+          </label>
+          <label>
+            <input 
+              type="radio" 
+              name="payment" 
+              value="SnapScan" 
+              checked={selectedPayment === "SnapScan"} 
+              onChange={(e) => setSelectedPayment(e.target.value)} 
+            />
+            Pay via SnapScan
+          </label>
+        </div>
+      </div>
+
+      {/* Extra Actions */}
       <div className="extra-actions">
         <button className="action-button favorite"><FaHeart /> Save for Later</button>
         <button className="action-button report"><FaFlag /> Report Listing</button>
-      </div>
-
-      {/* Payment & Chat Options */}
-      <div className="payment-section">
-        <h3>Payment Options</h3>
-        <div className="button-group">
-          <button className="payment-button"><FaMoneyBillWave /> Pay via EFT</button>
-          <button className="payment-button"><FaMoneyBillWave /> Pay via SnapScan</button>
-        </div>
-      </div>
-
-      <div className="chat-section">
-        <h3>Message Seller</h3>
-        <button className="contact-button chat"><FaComment /> Start Chat</button>
       </div>
     </div>
   );
