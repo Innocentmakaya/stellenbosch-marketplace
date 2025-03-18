@@ -17,26 +17,58 @@
   margin-bottom: 15px;
 }
 
-/* Item Info */
+/* Item Title */
 h2.listing-item {
   font-size: 24px;
   color: black;
-  margin: 10px 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-.listing-info p {
+h2.listing-item strong {
+  font-weight: 600;
+  color: #333;
+}
+
+/* Description */
+.listing-description {
   font-size: 16px;
   color: black;
   margin-bottom: 10px;
   line-height: 1.6;
 }
 
-/* Contact Seller Section */
-.actions-container {
-  margin-top: 20px;
-  text-align: center;
+.listing-description strong {
+  font-weight: 600;
+  color: #333;
 }
 
+/* Price */
+.listing-price {
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+  margin-bottom: 10px;
+}
+
+.listing-price strong {
+  font-weight: 600;
+  color: #333;
+}
+
+/* Category */
+.listing-category {
+  font-size: 16px;
+  color: black;
+  margin-bottom: 20px;
+}
+
+.listing-category strong {
+  font-weight: 600;
+  color: #333;
+}
+
+/* Button Group */
 .button-group {
   display: flex;
   justify-content: center;
@@ -44,6 +76,7 @@ h2.listing-item {
   margin-top: 10px;
 }
 
+/* Contact Buttons */
 .contact-button {
   padding: 10px 15px;
   border: none;
@@ -54,9 +87,11 @@ h2.listing-item {
   font-weight: 600;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
   transition: all 0.3s ease;
   cursor: pointer;
+  width: 120px; /* Ensures all buttons have the same width */
 }
 
 /* Button Colors */
@@ -84,6 +119,7 @@ h2.listing-item {
   text-align: center;
 }
 
+/* Payment Options - Radio Buttons */
 .payment-options {
   display: flex;
   justify-content: center;
@@ -91,19 +127,36 @@ h2.listing-item {
   margin-top: 10px;
 }
 
-.payment-options label {
+/* Payment Labels */
+.payment-label {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
   font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
   color: #333;
+  cursor: pointer;
+  transition: color 0.2s;
 }
 
-/* Radio Button */
-input[type="radio"] {
+.payment-label input[type="radio"] {
   accent-color: #28a745;
+  cursor: pointer;
+}
+
+/* Selected Payment Effect */
+.payment-label:hover {
+  color: #28a745;
+}
+
+/* Clean Up Radio Appearance */
+input[type="radio"] {
   width: 16px;
   height: 16px;
+}
+
+/* Loading Text */
+.loading-text {
+  font-size: 16px;
+  color: #333;
+  margin-top: 20px;
 }
