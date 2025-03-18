@@ -1,39 +1,25 @@
-/* General Container */
+/* Container */
 .listing-details-container {
   max-width: 600px;
   margin: 80px auto 20px auto;
   padding: 20px;
   background: white;
-  border-radius: 12px;
+  border-radius: 10px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   text-align: center;
-  overflow: hidden;
 }
 
-/* Section Divider */
+/* Section Styling */
 .section {
   padding: 20px;
   margin-bottom: 20px;
-  background: #f9f9f9;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  background: #f4f4f4;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s;
 }
-
-/* Section Heading */
-.section h3 {
-  color: #333;
-  font-size: 18px;
-  margin-bottom: 15px;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-}
-
-/* Divider Line */
-.divider {
-  border: 0;
-  height: 1px;
-  background: #e0e0e0;
-  margin: 20px 0;
+.section:hover {
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Image */
@@ -42,41 +28,17 @@
   height: auto;
   border-radius: 10px;
   margin-bottom: 15px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Item Title */
+/* Item Details */
 h2.listing-item {
   font-size: 24px;
   color: black;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin: 10px 0;
 }
 
-h2.listing-item strong {
-  font-weight: 600;
-  color: #333;
-}
-
-/* Item Info */
-.listing-description,
-.listing-price,
-.listing-category {
-  font-size: 16px;
-  color: black;
-  margin-bottom: 10px;
-  line-height: 1.6;
-}
-
-.listing-description strong,
-.listing-price strong,
-.listing-category strong {
-  font-weight: 600;
-  color: #333;
-}
-
-/* Button Group */
-.button-group {
+/* Contact Seller Section */
+.contact-section .button-group {
   display: flex;
   justify-content: center;
   gap: 10px;
@@ -94,15 +56,11 @@ h2.listing-item strong {
   font-weight: 600;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 5px;
+  gap: 8px;
   transition: all 0.3s ease;
   cursor: pointer;
-  width: 120px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Button Colors */
 .whatsapp {
   background-color: #25d366;
 }
@@ -115,82 +73,55 @@ h2.listing-item strong {
   background-color: #ff9100;
 }
 
-/* Hover Effect */
 .contact-button:hover {
   transform: translateY(-2px);
   opacity: 0.9;
 }
 
 /* Payment Section */
-.payment-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-  margin-top: 20px;
-}
-
-/* Payment Options */
 .payment-options {
   display: flex;
-  justify-content: center;
-  gap: 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 10px 0;
 }
 
-/* Payment Labels */
 .payment-label {
+  font-size: 14px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: #333;
+  gap: 10px;
   cursor: pointer;
-  transition: color 0.2s;
-}
-
-.payment-label input[type="radio"] {
-  accent-color: #28a745;
-  cursor: pointer;
-}
-
-/* Selected Payment Effect */
-.payment-label:hover {
-  color: #28a745;
 }
 
 /* Proceed to Payment Button */
 .proceed-payment-button {
-  background-color: #28a745;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
   padding: 12px 20px;
+  margin-top: 15px;
   border: none;
   border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  background-color: #28a745;
+  color: white;
   cursor: pointer;
-  margin-top: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: all 0.2s ease;
-  width: 200px;
-  text-align: center;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  width: 100%;
 }
 
-/* Hover Effect */
 .proceed-payment-button:hover {
-  background-color: #218838;
   transform: translateY(-2px);
-  opacity: 0.95;
-}
-
-/* Clean Up Radio Appearance */
-input[type="radio"] {
-  width: 16px;
-  height: 16px;
+  opacity: 0.9;
 }
 
 /* Loading Text */
 .loading-text {
-  font-size: 16px;
+  text-align: center;
+  font-size: 18px;
   color: #333;
-  margin-top: 20px;
 }

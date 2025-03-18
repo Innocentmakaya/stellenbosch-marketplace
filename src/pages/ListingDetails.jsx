@@ -7,7 +7,6 @@ import { FaWhatsapp, FaPhone, FaComment, FaMoneyBillWave } from "react-icons/fa"
 const ListingDetails = () => {
   const { id } = useParams();
   const [listing, setListing] = useState(null);
-  const [selectedPayment, setSelectedPayment] = useState("");
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -37,9 +36,11 @@ const ListingDetails = () => {
 
   return (
     <div className="listing-details-container">
-      {/* Item Details */}
+      {/* Item Image */}
       <img src={listing.image_url} alt={listing.title} className="listing-detail-image" />
-      <div className="listing-info">
+
+      {/* Item Details */}
+      <div className="section">
         <h2 className="listing-item"><strong>Item:</strong> {listing.title}</h2>
         <p><strong>Description:</strong> {listing.description}</p>
         <p className="listing-price"><strong>Price:</strong> R{listing.price}</p>
@@ -47,7 +48,7 @@ const ListingDetails = () => {
       </div>
 
       {/* Contact Seller Section */}
-      <div className="actions-container">
+      <div className="section contact-section">
         <h3>Contact Seller</h3>
         <div className="button-group">
           <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="contact-button whatsapp">
@@ -57,36 +58,28 @@ const ListingDetails = () => {
             <FaPhone /> Call
           </a>
           <button className="contact-button chat">
-            <FaComment /> Chat
+            <FaComment /> In-App Chat
           </button>
         </div>
       </div>
 
-      {/* Payment Options Section */}
-      <div className="payment-section">
+      {/* Payment Section */}
+      <div className="section payment-section">
         <h3>Payment Options</h3>
         <div className="payment-options">
-          <label>
-            <input
-              type="radio"
-              name="payment"
-              value="EFT"
-              checked={selectedPayment === "EFT"}
-              onChange={() => setSelectedPayment("EFT")}
-            />
-            Pay via EFT
+          <label className="payment-label">
+            <input type="radio" name="payment" value="card" required /> Credit/Debit Card
           </label>
-          <label>
-            <input
-              type="radio"
-              name="payment"
-              value="SnapScan"
-              checked={selectedPayment === "SnapScan"}
-              onChange={() => setSelectedPayment("SnapScan")}
-            />
-            Pay via SnapScan
+          <label className="payment-label">
+            <input type="radio" name="payment" value="eft" /> EFT
+          </label>
+          <label className="payment-label">
+            <input type="radio" name="payment" value="snapscan" /> SnapScan
           </label>
         </div>
+        <button className="proceed-payment-button">
+          <FaMoneyBillWave /> Proceed to Payment
+        </button>
       </div>
     </div>
   );
