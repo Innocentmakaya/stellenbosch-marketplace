@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import supabase from "../supabaseClient";
 import "./ListingDetails.css";
-import { FaWhatsapp, FaPhone, FaHeart, FaFlag, FaMoneyBillWave, FaComment } from "react-icons/fa";
+import { FaWhatsapp, FaPhone, FaComment, FaMoneyBillWave } from "react-icons/fa";
 
 const ListingDetails = () => {
   const { id } = useParams();
@@ -37,8 +37,8 @@ const ListingDetails = () => {
 
   return (
     <div className="listing-details-container">
+      {/* Item Details */}
       <img src={listing.image_url} alt={listing.title} className="listing-detail-image" />
-
       <div className="listing-info">
         <h2 className="listing-item"><strong>Item:</strong> {listing.title}</h2>
         <p><strong>Description:</strong> {listing.description}</p>
@@ -46,53 +46,47 @@ const ListingDetails = () => {
         <p className="listing-category"><strong>Category:</strong> {listing.category}</p>
       </div>
 
-      {/* Contact & Actions */}
+      {/* Contact Seller Section */}
       <div className="actions-container">
         <h3>Contact Seller</h3>
         <div className="button-group">
           <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="contact-button whatsapp">
-            <FaWhatsapp /> WhatsApp Seller
+            <FaWhatsapp /> WhatsApp
           </a>
           <a href={callLink} className="contact-button call">
-            <FaPhone /> Call Seller
+            <FaPhone /> Call
           </a>
           <button className="contact-button chat">
-            <FaComment /> In-App Chat
+            <FaComment /> Chat
           </button>
         </div>
       </div>
 
-      {/* Payment Options */}
+      {/* Payment Options Section */}
       <div className="payment-section">
         <h3>Payment Options</h3>
         <div className="payment-options">
           <label>
-            <input 
-              type="radio" 
-              name="payment" 
-              value="EFT" 
-              checked={selectedPayment === "EFT"} 
-              onChange={(e) => setSelectedPayment(e.target.value)} 
+            <input
+              type="radio"
+              name="payment"
+              value="EFT"
+              checked={selectedPayment === "EFT"}
+              onChange={() => setSelectedPayment("EFT")}
             />
             Pay via EFT
           </label>
           <label>
-            <input 
-              type="radio" 
-              name="payment" 
-              value="SnapScan" 
-              checked={selectedPayment === "SnapScan"} 
-              onChange={(e) => setSelectedPayment(e.target.value)} 
+            <input
+              type="radio"
+              name="payment"
+              value="SnapScan"
+              checked={selectedPayment === "SnapScan"}
+              onChange={() => setSelectedPayment("SnapScan")}
             />
             Pay via SnapScan
           </label>
         </div>
-      </div>
-
-      {/* Extra Actions */}
-      <div className="extra-actions">
-        <button className="action-button favorite"><FaHeart /> Save for Later</button>
-        <button className="action-button report"><FaFlag /> Report Listing</button>
       </div>
     </div>
   );

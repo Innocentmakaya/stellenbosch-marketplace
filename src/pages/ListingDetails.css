@@ -1,3 +1,4 @@
+/* Container */
 .listing-details-container {
   max-width: 600px;
   margin: 80px auto 20px auto;
@@ -8,6 +9,7 @@
   text-align: center;
 }
 
+/* Image */
 .listing-detail-image {
   width: 100%;
   height: auto;
@@ -15,31 +17,35 @@
   margin-bottom: 15px;
 }
 
+/* Item Info */
 h2.listing-item {
   font-size: 24px;
   color: black;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin: 10px 0;
 }
 
-.listing-price, .listing-category {
+.listing-info p {
   font-size: 16px;
-  font-weight: bold;
   color: black;
   margin-bottom: 10px;
+  line-height: 1.6;
 }
 
-/* Contact & Action Buttons */
+/* Contact Seller Section */
+.actions-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
 .button-group {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
   gap: 10px;
   margin-top: 10px;
 }
 
 .contact-button {
-  padding: 12px 15px;
+  padding: 10px 15px;
   border: none;
   border-radius: 8px;
   text-decoration: none;
@@ -48,45 +54,26 @@ h2.listing-item {
   font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 8px;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.whatsapp { background-color: #25d366; }
-.call { background-color: #007bff; }
-.chat { background-color: #ff9100; }
-
-.contact-button:hover {
-  transform: translateY(-2px);
-  opacity: 0.9;
-}
-
-/* Extra Actions */
-.extra-actions {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-}
-
-.action-button {
-  padding: 12px 15px;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
   gap: 5px;
-  cursor: pointer;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
-.favorite { background-color: #ff4081; color: white; }
-.report { background-color: #f44336; color: white; }
+/* Button Colors */
+.whatsapp {
+  background-color: #25d366;
+}
 
-.action-button:hover {
+.call {
+  background-color: #007bff;
+}
+
+.chat {
+  background-color: #ff9100;
+}
+
+/* Hover Effect */
+.contact-button:hover {
   transform: translateY(-2px);
   opacity: 0.9;
 }
@@ -105,14 +92,18 @@ h2.listing-item {
 }
 
 .payment-options label {
-  font-size: 14px;
-  font-weight: 600;
   display: flex;
   align-items: center;
   gap: 5px;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
+  color: #333;
 }
 
-.payment-options input[type="radio"] {
-  transform: scale(1.2);
+/* Radio Button */
+input[type="radio"] {
+  accent-color: #28a745;
+  width: 16px;
+  height: 16px;
 }
