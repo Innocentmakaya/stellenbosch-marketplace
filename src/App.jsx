@@ -14,6 +14,9 @@ import EditListing from "./pages/EditListing";
 import ResetPassword from "./pages/ResetPassword";
 import UpdatePassword from "./pages/UpdatePassword";
 import Profile from "./pages/Profile";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentCancel from "./pages/PaymentCancel";
+
 
 function App() {
   useEffect(() => {
@@ -43,6 +46,9 @@ function App() {
           <Route path="/update-password" element={<UpdatePassword />} />
           <Route path="/listing/:id" element={<ListingDetails />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/payment-success" element={<PaymentSuccess />} />
+          <Route path="/payment-cancel" element={<PaymentCancel />} />
+
         </Routes>
       </div>
     </Router>

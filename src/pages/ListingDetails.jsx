@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import supabase from "../supabaseClient";
 import "./ListingDetails.css";
-import { FaWhatsapp, FaPhone, FaComment, FaMoneyBillWave } from "react-icons/fa";
+import { FaWhatsapp, FaPhone, FaComment } from "react-icons/fa";
+import PayFastTest from "./PayFastTest";  // Import the PayFastTest component
 
 const ListingDetails = () => {
   const { id } = useParams();
@@ -42,7 +43,7 @@ const ListingDetails = () => {
       {/* Item Details */}
       <div className="section">
         <h2 className="listing-item"><strong>Item:</strong> {listing.title}</h2>
-        <p><strong>Description:</strong> {listing.description}</p>
+        <p className="listing-description"><strong>Description:</strong> {listing.description}</p>
         <p className="listing-price"><strong>Price:</strong> R{listing.price}</p>
         <p className="listing-category"><strong>Category:</strong> {listing.category}</p>
       </div>
@@ -77,9 +78,9 @@ const ListingDetails = () => {
             <input type="radio" name="payment" value="snapscan" /> SnapScan
           </label>
         </div>
-        <button className="proceed-payment-button">
-          <FaMoneyBillWave /> Proceed to Payment
-        </button>
+        
+        {/* PayFast Button */}
+        <PayFastTest amount={listing.price} itemName={listing.title} />
       </div>
     </div>
   );
