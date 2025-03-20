@@ -1,12 +1,19 @@
 const PayFastTest = ({ amount, itemName }) => {
-  // Replace with your sandbox credentials
+  // Sandbox Credentials
   const merchantId = "10037747";
   const merchantKey = "2ctp6k5hlt1xc";
   const sandboxUrl = "https://sandbox.payfast.co.za/eng/process";
 
+  // URLs
   const returnUrl = "https://stellenbosch-marketplace.vercel.app/payment-success";
   const cancelUrl = "https://stellenbosch-marketplace.vercel.app/payment-cancel";
-  const notifyUrl = "https://stellenbosch-marketplace.vercel.app/payfast-notify"; // ✅ Added this
+  const notifyUrl = "https://stellenbosch-marketplace.vercel.app/payfast-notify";
+
+  // ✅ Fix Amount Format (e.g., 100.00)
+  const formattedAmount = parseFloat(amount).toFixed(2);
+
+  // ✅ Encode Item Name (avoids breaking special characters)
+  const encodedItemName = encodeURIComponent(itemName);
 
   return (
     <form action={sandboxUrl} method="post">
@@ -18,8 +25,11 @@ const PayFastTest = ({ amount, itemName }) => {
       <input type="hidden" name="notify_url" value={notifyUrl} />
 
       {/* Payment Information */}
-      <input type="hidden" name="amount" value={amount} />
-      <input type="hidden" name="item_name" value={itemName} />
+      <input type="hidden" name="amount" value={formattedAmount} />
+      <input type="hidden" name="item_name" value={encodedItemName} />
+
+      {/* Optional: Auto-select Payment Method (Credit Card, EFT, etc.) */}
+      {/* <input type="hidden" name="payment_method" value="cc" /> */}
 
       {/* Payment Button */}
       <button type="submit" style={styles.button}>
