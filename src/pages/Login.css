@@ -1,33 +1,85 @@
 /* Login.css */
+/* Stellenbosch University colors */
+:root {
+  --primary: #8b0000; /* Maroon - Stellenbosch primary color */
+  --secondary: #003366; /* Dark blue - Secondary color */
+  --accent: #e6b800; /* Gold/Yellow - Accent color */
+  --light-bg: #f9f9f9;
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --error: #d62828;
+  --success: #1a936f;
+  --border: #e0e0e0;
+  --shadow: rgba(0, 0, 0, 0.1);
+}
+
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: #f8f9fa; /* Light neutral background */
+  background: linear-gradient(135deg, #f9f9f9 0%, #efefef 100%);
   padding: 20px;
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
 }
 
-.login-box {
+.login-form-container {
+  display: flex;
+  flex-direction: column;
   background: white;
-  padding: 2.5rem;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* Subtle shadow */
+  box-shadow: 0 8px 30px var(--shadow);
   width: 100%;
-  max-width: 450px;
+  max-width: 480px;
+  overflow: hidden;
+}
+
+.login-banner {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color: white;
+  padding: 2rem;
   text-align: center;
 }
 
-.login-box h2 {
-  color: #2d2d2d; /* Dark gray for professionalism */
+.login-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 1rem;
+}
+
+.university-icon {
+  font-size: 2rem;
+  margin-right: 10px;
+}
+
+.login-banner h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.login-tagline {
+  opacity: 0.9;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+}
+
+.login-form-box {
+  padding: 2.5rem;
+}
+
+.login-form-box h2 {
+  color: var(--text-primary);
+  margin: 0 0 0.5rem 0;
   font-size: 1.8rem;
   font-weight: 600;
 }
 
-.login-box p {
-  color: #666;
+.login-subtitle {
+  color: var(--text-secondary);
   margin-bottom: 2rem;
+  font-size: 1rem;
 }
 
 .input-group {
@@ -37,55 +89,117 @@
 
 .input-icon {
   position: absolute;
-  left: 12px;
+  left: 16px;
   top: 50%;
   transform: translateY(-50%);
-  color: #666; /* Neutral icon color */
+  color: var(--text-secondary);
   font-size: 1.1rem;
 }
 
-.login-box input {
+input {
   width: 100%;
-  padding: 12px 12px 12px 40px;
-  border: 1px solid #ddd;
+  padding: 14px 14px 14px 50px;
+  border: 1px solid var(--border);
   border-radius: 8px;
   font-size: 1rem;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
+  background-color: #f9f9f9;
 }
 
-.login-box input:focus {
-  border-color: #6200ea; /* Brand color on focus */
+input:focus {
+  border-color: var(--primary);
+  background-color: white;
+  box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.1);
   outline: none;
 }
 
-.login-box button {
+.login-options {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1.5rem;
+}
+
+.forgot-password {
+  color: var(--secondary);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.forgot-password:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.login-button {
   width: 100%;
-  padding: 12px;
-  background: #6200ea; /* Brand color for the button */
+  padding: 14px;
+  background: var(--primary);
   color: white;
   border: none;
   border-radius: 8px;
   font-weight: 600;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.login-box button:hover {
-  background: #4a00a3; /* Darker shade on hover */
+.login-button:hover {
+  background: #6b0000; /* Darker shade of maroon */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(139, 0, 0, 0.2);
 }
 
-.error {
-  color: #dc3545; /* Standard error red */
-  margin-bottom: 1rem;
-  font-weight: 500;
+.login-button:active {
+  transform: translateY(1px);
 }
 
-.forgot-password a {
-  color: #6200ea; /* Brand color for links */
+.login-button.loading {
+  background: #a53f3f; /* Lighter shade when loading */
+  cursor: not-allowed;
+}
+
+.login-footer {
+  text-align: center;
+  margin-top: 2rem;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.signup-link {
+  color: var(--primary);
+  font-weight: 600;
   text-decoration: none;
-  font-weight: 500;
 }
 
-.forgot-password a:hover {
+.signup-link:hover {
   text-decoration: underline;
+}
+
+.error-message {
+  background-color: rgba(214, 40, 40, 0.1);
+  color: var(--error);
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  border-left: 4px solid var(--error);
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .login-form-box {
+    padding: 1.8rem;
+  }
+  
+  .login-banner {
+    padding: 1.5rem;
+  }
+  
+  .login-banner h1 {
+    font-size: 1.8rem;
+  }
 }

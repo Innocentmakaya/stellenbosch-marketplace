@@ -1,12 +1,12 @@
 /* Navbar Container */
 .navbar {
   width: 100%;
-  background-color: #6200ea;
+  background-color: #8b0000; /* Stellenbosch maroon */
   padding: 15px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   position: fixed;
   top: 0;
   left: 0;
@@ -42,7 +42,7 @@
 
 .nav-links .active-link {
   background: rgba(255, 255, 255, 0.2);
-  border-bottom: 2px solid white;
+  border-bottom: 2px solid #e6b800; /* Gold accent color */
 }
 
 /* Auth Section */
@@ -77,23 +77,28 @@
   cursor: pointer;
   font-size: 16px;
   font-weight: bold;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
   white-space: nowrap; /* Prevent text from wrapping */
 }
 
 .auth-button {
-  background: white;
-  color: #6200ea;
+  background: #e6b800; /* Gold accent */
+  color: #003366; /* Dark blue */
+}
+
+.auth-button:hover {
+  background: #d6ad00; /* Slightly darker gold */
+  transform: translateY(-2px);
 }
 
 .logout-button {
-  background: #ff4d4d;
+  background: #FFA500; /* Dark blue */
   color: white;
 }
 
-.auth-button:hover,
 .logout-button:hover {
-  opacity: 0.9;
+  background: #002855;
+  transform: translateY(-2px);
 }
 
 /* Mobile Menu Toggle */
@@ -112,7 +117,7 @@
     top: 100px; /* Increased further to prevent overlap with navbar */
     right: 0;
     flex-direction: column;
-    background-color: #6200ea;
+    background-color: #8b0000; /* Stellenbosch maroon */
     width: 60%; /* Cover only 60% of the screen */
     height: calc(100vh - 100px); /* Adjusted height to match new top value */
     align-items: flex-start; /* Align links to the left */
@@ -149,6 +154,7 @@
 
   .logout-button {
     width: 100%; /* Full width for logout button */
+
   }
 
   /* Ensure auth buttons stay in a single line */

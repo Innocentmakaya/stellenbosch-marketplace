@@ -8,49 +8,49 @@ function Navbar() {
   const [user, setUser] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
-
+  
   useEffect(() => {
     const getUser = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       setUser(user);
     };
-
+    
     getUser();
-
+    
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user || null);
     });
-
+    
     return () => {
       authListener?.subscription?.unsubscribe();
     };
   }, []);
-
+  
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setUser(null);
   };
-
+  
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-
+  
   // Hide hamburger menu on login, signup, and home pages
   const isAuthPage = location.pathname === "/login" || location.pathname === "/signup";
   const isHomePage = location.pathname === "/";
-
+  
   return (
     <nav className="navbar">
       {/* Logo */}
-      <h1 className="logo">Student Marketplace</h1>
-
+      <h1 className="logo">Matie Market</h1>
+      
       {/* Mobile Menu Toggle (Hidden on auth and home pages) */}
       {!isAuthPage && !isHomePage && (
         <div className="mobile-menu-toggle" onClick={toggleMobileMenu}>
           {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
         </div>
       )}
-
+      
       {/* Navbar Links (Desktop) */}
       <div className={`nav-links ${isMobileMenuOpen ? "active" : ""}`}>
         {user && (
@@ -86,7 +86,7 @@ function Navbar() {
           </>
         )}
       </div>
-
+      
       {/* Auth Section */}
       <div className="auth-section">
         {user ? (

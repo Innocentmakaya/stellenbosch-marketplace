@@ -2,19 +2,19 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import supabase from "../supabaseClient";
 import "./Login.css";
-import { FaEnvelope, FaLock } from "react-icons/fa"; // Import icons
+import { FaEnvelope, FaLock, FaUniversity } from "react-icons/fa";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // Loading state
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
-    setIsLoading(true); // Start loading
+    setIsLoading(true);
 
     try {
       console.log("Attempting to log in...");
@@ -69,49 +69,74 @@ const Login = () => {
       }
 
       console.log("Login successful! Redirecting to Home page...");
-      navigate("/listings"); // Redirect to the Home page after successful login
+      navigate("/listings");
     } catch (error) {
       console.error("❌ Error during login:", error);
       setError(error.message);
     } finally {
-      setIsLoading(false); // Stop loading
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="login-container">
-      <div className="login-box">
-        <h2>Welcome Back!</h2>
-        <p>Log in to continue</p>
-        {error && <p className="error">{error}</p>}
-        <form onSubmit={handleLogin}>
-          <div className="input-group">
-            <FaEnvelope className="input-icon" />
-            <input
-              type="email"
-              placeholder="Stellenbosch Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+      <div className="login-form-container">
+        <div className="login-banner">
+          <div className="login-logo">
+            <FaUniversity className="university-icon" />
+            <h1>Matie Market</h1>
           </div>
-          <div className="input-group">
-            <FaLock className="input-icon" />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+          <p className="login-tagline">Buy, sell, and connect with fellow Maties</p>
+        </div>
+        
+        <div className="login-form-box">
+          <h2>Welcome Back!</h2>
+          <p className="login-subtitle">Sign in to continue to Matie Market</p>
+          
+          {error && <div className="error-message">{error}</div>}
+          
+          <form onSubmit={handleLogin}>
+            <div className="input-group">
+              <FaEnvelope className="input-icon" />
+              <input
+                type="email"
+                placeholder="Stellenbosch Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            
+            <div className="input-group">
+              <FaLock className="input-icon" />
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            
+            <div className="login-options">
+              <a href="/reset-password" className="forgot-password">
+                Forgot Password?
+              </a>
+            </div>
+            
+            <button 
+              type="submit" 
+              className={`login-button ${isLoading ? 'loading' : ''}`}
+              disabled={isLoading}
+            >
+              {isLoading ? "Signing in..." : "Sign In"}
+            </button>
+          </form>
+          
+          <div className="login-footer">
+            <p>Don't have an account? <a href="/signup" className="signup-link">Sign Up</a></p>
           </div>
-          <button type="submit" disabled={isLoading}>
-            {isLoading ? "Logging in..." : "Login"}
-          </button>
-        </form>
-        <p className="forgot-password">
-          <a href="/reset-password">Forgot Password?</a>
-        </p>
+        </div>
       </div>
     </div>
   );

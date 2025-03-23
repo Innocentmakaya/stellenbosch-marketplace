@@ -2,16 +2,30 @@
 .listings-container {
   padding: 20px;
   max-width: 1200px;
-  margin: auto;
+  margin: 100px auto 0;
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
 }
 
 /* Page heading */
 .page-heading {
   text-align: center;
-  font-size: 28px;
-  color: #333;
-  margin-bottom: 20px;
-  margin-top: 60px;
+  font-size: 2.2rem;
+  color: var(--primary);
+  margin-bottom: 2rem;
+  position: relative;
+  display: inline-block;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.page-heading:after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: var(--primary);
+  margin: 15px auto 0;
+  border-radius: 2px;
 }
 
 /* Controls Bar */
@@ -19,9 +33,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 1rem;
+  margin-bottom: 2rem;
   flex-wrap: wrap;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Search Wrapper */
@@ -29,22 +46,24 @@
   position: relative;
   display: flex;
   align-items: center;
+  flex: 1;
+  min-width: 250px;
 }
 
 /* Search Box */
 .search-box {
   padding: 12px 40px 12px 15px;
-  width: 250px;
+  width: 100%;
   border-radius: 25px;
-  border: 2px solid #6200ea;
+  border: 2px solid var(--primary);
   font-size: 16px;
   outline: none;
   transition: all 0.3s ease-in-out;
 }
 
 .search-box:focus {
-  border-color: #3700b3;
-  box-shadow: 0px 0px 12px rgba(98, 0, 234, 0.2);
+  border-color: var(--secondary);
+  box-shadow: 0px 0px 12px rgba(139, 0, 0, 0.2);
 }
 
 /* Clear Filters Button */
@@ -53,7 +72,7 @@
   right: 10px;
   background: none;
   border: none;
-  color: #ff4757;
+  color: var(--error, #d62828);
   cursor: pointer;
   padding: 5px;
   display: flex;
@@ -70,11 +89,17 @@
 }
 
 /* Filter and Sort Dropdowns */
+.filter-container,
+.sort-container {
+  min-width: 150px;
+}
+
 .filter-container select,
 .sort-container select {
   padding: 10px 15px;
   border-radius: 25px;
-  border: 2px solid #6200ea;
+  border: 2px solid var(--primary);
+  width: 100%;
   font-size: 14px;
   background-color: white;
   cursor: pointer;
@@ -84,8 +109,8 @@
 
 .filter-container select:focus,
 .sort-container select:focus {
-  border-color: #3700b3;
-  box-shadow: 0px 0px 12px rgba(98, 0, 234, 0.2);
+  border-color: var(--secondary);
+  box-shadow: 0px 0px 12px rgba(139, 0, 0, 0.2);
 }
 
 /* Listings Grid */
@@ -100,52 +125,62 @@
 /* Listing Card */
 .listing-card {
   background: white;
-  border-radius: 15px;
+  border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+  box-shadow: 0px 5px 15px var(--shadow, rgba(0, 0, 0, 0.1));
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   text-align: left;
   width: 280px;
   padding: 15px;
   cursor: pointer;
   animation: fadeIn 0.5s ease-in-out;
+  border: 2px solid transparent;
 }
 
 .listing-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+  border-color: var(--primary);
 }
 
 /* Listing Image */
 .listing-image {
   width: 100%;
-  height: 200px;
+  height: 100%;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 8px;
+  transition: transform 0.5s ease;
+}
+
+.listing-card:hover .listing-image {
+  transform: scale(1.05);
 }
 
 /* Listing Details */
 .listing-details {
-  padding: 10px;
+  padding: 15px 5px 5px;
 }
 
 .listing-details h3 {
   font-size: 18px;
   margin-bottom: 8px;
-  color: #333;
+  color: var(--text-primary, #333);
 }
 
 .listing-details p {
   font-size: 14px;
-  color: #666;
+  color: var(--text-secondary, #666);
   margin-bottom: 8px;
+  line-height: 1.4;
 }
 
 /* Price, Category, Date */
 .price {
   display: block;
   font-weight: bold;
-  color: #6200ea;
-  margin-top: 8px;
+  color: maroon !important;
+  margin-top: 10px;
+  font-size: 1.1rem;
 }
 
 .category {
@@ -154,8 +189,16 @@
   padding: 6px 12px;
   border-radius: 15px;
   font-size: 12px;
-  color: #555;
+  color: var(--text-secondary, #555);
   margin-top: 8px;
+  border: 1px solid #e0e0e0;
+  transition: all 0.3s ease;
+}
+
+.category:hover {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
 }
 
 .date-listed {
@@ -169,24 +212,25 @@
 .back-to-top {
   position: fixed;
   bottom: 30px;
-  left: 50%; /* Center horizontally */
-  transform: translateX(-50%); /* Adjust for exact centering */
-  padding: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 15px;
   border: none;
   border-radius: 50%;
-  background: #6200ea;
+  background: var(--primary);
   color: white;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 100;
 }
 
 .back-to-top:hover {
-  background: #3700b3;
-  transform: translateX(-50%) scale(1.1); /* Maintain centering while scaling */
+  background: #6b0000;
+  transform: translateX(-50%) scale(1.1);
 }
 
 .back-to-top svg {
@@ -197,82 +241,187 @@
 .loading-spinner {
   text-align: center;
   font-size: 20px;
-  color: #6200ea;
-  margin-top: 50px;
+  color: var(--primary);
+  margin: 50px 0;
 }
 
 /* Fade-in Animation */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* Category Filter */
-.category-filter {
-  padding: 10px 15px;
-  border-radius: 25px;
-  border: 2px solid #6200ea;
-  font-size: 14px;
-  background-color: white;
-  cursor: pointer;
-  outline: none;
-  transition: all 0.3s ease-in-out;
-}
-
-.category-filter:focus {
-  border-color: #3700b3;
-  box-shadow: 0px 0px 12px rgba(98, 0, 234, 0.2);
-}
-
-/* Listing Actions */
-.listing-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 15px;
-}
-
-.edit-button,
-.delete-button {
-  padding: 8px 12px;
-  border: none;
-  border-radius: 25px;
-  font-size: 14px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  transition: all 0.3s ease;
-}
-
-.edit-button {
-  background-color: #6200ea;
-  color: white;
-}
-
-.edit-button:hover {
-  background-color: #3700b3;
-}
-
-.delete-button {
-  background-color: #ff4757;
-  color: white;
-}
-
-.delete-button:hover {
-  background-color: #ff6b81;
-}
-
-/* Loading Spinner */
-.loading-spinner {
-  text-align: center;
-  font-size: 20px;
-  color: #6200ea;
-  margin-top: 50px;
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* No Listings Message */
 .no-listings {
   text-align: center;
   font-size: 18px;
-  color: #777;
+  color: var(--text-secondary, #777);
+  padding: 40px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 500px;
+  margin: 30px auto;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .controls-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-wrapper,
+  .filter-container,
+  .sort-container {
+    width: 100%;
+  }
+  
+  .listings-container {
+    padding: 15px;
+  }
+  
+  .page-heading {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .listing-card {
+    width: 100%;
+    max-width: 320px;
+  }
+  
+  .back-to-top {
+    bottom: 20px;
+    padding: 12px;
+  }
+}
+
+/* Additional CSS for new elements in Listings page */
+
+/* Active filters display */
+.active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 auto 20px;
+  padding: 0 20px;
+  max-width: 1000px;
+}
+
+.filter-badge {
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  color: var(--text-secondary);
+}
+
+.filter-badge button {
+  background: none;
+  border: none;
+  color: var(--error, #d62828);
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 8px;
+  padding: 0 4px;
+}
+
+.filter-badge button:hover {
+  color: #ff3b3b;
+}
+
+.clear-all-button {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 6px 15px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: auto;
+}
+
+.clear-all-button:hover {
+  background-color: #eee;
+  color: var(--primary);
+}
+
+/* Create new listing button */
+.create-listing-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.create-listing-button {
+  background-color: var(--primary);
+  color: white;
+  padding: 12px 25px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(139, 0, 0, 0.2);
+}
+
+.create-listing-button:hover {
+  background-color: #6b0000;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(139, 0, 0, 0.25);
+}
+
+/* Image container with consistent height */
+.listing-image-container {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 8px;
+  margin-bottom: 5px;
+}
+
+/* New listing badge */
+.new-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--primary);
+  color: white;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 10px;
+  font-weight: bold;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Meta information at bottom of card */
+.listing-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Responsive styles for filters */
+@media (max-width: 768px) {
+  .active-filters {
+    justify-content: center
+  }
+  
+  .clear-all-button {
+    margin-left: 0;
+    margin-top: 10px;
+  }
 }

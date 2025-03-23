@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import supabase from "../supabaseClient";
 import "./Listings.css";
-import { FaArrowUp, FaTimesCircle } from "react-icons/fa";
+import { FaArrowUp, FaTimesCircle, FaSearch, FaFilter, FaSort, FaPlus } from "react-icons/fa";
 
 function Listings() {
   const [listings, setListings] = useState([]);
@@ -32,11 +32,13 @@ function Listings() {
       let { data, error } = await supabase.from("listings").select("*");
       if (error) {
         console.error("Error fetching listings:", error);
-      } else {
-        const sortedData = sortListings("newest", data);
-        setListings(sortedData);
-        setFilteredListings(sortedData);
+        setIsLoading(false);
+        return;
       }
+      
+      const sortedData = sortListings("newest", data);
+      setListings(sortedData);
+      setFilteredListings(sortedData);
       setIsLoading(false);
     };
 
@@ -53,6 +55,33 @@ function Listings() {
       authListener?.subscription?.unsubscribe();
     };
   }, [navigate]);
+
+  // Filter listings based on search query
+  useEffect(() => {
+    if (searchQuery.trim() === '') {
+      // If search query is empty, only apply category filter
+      if (selectedCategory === 'all') {
+        setFilteredListings(sortListings(sortOption, listings));
+      } else {
+        const filtered = listings.filter(item => item.category === selectedCategory);
+        setFilteredListings(sortListings(sortOption, filtered));
+      }
+    } else {
+      // Apply both search and category filters
+      const query = searchQuery.toLowerCase().trim();
+      let filtered = listings.filter(item => 
+        item.title.toLowerCase().includes(query) || 
+        item.description.toLowerCase().includes(query)
+      );
+      
+      // Apply category filter if not 'all'
+      if (selectedCategory !== 'all') {
+        filtered = filtered.filter(item => item.category === selectedCategory);
+      }
+      
+      setFilteredListings(sortListings(sortOption, filtered));
+    }
+  }, [searchQuery, selectedCategory, listings, sortOption]);
 
   // 🔄 Sorting function
   const sortListings = (option, data) => {
@@ -82,12 +111,11 @@ function Listings() {
   const handleCategoryChange = (e) => {
     const category = e.target.value;
     setSelectedCategory(category);
-    if (category === "all") {
-      setFilteredListings([...listings]);
-    } else {
-      const filtered = listings.filter((item) => item.category === category);
-      setFilteredListings(filtered);
-    }
+  };
+
+  // 🔍 Handle search query change
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
   };
 
   // 🗑 Clear all filters
@@ -96,6 +124,17 @@ function Listings() {
     setSelectedCategory("all");
     setSortOption("newest");
     setFilteredListings([...listings]);
+  };
+
+  // Format the date in a more readable format
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
+  // Check if a listing is new (less than 2 days old)
+  const isNewListing = (dateString) => {
+    return new Date(dateString) > new Date(Date.now() - 86400000 * 2);
   };
 
   if (!user) return null;
@@ -112,52 +151,103 @@ function Listings() {
             className="search-box"
             placeholder="Search listings..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={handleSearchChange}
           />
           {searchQuery && (
-            <button className="clear-filters-button" onClick={clearFilters}>
+            <button className="clear-filters-button" onClick={() => setSearchQuery("")}>
               <FaTimesCircle />
             </button>
           )}
         </div>
+        
         <div className="filter-container">
           <select id="category" value={selectedCategory} onChange={handleCategoryChange}>
             <option value="all">All Categories</option>
             <option value="Electronics">Electronics</option>
             <option value="Furniture">Furniture</option>
             <option value="Books">Books</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Services">Services</option>
+            <option value="Other">Other</option>
           </select>
         </div>
+        
         <div className="sort-container">
           <select id="sort" value={sortOption} onChange={handleSortChange}>
-            <option value="newest">Newest</option>
-            <option value="oldest">Oldest</option>
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
             <option value="lowToHigh">Price: Low to High</option>
             <option value="highToLow">Price: High to Low</option>
           </select>
         </div>
       </div>
 
+      {/* Filter badges and clear all button */}
+      {(searchQuery || selectedCategory !== "all" || sortOption !== "newest") && (
+        <div className="active-filters">
+          {searchQuery && (
+            <span className="filter-badge">
+              Search: {searchQuery}
+              <button onClick={() => setSearchQuery("")}>×</button>
+            </span>
+          )}
+          
+          {selectedCategory !== "all" && (
+            <span className="filter-badge">
+              Category: {selectedCategory}
+              <button onClick={() => setSelectedCategory("all")}>×</button>
+            </span>
+          )}
+          
+          {sortOption !== "newest" && (
+            <span className="filter-badge">
+              Sort: {sortOption.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
+              <button onClick={() => setSortOption("newest")}>×</button>
+            </span>
+          )}
+          
+          <button className="clear-all-button" onClick={clearFilters}>
+            Clear All Filters
+          </button>
+        </div>
+      )}
+
+      {/* Create new listing button */}
+      <div className="create-listing-container">
+        <Link to="/create-listing" className="create-listing-button">
+          <FaPlus /> Create New Listing
+        </Link>
+      </div>
+
       {/* 🏷 Listings Display */}
       {isLoading ? (
-        <div className="loading-spinner">Loading...</div>
+        <div className="loading-spinner">Loading listings...</div>
       ) : (
         <div className="listings-flex">
           {filteredListings.length > 0 ? (
             filteredListings.map((item) => (
               <div key={item.id} className="listing-card" onClick={() => navigate(`/listing/${item.id}`)}>
-                <img src={item.image_url} alt={item.title} className="listing-image" />
+                <div className="listing-image-container">
+                  <img src={item.image_url || '/placeholder-image.jpg'} alt={item.title} className="listing-image" />
+                  {isNewListing(item.created_at) && (
+                    <div className="new-badge">New</div>
+                  )}
+                </div>
                 <div className="listing-details">
-                  <h3>Item: {item.title}</h3>
-                  <p>Description: {item.description}</p>
-                  <span className="price">Price: R{item.price}</span>
-                  <span className="category">Category: {item.category}</span>
-                  <span className="date-listed">Date Listed: {new Date(item.created_at).toLocaleDateString()}</span>
+                  <h3>{item.title}</h3>
+                  <p>{item.description.length > 80 ? `${item.description.substring(0, 80)}...` : item.description}</p>
+                  <span className="price">R{item.price.toFixed(2)}</span>
+                  <div className="listing-meta">
+                    <span className="category">{item.category}</span>
+                    <span className="date-listed">Listed: {formatDate(item.created_at)}</span>
+                  </div>
                 </div>
               </div>
             ))
           ) : (
-            <p className="no-listings">No listings match your search.</p>
+            <p className="no-listings">
+              No listings match your search criteria. Try adjusting your filters or create a new listing!
+            </p>
           )}
         </div>
       )}
