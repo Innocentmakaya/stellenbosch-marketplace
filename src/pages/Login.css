@@ -20,6 +20,7 @@
   min-height: 100vh;
   background: linear-gradient(135deg, #f9f9f9 0%, #efefef 100%);
   padding: 20px;
+  padding-top: 90px;
   font-family: 'Segoe UI', 'Roboto', sans-serif;
 }
 

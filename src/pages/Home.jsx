@@ -1,8 +1,45 @@
 import { Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
 import "./Home.css";
-import { FaGraduationCap, FaExchangeAlt, FaShieldAlt, FaMobileAlt } from "react-icons/fa";
+import { FaGraduationCap, FaExchangeAlt, FaShieldAlt, FaMobileAlt, FaAngleDown, FaArrowRight } from "react-icons/fa";
 
 function Home() {
+  const featuresRef = useRef(null);
+  const howItWorksRef = useRef(null);
+  const testimonialsRef = useRef(null);
+  const aboutRef = useRef(null);
+  
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -100px 0px"
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, observerOptions);
+    
+    // Observe all sections
+    const sections = document.querySelectorAll('.animate-on-scroll');
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+    
+    return () => {
+      sections.forEach(section => {
+        observer.unobserve(section);
+      });
+    };
+  }, []);
+  
+  const scrollToSection = (ref) => {
+    ref.current.scrollIntoView({ behavior: 'smooth' });
+  };
+  
   return (
     <div className="home-container">
       {/* Hero Section */}
@@ -15,21 +52,34 @@ function Home() {
             <Link to="/login" className="cta-button primary">Log In</Link>
             <Link to="/signup" className="cta-button secondary">Sign Up</Link>
           </div>
+          
+          <button className="scroll-indicator" onClick={() => scrollToSection(aboutRef)}>
+            <span>Learn More</span>
+            <FaAngleDown className="bounce" />
+          </button>
         </div>
       </section>
       
       {/* About Section */}
-      <section className="about-section">
+      <section ref={aboutRef} className="about-section animate-on-scroll">
         <div className="about-content">
           <h2>What is Matie Market?</h2>
           <p>Matie Market is a dedicated online marketplace exclusively for Stellenbosch University students. 
             Buy and sell textbooks, electronics, furniture, and more with fellow students in a safe, 
             convenient platform designed specifically for the Matie community.</p>
+            
+          <button 
+            className="discover-more-btn"
+            onClick={() => scrollToSection(featuresRef)}
+          >
+            <span>Discover Features</span>
+            <FaArrowRight className="arrow-icon" />
+          </button>
         </div>
       </section>
       
       {/* Features Section */}
-      <section className="features-section">
+      <section ref={featuresRef} className="features-section animate-on-scroll">
         <h2>Why Use Matie Market?</h2>
         <div className="features-grid">
           <div className="feature-card">
@@ -67,7 +117,7 @@ function Home() {
       </section>
       
       {/* How It Works Section */}
-      <section className="how-it-works">
+      <section ref={howItWorksRef} className="how-it-works animate-on-scroll">
         <h2>How It Works</h2>
         <div className="steps-container">
           <div className="step">
@@ -97,7 +147,7 @@ function Home() {
       </section>
       
       {/* Testimonials Section */}
-      <section className="testimonials-section">
+      <section ref={testimonialsRef} className="testimonials-section animate-on-scroll">
         <h2>What Students Say</h2>
         <div className="testimonials-grid">
           <div className="testimonial">
@@ -118,7 +168,7 @@ function Home() {
       </section>
       
       {/* Final CTA Section */}
-      <section className="bottom-cta">
+      <section className="bottom-cta animate-on-scroll">
         <div className="cta-content">
           <h2>Ready to join the Matie Market community?</h2>
           <p>Start buying and selling with fellow Stellenbosch students today!</p>

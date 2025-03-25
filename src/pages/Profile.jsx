@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import supabase from "../supabaseClient";
 import "./Profile.css";
@@ -8,8 +8,8 @@ const Profile = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [error, setError] = useState("");
-  const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -31,7 +31,7 @@ const Profile = () => {
         .single();
 
       if (profileError) {
-        setError("Failed to fetch profile data.");
+        setErrorMessage("Failed to fetch profile data.");
         return;
       }
 
@@ -47,8 +47,8 @@ const Profile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setMessage("");
+    setErrorMessage("");
+    setSuccessMessage("");
     setLoading(true);
 
     try {
@@ -71,9 +71,9 @@ const Profile = () => {
 
       if (error) throw new Error(error.message);
 
-      setMessage("Profile updated successfully!");
+      setSuccessMessage("Profile updated successfully!");
     } catch (error) {
-      setError(error.message);
+      setErrorMessage(error.message);
     } finally {
       setLoading(false);
     }
@@ -82,50 +82,60 @@ const Profile = () => {
   return (
     <div className="profile-container">
       <div className="profile-card">
-        <h2>My Profile</h2>
-        {error && <p className="error-message">{error}</p>}
-        {message && <p className="success-message">{message}</p>}
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>Full Name</label>
-            <input
-              type="text"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              required
-            />
+        <div className="profile-header">
+          <div className="profile-avatar">
+            {fullName ? fullName.charAt(0).toUpperCase() : 'U'}
           </div>
-          <div className="form-group">
-            <label>Username</label>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              disabled // Email cannot be changed
-            />
-          </div>
-          <div className="form-group">
-            <label>Phone</label>
-            <input
-              type="text"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              required
-            />
-          </div>
-          <button type="submit" disabled={loading}>
-            {loading ? "Updating..." : "Update Profile"}
-          </button>
-        </form>
+          <h2>Profile</h2>
+        </div>
+        
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
+        {successMessage && <div className="success-message">{successMessage}</div>}
+        
+        <div className="form-group">
+          <label htmlFor="email">Email</label>
+          <input
+            id="email"
+            type="text"
+            value={email}
+            disabled
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="fullName">Full Name</label>
+          <input
+            id="fullName"
+            type="text"
+            value={fullName || ''}
+            onChange={(e) => setFullName(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="username">Username</label>
+          <input
+            id="username"
+            type="text"
+            value={username || ''}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="phone">Phone Number</label>
+          <input
+            id="phone"
+            type="tel"
+            value={phone || ''}
+            onChange={(e) => setPhone(e.target.value)}
+          />
+        </div>
+
+        <button
+          className="profile-submit-btn"
+          onClick={(e) => handleSubmit(e)}
+          disabled={loading}
+        >
+          <span>{loading ? 'Updating...' : 'Update Profile'}</span>
+        </button>
       </div>
     </div>
   );

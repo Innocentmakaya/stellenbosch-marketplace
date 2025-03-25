@@ -2,131 +2,245 @@
 .navbar {
   width: 100%;
   background-color: #8b0000; /* Stellenbosch maroon */
-  padding: 15px 20px;
+  background-image: linear-gradient(135deg, #8b0000 0%, #6b0000 100%);
+  padding: 1rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   position: fixed;
   top: 0;
   left: 0;
   z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.navbar.scrolled {
+  padding: 0.75rem 1.5rem;
+  background-image: linear-gradient(135deg, rgba(139, 0, 0, 0.95) 0%, rgba(107, 0, 0, 0.95) 100%);
+  backdrop-filter: blur(10px);
 }
 
 /* Logo */
 .logo {
   color: white;
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 1.75rem;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  position: relative;
+  margin: 0;
+  letter-spacing: -0.5px;
+  transition: all 0.3s ease;
+}
+
+.logo:after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background-color: #e6b800; /* Gold accent */
+  transition: width 0.3s ease;
+}
+
+.navbar:hover .logo:after {
+  width: 100%;
 }
 
 /* Navbar Links */
 .nav-links {
   display: flex;
-  gap: 20px;
+  gap: 0.25rem;
   align-items: center;
 }
 
 .nav-links .link {
   color: white;
   text-decoration: none;
-  font-size: 18px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  transition: background 0.3s ease;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-links .link:before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 3px;
+  background-color: #e6b800; /* Gold accent */
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
 }
 
 .nav-links .link:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.nav-links .link:hover:before {
+  width: 70%;
 }
 
 .nav-links .active-link {
-  background: rgba(255, 255, 255, 0.2);
-  border-bottom: 2px solid #e6b800; /* Gold accent color */
+  background: rgba(255, 255, 255, 0.15);
+  font-weight: 600;
+}
+
+.nav-links .active-link:before {
+  width: 70%;
 }
 
 /* Auth Section */
 .auth-section {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 1rem;
 }
 
 .auth-buttons {
   display: flex;
-  gap: 10px;
+  gap: 0.75rem;
 }
 
 .user-section {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 1rem;
+  position: relative;
 }
 
 .user-email {
-  color: white;
-  font-size: 16px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+  font-weight: 500;
   white-space: nowrap; /* Prevent email from wrapping */
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.user-email:hover {
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .auth-button,
 .logout-button {
-  padding: 10px 15px;
+  padding: 0.6rem 1.2rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 0.5rem;
   cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
   transition: all 0.3s ease;
   white-space: nowrap; /* Prevent text from wrapping */
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-button:before,
+.logout-button:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease-out, height 0.4s ease-out;
+  z-index: 0;
+}
+
+.auth-button:hover:before,
+.logout-button:hover:before {
+  width: 200%;
+  height: 200%;
+}
+
+.auth-button span,
+.logout-button span {
+  position: relative;
+  z-index: 1;
 }
 
 .auth-button {
   background: #e6b800; /* Gold accent */
   color: #003366; /* Dark blue */
+  box-shadow: 0 4px 6px rgba(230, 184, 0, 0.2);
 }
 
 .auth-button:hover {
-  background: #d6ad00; /* Slightly darker gold */
+  background: #ffd024; /* Slightly lighter gold */
   transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(230, 184, 0, 0.3);
 }
 
 .logout-button {
-  background: #FFA500; /* Dark blue */
+  background: rgba(255, 255, 255, 0.2);
   color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .logout-button:hover {
-  background: #002855;
+  background: rgba(255, 255, 255, 0.3);
   transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
 
 /* Mobile Menu Toggle */
 .mobile-menu-toggle {
-  display: none;
-  font-size: 24px;
+  display: none; /* Hide by default - only show on mobile */
+  font-size: 1.5rem;
   color: white;
   cursor: pointer;
-  margin-right: 20px; /* Space between hamburger and email/logout button */
+  margin-right: 1rem; /* Space between hamburger and email/logout button */
+  transition: all 0.3s ease;
+  border-radius: 0.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-menu-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: rotate(5deg);
 }
 
 /* Mobile Styles */
 @media (max-width: 768px) {
   .nav-links {
     position: fixed;
-    top: 100px; /* Increased further to prevent overlap with navbar */
+    top: 0;
     right: 0;
     flex-direction: column;
-    background-color: #8b0000; /* Stellenbosch maroon */
-    width: 60%; /* Cover only 60% of the screen */
-    height: calc(100vh - 100px); /* Adjusted height to match new top value */
+    background-color: white;
+    color: var(--text-primary);
+    width: 70%; /* Cover only 70% of the screen */
+    height: 100vh;
     align-items: flex-start; /* Align links to the left */
     justify-content: flex-start; /* Start from the top */
-    padding: 20px; /* Add padding for spacing */
+    padding: 5rem 1.5rem 2rem; /* Add padding for spacing */
     transform: translateX(100%); /* Start off-screen */
-    transition: transform 0.3s ease-in-out;
-    z-index: 999; /* Ensure it appears below the navbar */
-    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    z-index: 998; /* Ensure it appears below the navbar */
+    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15); /* Add shadow for depth */
   }
 
   .nav-links.active {
@@ -135,12 +249,28 @@
 
   .nav-links .link {
     width: 100%; /* Full width for links */
-    padding: 15px 0; /* Add padding for touch targets */
-    font-size: 18px; /* Larger font for readability */
+    padding: 1rem 0.5rem; /* Add padding for touch targets */
+    font-size: 1.1rem; /* Larger font for readability */
+    color: var(--text-primary);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  
+  .nav-links .link:hover {
+    background: rgba(139, 0, 0, 0.05);
+    color: var(--primary);
+  }
+  
+  .nav-links .active-link {
+    color: var(--primary);
+    background: rgba(139, 0, 0, 0.05);
+    border-left: 3px solid var(--primary);
+    padding-left: calc(0.5rem - 3px);
   }
 
   .mobile-menu-toggle {
-    display: block;
+    display: flex; /* Show only on mobile */
+    position: relative;
+    z-index: 999;
   }
 
   .auth-section {
@@ -149,20 +279,74 @@
 
   .user-section {
     flex-direction: column; /* Stack email and logout button vertically */
-    gap: 5px;
+    gap: 0.5rem;
+    align-items: flex-end;
   }
 
   .logout-button {
-    width: 100%; /* Full width for logout button */
-
+    width: auto; /* Auto width for logout button */
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
   }
 
   /* Ensure auth buttons stay in a single line */
   .auth-buttons {
     flex-direction: row; /* Ensure buttons are in a row */
+    margin-left: auto;
   }
 
   .auth-button {
     white-space: nowrap; /* Prevent text from wrapping */
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
   }
+  
+  /* Dimmed overlay when mobile menu is open */
+  .navbar:after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.4s ease;
+    z-index: 997;
+    pointer-events: none;
+  }
+  
+  .navbar.menu-open:after {
+    background: rgba(0, 0, 0, 0.6);
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* Add these styles for the user profile link */
+.user-profile-link {
+  text-decoration: none;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+}
+
+.user-profile-link:hover {
+  transform: translateY(-2px);
+}
+
+.user-profile-link:hover .user-email {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.user-profile-link .user-icon {
+  font-size: 1.2rem;
+  margin-right: 0.4rem;
+  transition: transform 0.3s ease;
+}
+
+.user-profile-link:hover .user-icon {
+  transform: scale(1.1);
 }

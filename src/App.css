@@ -1,15 +1,35 @@
 /* App.css */
 :root {
   --primary: #8b0000; /* Maroon - Stellenbosch primary color */
+  --primary-light: #ac1010;
+  --primary-dark: #6b0000;
   --secondary: #003366; /* Dark blue - Secondary color */
+  --secondary-light: #074980;
+  --secondary-dark: #002548;
   --accent: #e6b800; /* Gold/Yellow - Accent color */
+  --accent-light: #ffd024;
+  --accent-dark: #d6ad00;
   --light-bg: #f9f9f9;
+  --dark-bg: #1e1e1e;
   --text-primary: #333333;
   --text-secondary: #666666;
+  --text-light: #ffffff;
   --error: #d62828;
   --success: #1a936f;
+  --warning: #f8961e;
+  --info: #4361ee;
   --border: #e0e0e0;
-  --shadow: rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 6px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.15);
+  --radius-sm: 4px;
+  --radius: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+  --transition: all 0.3s ease;
 }
 
 * {
@@ -19,7 +39,7 @@
 }
 
 body {
-  font-family: 'Segoe UI', 'Roboto', sans-serif;
+  font-family: 'Inter', 'Segoe UI', 'Roboto', sans-serif;
   background-color: var(--light-bg);
   color: var(--text-primary);
   line-height: 1.6;
@@ -42,48 +62,79 @@ body {
 
 /* Common button styles */
 .btn {
-  display: inline-block;
-  padding: 10px 20px;
-  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.625rem 1.25rem;
+  border-radius: var(--radius);
   font-weight: 600;
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: var(--transition);
   cursor: pointer;
   border: none;
   font-size: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease-out, height 0.4s ease-out;
+  z-index: 0;
+}
+
+.btn:hover:before {
+  width: 200%;
+  height: 200%;
+}
+
+.btn > * {
+  position: relative;
+  z-index: 1;
 }
 
 .btn-primary {
   background: var(--primary);
   color: white;
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-primary:hover {
-  background: #6b0000;
+  background: var(--primary-light);
   transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(139, 0, 0, 0.2);
+  box-shadow: var(--shadow-md);
 }
 
 .btn-secondary {
   background: var(--secondary);
   color: white;
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-secondary:hover {
-  background: #002548;
+  background: var(--secondary-light);
   transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 51, 102, 0.2);
+  box-shadow: var(--shadow-md);
 }
 
 .btn-accent {
   background: var(--accent);
   color: var(--secondary);
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-accent:hover {
-  background: #d6ad00;
+  background: var(--accent-light);
   transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(230, 184, 0, 0.2);
+  box-shadow: var(--shadow-md);
 }
 
 .btn-outline {
@@ -95,15 +146,22 @@ body {
 .btn-outline:hover {
   background: rgba(139, 0, 0, 0.05);
   transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
 }
 
 /* Common card styles */
 .card {
   background: white;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   padding: 1.5rem;
-  box-shadow: 0 4px 15px var(--shadow);
+  box-shadow: var(--shadow);
   margin-bottom: 1.5rem;
+  transition: var(--transition);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
 }
 
 /* Form styles */
@@ -115,15 +173,17 @@ body {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 500;
+  color: var(--text-primary);
 }
 
 .form-input {
   width: 100%;
-  padding: 12px;
+  padding: 0.75rem 1rem;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius);
   font-size: 1rem;
-  transition: all 0.3s ease;
+  transition: var(--transition);
+  background-color: white;
 }
 
 .form-input:focus {
@@ -132,10 +192,14 @@ body {
   outline: none;
 }
 
-/* Utility classes */
-.text-center {
-  text-align: center;
+.form-input::placeholder {
+  color: #aaa;
 }
+
+/* Utility classes */
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-left { text-align: left; }
 
 .mt-1 { margin-top: 0.5rem; }
 .mt-2 { margin-top: 1rem; }
@@ -149,7 +213,15 @@ body {
 .mb-4 { margin-bottom: 2rem; }
 .mb-5 { margin-bottom: 2.5rem; }
 
-/* Animation */
+.py-1 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+.py-2 { padding-top: 1rem; padding-bottom: 1rem; }
+.py-3 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+
+.px-1 { padding-left: 0.5rem; padding-right: 0.5rem; }
+.px-2 { padding-left: 1rem; padding-right: 1rem; }
+.px-3 { padding-left: 1.5rem; padding-right: 1.5rem; }
+
+/* Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -161,6 +233,71 @@ body {
   }
 }
 
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
 .fade-in {
-  animation: fadeIn 0.5s ease-out;
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.fade-in-left {
+  animation: fadeInLeft 0.5s ease-out forwards;
+}
+
+.fade-in-right {
+  animation: fadeInRight 0.5s ease-out forwards;
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+/* Shimmer effect for loading states */
+.shimmer {
+  background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0.1) 25%, 
+    rgba(255, 255, 255, 0.2) 50%, 
+    rgba(255, 255, 255, 0.1) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
 }

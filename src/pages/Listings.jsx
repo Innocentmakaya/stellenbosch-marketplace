@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import supabase from "../supabaseClient";
 import "./Listings.css";
-import { FaArrowUp, FaTimesCircle, FaSearch, FaFilter, FaSort, FaPlus } from "react-icons/fa";
+import { FaArrowUp, FaTimesCircle, FaSearch, FaFilter, FaSort, FaPlus, FaCalendarAlt, FaArrowRight } from "react-icons/fa";
 
 function Listings() {
   const [listings, setListings] = useState([]);
@@ -146,6 +146,7 @@ function Listings() {
       {/* 🔍 Search Bar, Filters, and Sorting */}
       <div className="controls-bar">
         <div className="search-wrapper">
+          <FaSearch className="search-icon" />
           <input
             type="text"
             className="search-box"
@@ -201,12 +202,14 @@ function Listings() {
           
           {sortOption !== "newest" && (
             <span className="filter-badge">
-              Sort: {sortOption.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
+              Sort: {sortOption === "lowToHigh" ? "Price (Low to High)" : 
+                     sortOption === "highToLow" ? "Price (High to Low)" : 
+                     "Oldest First"}
               <button onClick={() => setSortOption("newest")}>×</button>
             </span>
           )}
           
-          <button className="clear-all-button" onClick={clearFilters}>
+          <button className="clear-all-filters" onClick={clearFilters}>
             Clear All Filters
           </button>
         </div>
@@ -219,36 +222,56 @@ function Listings() {
         </Link>
       </div>
 
-      {/* 🏷 Listings Display */}
+      {/* Loading state */}
       {isLoading ? (
-        <div className="loading-spinner">Loading listings...</div>
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
+          <p className="loading-text">Loading listings...</p>
+        </div>
+      ) : filteredListings.length === 0 ? (
+        // No results
+        <div className="no-results">
+          <h3>No listings found</h3>
+          <p>Try adjusting your search or filters to find what you're looking for.</p>
+          <button className="btn btn-primary" onClick={clearFilters}>Reset All Filters</button>
+        </div>
       ) : (
-        <div className="listings-flex">
-          {filteredListings.length > 0 ? (
-            filteredListings.map((item) => (
-              <div key={item.id} className="listing-card" onClick={() => navigate(`/listing/${item.id}`)}>
-                <div className="listing-image-container">
-                  <img src={item.image_url || '/placeholder-image.jpg'} alt={item.title} className="listing-image" />
-                  {isNewListing(item.created_at) && (
-                    <div className="new-badge">New</div>
-                  )}
-                </div>
-                <div className="listing-details">
-                  <h3>{item.title}</h3>
-                  <p>{item.description.length > 80 ? `${item.description.substring(0, 80)}...` : item.description}</p>
-                  <span className="price">R{item.price.toFixed(2)}</span>
-                  <div className="listing-meta">
-                    <span className="category">{item.category}</span>
-                    <span className="date-listed">Listed: {formatDate(item.created_at)}</span>
+        // Listings grid
+        <div className="listings-grid">
+          {filteredListings.map((item, index) => (
+            <div 
+              key={item.id}
+              className="listing-card"
+              style={{"--card-index": index % 10 + 1}}
+            >
+              {isNewListing(item.created_at) && <div className="new-badge">NEW</div>}
+              
+              <div className="item-image-container">
+                <img 
+                  src={item.image_url || 'https://via.placeholder.com/300x200?text=No+Image'} 
+                  alt={item.title}
+                  className="item-image"
+                />
+              </div>
+              
+              <div className="listing-details">
+                <span className="item-category">{item.category}</span>
+                <h3 className="item-title">{item.title}</h3>
+                <div className="item-price">R{item.price.toFixed(2)}</div>
+                <p className="item-description">{item.description}</p>
+                
+                <div className="item-meta">
+                  <div className="item-date">
+                    <FaCalendarAlt /> {formatDate(item.created_at)}
                   </div>
+                  
+                  <Link to={`/listing/${item.id}`} className="view-details">
+                    View Details <FaArrowRight className="view-details-arrow" />
+                  </Link>
                 </div>
               </div>
-            ))
-          ) : (
-            <p className="no-listings">
-              No listings match your search criteria. Try adjusting your filters or create a new listing!
-            </p>
-          )}
+            </div>
+          ))}
         </div>
       )}
 

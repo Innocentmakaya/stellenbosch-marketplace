@@ -1,63 +1,182 @@
+/* SellItem.css */
 .sell-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f5f5f5;
+  padding: 20px;
+  max-width: 800px;
+  margin: 100px auto 0;
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
 }
 
 .sell-card {
-  width: 400px;
   background: white;
-  padding: 20px;
   border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-align: center;
+  border: 2px solid transparent;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.sell-card:hover {
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+  border-color: var(--primary, #8B0000);
 }
 
 .sell-card h2 {
-  margin-bottom: 15px;
+  text-align: center;
+  font-size: 2rem;
+  color: var(--primary, #8B0000);
+  margin-bottom: 2rem;
+  position: relative;
+  display: inline-block;
+}
+
+.sell-card h2:after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: var(--primary, #8B0000);
+  margin: 15px auto 0;
+  border-radius: 2px;
 }
 
 .sell-card form {
   display: flex;
   flex-direction: column;
+  gap: 15px;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .sell-card input,
-.sell-card textarea {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-
-.sell-card textarea {
-  height: 80px;
-  resize: none;
-}
-
+.sell-card textarea,
 .sell-card select {
+  padding: 12px 15px;
+  border-radius: 25px;
+  border: 2px solid #ddd;
+  font-size: 16px;
+  outline: none;
   width: 100%;
+  transition: all 0.3s ease-in-out;
+}
+
+.sell-card input:focus,
+.sell-card textarea:focus,
+.sell-card select:focus {
+  border-color: var(--primary, #8B0000);
+  box-shadow: 0px 0px 12px rgba(139, 0, 0, 0.2);
+}
+
+.sell-card textarea {
+  height: 120px;
+  resize: none;
+  border-radius: 15px;
+}
+
+.sell-card input[type="file"] {
   padding: 10px;
-  margin: 8px 0;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: white;
+  border: 2px dashed #ddd;
+  background-color: #f8f8f8;
+  cursor: pointer;
+}
+
+.sell-card input[type="file"]:hover {
+  border-color: var(--primary, #8B0000);
+  background-color: #f0f0f0;
 }
 
 .sell-card button {
-  background: #6200ea; /* Updated button color */
+  background-color: var(--primary, #8B0000);
   color: white;
-  padding: 10px;
+  padding: 12px 25px;
+  border-radius: 50px;
   border: none;
-  border-radius: 5px;
+  font-weight: 600;
+  font-size: 16px;
   cursor: pointer;
+  transition: all 0.3s ease;
   margin-top: 10px;
-  transition: background-color 0.3s ease; /* Smooth transition */
+  box-shadow: 0 4px 10px rgba(139, 0, 0, 0.2);
 }
 
 .sell-card button:hover {
-  background: #3700b3; /* Updated hover color */
+  background-color: #6b0000;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(139, 0, 0, 0.25);
+}
+
+/* Image preview section */
+.image-preview {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.image-preview img {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Form field labels */
+.form-group {
+  text-align: left;
+  margin-bottom: 5px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #555;
+  font-size: 14px;
+}
+
+/* Error message styling */
+.error-message {
+  color: #d62828;
+  font-size: 14px;
+  margin-top: 5px;
+  text-align: left;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .sell-container {
+    padding: 15px;
+    margin-top: 80px;
+  }
+  
+  .sell-card {
+    padding: 20px;
+  }
+  
+  .sell-card h2 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sell-card {
+    padding: 15px;
+  }
+  
+  .sell-card input,
+  .sell-card textarea,
+  .sell-card select {
+    padding: 10px;
+    font-size: 14px;
+  }
+  
+  .sell-card button {
+    padding: 10px 20px;
+  }
 }

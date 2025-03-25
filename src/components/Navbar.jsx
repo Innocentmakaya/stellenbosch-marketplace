@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import supabase from "../supabaseClient";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaUserCircle } from "react-icons/fa";
 import "./Navbar.css";
 
 function Navbar() {
   const [user, setUser] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   
   useEffect(() => {
     const getUser = async () => {
@@ -21,28 +23,49 @@ function Navbar() {
       setUser(session?.user || null);
     });
     
+    // Add scroll event listener
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    
     return () => {
       authListener?.subscription?.unsubscribe();
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
   
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setUser(null);
+    navigate('/'); // Redirect to the home page instead of login page
   };
   
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+    // Toggle body scroll when menu is open
+    document.body.style.overflow = !isMobileMenuOpen ? 'hidden' : '';
   };
+  
+  // Close mobile menu when location changes
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      setIsMobileMenuOpen(false);
+      document.body.style.overflow = '';
+    }
+  }, [location]);
   
   // Hide hamburger menu on login, signup, and home pages
   const isAuthPage = location.pathname === "/login" || location.pathname === "/signup";
   const isHomePage = location.pathname === "/";
   
   return (
-    <nav className="navbar">
+    <nav className={`navbar ${isScrolled ? 'scrolled' : ''} ${isMobileMenuOpen ? 'menu-open' : ''}`}>
       {/* Logo */}
-      <h1 className="logo">Matie Market</h1>
+      <Link to="/" className="logo-link">
+        <h1 className="logo">Matie Market</h1>
+      </Link>
       
       {/* Mobile Menu Toggle (Hidden on auth and home pages) */}
       {!isAuthPage && !isHomePage && (
@@ -60,28 +83,28 @@ function Navbar() {
               className={location.pathname === "/listings" ? "link active-link" : "link"}
               onClick={toggleMobileMenu}
             >
-              Browse Listings
+              <span>Browse Listings</span>
             </Link>
             <Link
               to="/my-listings"
               className={location.pathname === "/my-listings" ? "link active-link" : "link"}
               onClick={toggleMobileMenu}
             >
-              My Listings
+              <span>My Listings</span>
             </Link>
             <Link
               to="/sell"
               className={location.pathname === "/sell" ? "link active-link" : "link"}
               onClick={toggleMobileMenu}
             >
-              Sell Item
+              <span>Sell Item</span>
             </Link>
             <Link
               to="/profile"
               className={location.pathname === "/profile" ? "link active-link" : "link"}
               onClick={toggleMobileMenu}
             >
-              Profile
+              <span>Profile</span>
             </Link>
           </>
         )}
@@ -91,19 +114,27 @@ function Navbar() {
       <div className="auth-section">
         {user ? (
           <div className="user-section">
-            <span className="user-email">{user.email}</span>
+            <Link to="/profile" className="user-profile-link">
+              <span className="user-email">
+                <FaUserCircle className="user-icon" /> {user.email && user.email.split('@')[0]}
+              </span>
+            </Link>
             <button onClick={handleLogout} className="logout-button">
-              Logout
+              <span>Logout</span>
             </button>
           </div>
         ) : (
           !isAuthPage && ( // Hide auth buttons on login/signup pages
             <div className="auth-buttons">
               <Link to="/login">
-                <button className="auth-button">Login</button>
+                <button className="auth-button">
+                  <span>Login</span>
+                </button>
               </Link>
               <Link to="/signup">
-                <button className="auth-button">Sign Up</button>
+                <button className="auth-button">
+                  <span>Sign Up</span>
+                </button>
               </Link>
             </div>
           )

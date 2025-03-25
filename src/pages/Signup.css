@@ -1,59 +1,198 @@
+/* Signup.css */
+/* Stellenbosch University colors */
+:root {
+  --primary: #8b0000; /* Maroon - Stellenbosch primary color */
+  --secondary: #003366; /* Dark blue - Secondary color */
+  --accent: #e6b800; /* Gold/Yellow - Accent color */
+  --light-bg: #f9f9f9;
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --error: #d62828;
+  --success: #1a936f;
+  --border: #e0e0e0;
+  --shadow: rgba(0, 0, 0, 0.1);
+}
+
 .signup-container {
-  max-width: 400px;
-  margin: 100px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f9f9f9 0%, #efefef 100%);
   padding: 20px;
+  padding-top: 90px; /* Added padding for navbar */
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.signup-form-container {
+  display: flex;
+  flex-direction: column;
   background: white;
-  border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 8px 30px var(--shadow);
+  width: 100%;
+  max-width: 480px;
+  overflow: hidden;
+}
+
+.signup-banner {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color: white;
+  padding: 2rem;
   text-align: center;
 }
 
-.signup-container h2 {
-  color: #6200ea;
-  margin-bottom: 20px;
-}
-
-.signup-container form {
+.signup-logo {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  width: 100%;
+  justify-content: center;
+  margin-bottom: 1rem;
 }
 
-.signup-container input, 
+.university-icon {
+  font-size: 2rem;
+  margin-right: 10px;
+}
+
+.signup-banner h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.signup-tagline {
+  opacity: 0.9;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+}
+
+.signup-form-box {
+  padding: 2.5rem;
+}
+
+.signup-form-box h2 {
+  color: var(--text-primary);
+  margin: 0 0 0.5rem 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.signup-subtitle {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  font-size: 1rem;
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.input-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+.signup-container input,
 .signup-container select {
   width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  box-sizing: border-box;
+  padding: 14px 14px 14px 50px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: #f9f9f9;
 }
 
-.signup-container button {
+.signup-container input:focus,
+.signup-container select:focus {
+  border-color: var(--primary);
+  background-color: white;
+  box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.1);
+  outline: none;
+}
+
+.signup-container select {
+  appearance: none; /* Remove default arrow */
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23666%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem top 50%;
+  background-size: 0.65rem auto;
+  padding-right: 2.5rem !important;
+}
+
+.signup-button {
   width: 100%;
-  background: #6200ea;
+  padding: 14px;
+  background: var(--primary);
   color: white;
-  padding: 12px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
   cursor: pointer;
-  font-size: 16px;
-  margin-top: 10px;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.signup-container button:hover {
-  background: #4500b0;
+.signup-button:hover {
+  background: #6b0000; /* Darker shade of maroon */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(139, 0, 0, 0.2);
 }
 
-.signup-container button:disabled {
-  background: #ccc;
+.signup-button:active {
+  transform: translateY(1px);
+}
+
+.signup-button:disabled {
+  background: #a53f3f; /* Lighter shade when loading */
   cursor: not-allowed;
 }
 
-.error {
-  color: red;
-  margin-bottom: 10px;
+.signup-footer {
+  text-align: center;
+  margin-top: 2rem;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.login-link {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}
+
+.error-message {
+  background-color: rgba(214, 40, 40, 0.1);
+  color: var(--error);
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  border-left: 4px solid var(--error);
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .signup-form-box {
+    padding: 1.8rem;
+  }
+  
+  .signup-banner {
+    padding: 1.5rem;
+  }
+  
+  .signup-banner h1 {
+    font-size: 1.8rem;
+  }
 }

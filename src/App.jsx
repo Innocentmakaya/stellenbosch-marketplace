@@ -32,24 +32,25 @@ function App() {
 
   return (
     <Router>
-      <Navbar />
-      <div style={{ padding: "20px", maxWidth: "1200px", margin: "auto" }}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/listings" element={<Listings />} />
-          <Route path="/sell" element={<SellItem />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/my-listings" element={<MyListings />} />
-          <Route path="/edit-listing/:id" element={<EditListing />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/update-password" element={<UpdatePassword />} />
-          <Route path="/listing/:id" element={<ListingDetails />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/payment-success" element={<PaymentSuccess />} />
-          <Route path="/payment-cancel" element={<PaymentCancel />} />
-
-        </Routes>
+      <div className="app-container">
+        <Navbar />
+        <div className="page-container">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/listings" element={<Listings />} />
+            <Route path="/sell" element={<SellItem />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/my-listings" element={<MyListings />} />
+            <Route path="/edit-listing/:id" element={<EditListing />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/update-password" element={<UpdatePassword />} />
+            <Route path="/listing/:id" element={<ListingDetails />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/payment-success" element={<PaymentSuccess />} />
+            <Route path="/payment-cancel" element={<PaymentCancel />} />
+          </Routes>
+        </div>
       </div>
     </Router>
   );
