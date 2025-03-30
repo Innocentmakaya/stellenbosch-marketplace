@@ -16,7 +16,7 @@ import UpdatePassword from "./pages/UpdatePassword";
 import Profile from "./pages/Profile";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentCancel from "./pages/PaymentCancel";
-
+import Chat from "./pages/Chat";
 
 function App() {
   useEffect(() => {
@@ -49,6 +49,8 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/payment-success" element={<PaymentSuccess />} />
             <Route path="/payment-cancel" element={<PaymentCancel />} />
+            <Route path="/chat" element={<Chat />} />
+            <Route path="/chat/:chatId" element={<Chat />} />
           </Routes>
         </div>
       </div>

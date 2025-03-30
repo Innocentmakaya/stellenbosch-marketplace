@@ -99,12 +99,56 @@
   transition: all 0.3s ease;
   margin-top: 10px;
   box-shadow: 0 4px 10px rgba(139, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .sell-card button:hover {
   background-color: #6b0000;
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(139, 0, 0, 0.25);
+}
+
+.sell-card button:disabled {
+  background-color: #b85959;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Submit button spinner */
+.spinner-icon {
+  animation: spin 1s linear infinite;
+  font-size: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Loading button style */
+.submit-button.loading {
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-button.loading::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(to right, rgba(255,255,255,0.5), rgba(255,255,255,0.8), rgba(255,255,255,0.5));
+  animation: loading-bar 1.5s ease-in-out infinite;
+}
+
+@keyframes loading-bar {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 /* Image preview section */
@@ -178,5 +222,142 @@
   
   .sell-card button {
     padding: 10px 20px;
+  }
+}
+
+/* Add styles for multi-image upload feature */
+
+.image-upload-section {
+  margin-bottom: 1.5rem;
+}
+
+.image-upload-section h3 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary);
+}
+
+.image-upload-hint {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.image-upload-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.image-upload-item {
+  position: relative;
+}
+
+.image-upload-box {
+  height: 120px;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.image-upload-box:hover {
+  border-color: var(--primary);
+  background-color: rgba(139, 0, 0, 0.05);
+}
+
+.image-upload-box.has-image {
+  border-style: solid;
+  border-color: var(--primary);
+}
+
+.upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: #999;
+}
+
+.upload-placeholder svg {
+  font-size: 1.5rem;
+}
+
+.upload-placeholder span {
+  font-size: 0.8rem;
+}
+
+.image-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.remove-image-btn {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 5;
+}
+
+.remove-image-btn:hover {
+  background-color: rgba(220, 53, 69, 0.8);
+  transform: scale(1.1);
+}
+
+/* Spinner animation for the submit button */
+.spinner-icon {
+  animation: spin 1s linear infinite;
+  margin-right: 0.5rem;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .image-upload-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .image-upload-item:last-child {
+    grid-column: span 2;
+    width: 50%;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .image-upload-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .image-upload-item:last-child {
+    grid-column: auto;
+    width: 100%;
   }
 }

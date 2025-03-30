@@ -16,7 +16,7 @@ const PayFastTest = ({ amount, itemName }) => {
   const encodedItemName = encodeURIComponent(itemName);
 
   return (
-    <form action={sandboxUrl} method="post">
+    <form action={sandboxUrl} method="post" className="payfast-form">
       {/* PayFast Required Fields */}
       <input type="hidden" name="merchant_id" value={merchantId} />
       <input type="hidden" name="merchant_key" value={merchantKey} />
@@ -33,23 +33,29 @@ const PayFastTest = ({ amount, itemName }) => {
 
       {/* Payment Button */}
       <button type="submit" style={styles.button}>
-        Proceed to Payment
+        Proceed to Payment - R{formattedAmount}
       </button>
     </form>
   );
 };
 
-// Simple button styling (optional)
+// Maroon theme button styling
 const styles = {
   button: {
-    padding: "12px 20px",
+    padding: "14px 24px",
     border: "none",
     borderRadius: "8px",
-    backgroundColor: "#28a745",
+    backgroundColor: "#8b0000", // Stellenbosch Maroon
     color: "white",
     fontSize: "16px",
+    fontWeight: "600",
     cursor: "pointer",
-    transition: "0.2s",
+    transition: "all 0.3s ease",
+    boxShadow: "0 4px 8px rgba(139, 0, 0, 0.3)",
+    width: "100%",
+    maxWidth: "300px",
+    display: "block",
+    margin: "0 auto",
   },
 };
 
