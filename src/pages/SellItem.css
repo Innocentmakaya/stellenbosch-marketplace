@@ -1,9 +1,10 @@
 /* SellItem.css */
 .sell-container {
   padding: 20px;
-  max-width: 800px;
+  max-width: 1000px;
   margin: 100px auto 0;
   font-family: 'Segoe UI', 'Roboto', sans-serif;
+  width: 100%;
 }
 
 .sell-card {
@@ -193,10 +194,18 @@
 }
 
 /* Responsive design */
+@media (max-width: 1200px) {
+  .sell-container {
+    max-width: 800px;
+    padding: 20px;
+  }
+}
+
 @media (max-width: 768px) {
   .sell-container {
     padding: 15px;
     margin-top: 80px;
+    max-width: 100%;
   }
   
   .sell-card {
@@ -338,7 +347,7 @@
   }
 }
 
-/* Responsive adjustments */
+/* Image upload container responsive adjustments */
 @media (max-width: 768px) {
   .image-upload-container {
     grid-template-columns: repeat(2, 1fr);

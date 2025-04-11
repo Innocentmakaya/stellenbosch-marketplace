@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import supabase from "../supabaseClient";
 import "./ListingDetails.css";
-import { FaWhatsapp, FaPhone, FaComment, FaTag, FaInfoCircle, FaSearch, FaMoneyBillWave, FaHandshake, FaCalendarAlt, FaArrowRight, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { FaWhatsapp, FaPhone, FaComment, FaTag, FaInfoCircle, FaSearch, FaMoneyBillWave, FaHandshake, FaCalendarAlt, FaArrowRight, FaChevronLeft, FaChevronRight, FaMapMarkerAlt } from "react-icons/fa";
 import PayFastTest from "./PayFastTest";  // Import the PayFastTest component
+import LocationShare from "../components/LocationShare";
 
 const ListingDetails = () => {
   const { id } = useParams();
@@ -16,6 +17,7 @@ const ListingDetails = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [allImages, setAllImages] = useState([]);
   const [user, setUser] = useState(null);
+  const [showLocationShare, setShowLocationShare] = useState(false);
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -173,22 +175,181 @@ const ListingDetails = () => {
   };
 
   // Function to handle starting a chat
-  const handleStartChat = () => {
+  const handleStartChat = async () => {
+    // Check if user is logged in
     if (!user) {
-      // If user is not logged in, redirect to login page
+      navigate('/login', { state: { from: `/listings/${id}` } });
+      return;
+    }
+    
+    // // Check if user is trying to chat with themselves (commented out for testing)
+    // if (user.id === listing.user_id) {
+    //   alert("You cannot chat with yourself about your own listing");
+    //   return;
+    // }
+
+    try {
+      console.log("Starting chat process...");
+      console.log("Current user:", user.id);
+      console.log("Listing seller:", listing.user_id);
+      console.log("Listing ID:", listing.id);
+      
+      // Check if a chat already exists between these users for this listing
+      const { data: existingChats, error: searchError } = await supabase
+        .from('chats')
+        .select('id')
+        .eq('listing_id', listing.id)
+        .eq('buyer_id', user.id)
+        .eq('seller_id', listing.user_id);
+      
+      if (searchError) {
+        console.error("Error checking for existing chat:", searchError);
+        throw searchError;
+      }
+      
+      console.log("Existing chats:", existingChats);
+      
+      let chatId;
+      
+      if (existingChats && existingChats.length > 0) {
+        // Chat exists, use the existing chat
+        chatId = existingChats[0].id;
+        console.log("Using existing chat:", chatId);
+      } else {
+        // Create a new chat
+        console.log("Creating new chat...");
+        const { data: newChat, error: createError } = await supabase
+          .from('chats')
+          .insert({
+            listing_id: listing.id,
+            buyer_id: user.id,
+            seller_id: listing.user_id,
+            last_message: `Chat about: ${listing.title}`,
+            last_message_time: new Date().toISOString()
+          })
+          .select();
+          
+        if (createError) {
+          console.error("Error creating new chat:", createError);
+          throw createError;
+        }
+        
+        console.log("New chat created:", newChat);
+        chatId = newChat[0].id;
+      }
+      
+      // Create initial message
+      console.log("Creating initial message...");
+      const { error: messageError } = await supabase
+        .from('messages')
+        .insert({
+          chat_id: chatId,
+          sender_id: user.id,
+          message: `Hi! I'm interested in ${listing.title}`,
+          read: false
+        });
+        
+      if (messageError) {
+        console.error("Error creating initial message:", messageError);
+        // Continue anyway - we don't want to block navigation just because the message failed
+      }
+      
+      // Navigate to the chat page with the chat ID
+      console.log("Navigating to chat:", chatId);
+      navigate(`/chat/${chatId}`);
+    } catch (error) {
+      console.error("Error starting chat:", error);
+      alert("Failed to start chat. Please try again later.");
+    }
+  };
+
+  // Function to handle sending a location in a new chat
+  const handleShareLocation = async (locationData) => {
+    // First check if user is logged in
+    if (!user) {
       navigate('/login', { state: { from: `/listing/${id}` } });
       return;
     }
     
-    // Check if user is trying to chat with themselves
-    if (user.id === listing.user_id) {
-      alert("You cannot chat with yourself about your own listing");
-      return;
+    try {
+      // Check if a chat already exists
+      const { data: existingChats, error: chatError } = await supabase
+        .from('chats')
+        .select('id')
+        .eq('listing_id', id)
+        .eq('buyer_id', user.id)
+        .limit(1);
+      
+      if (chatError) {
+        console.error("Error checking existing chats:", chatError);
+        alert("Failed to check for existing conversations. Please try again.");
+        return;
+      }
+      
+      let chatId;
+      
+      // If chat exists, use it
+      if (existingChats && existingChats.length > 0) {
+        chatId = existingChats[0].id;
+      } else {
+        // Create a new chat
+        const { data: newChat, error: createError } = await supabase
+          .from('chats')
+          .insert({
+            listing_id: id,
+            buyer_id: user.id,
+            seller_id: listing.user_id,
+            last_message: "Started a conversation",
+            last_message_time: new Date().toISOString()
+          })
+          .select('id');
+        
+        if (createError) {
+          console.error("Error creating chat:", createError);
+          alert("Failed to create conversation. Please try again.");
+          return;
+        }
+        
+        chatId = newChat[0].id;
+      }
+      
+      // Format location message
+      const locationMessage = JSON.stringify({
+        type: 'location',
+        data: locationData
+      });
+      
+      // Send the location as a message
+      const { error: messageError } = await supabase
+        .from('messages')
+        .insert({
+          chat_id: chatId,
+          sender_id: user.id,
+          message: locationMessage,
+          read: false
+        });
+      
+      if (messageError) {
+        console.error("Error sending location message:", messageError);
+        // We can still navigate to the chat even if the message failed
+      }
+      
+      // Update last message in chat
+      await supabase
+        .from('chats')
+        .update({
+          last_message: "Shared a location",
+          last_message_time: new Date().toISOString()
+        })
+        .eq('id', chatId);
+      
+      // Navigate to the chat
+      navigate(`/chat/${chatId}`);
+      
+    } catch (error) {
+      console.error("Error sharing location:", error);
+      alert("Failed to share location. Please try again.");
     }
-
-    // For now, just navigate to the chat page
-    // In the future, this would create a new chat if one doesn't exist
-    navigate('/chat');
   };
 
   if (loading) {
@@ -300,49 +461,112 @@ const ListingDetails = () => {
                   className={`tab-button ${activeTab === 'contact' ? 'active' : ''}`}
                   onClick={() => setActiveTab('contact')}
                 >
-                  <FaHandshake /> Contact Seller
+                  <FaHandshake /> Connect
                 </button>
                 <button 
                   className={`tab-button ${activeTab === 'payment' ? 'active' : ''}`}
                   onClick={() => setActiveTab('payment')}
                 >
-                  <FaMoneyBillWave /> Payment
+                  <FaMoneyBillWave /> Exchange
                 </button>
               </div>
               
               <div className="tab-content">
                 {activeTab === 'contact' ? (
                   <div className="contact-options">
+                    <div className="contact-message">
+                      <p className="contact-tagline">Chat directly with the seller or use other contact methods</p>
+                    </div>
                     <div className="contact-buttons">
-                      <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="contact-button whatsapp">
-                        <FaWhatsapp /> <span>WhatsApp</span>
-                      </a>
-                      <a href={callLink} className="contact-button call">
-                        <FaPhone /> <span>Call</span>
-                      </a>
-                      <button className="contact-button chat" onClick={handleStartChat}>
-                        <FaComment /> <span>In-App Chat</span>
+                      <button className="contact-button chat primary-option" onClick={handleStartChat}>
+                        <FaComment className="contact-icon" /> 
+                        <div className="contact-button-content">
+                          <span className="contact-button-title">In-App Chat</span>
+                          <span className="contact-button-desc">Chat securely within the app</span>
+                        </div>
                       </button>
+                      
+                      <div className="alternative-contacts">
+                        <p className="alternative-heading">Alternative Contact Methods</p>
+                        <div className="alternative-buttons">
+                          <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="contact-button whatsapp">
+                            <FaWhatsapp /> <span>WhatsApp</span>
+                          </a>
+                          <a href={callLink} className="contact-button call">
+                            <FaPhone /> <span>Call</span>
+                          </a>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 ) : (
                   <div className="payment-options-container">
-                    <div className="payment-options">
-                      <label className="payment-label selected" htmlFor="card-payment">
-                        <input 
-                          type="radio" 
-                          id="card-payment" 
-                          name="payment" 
-                          value="card" 
-                          checked={true}
-                          readOnly
-                          required 
-                        /> 
-                        <span className="payment-text">Credit/Debit Card</span>
-                      </label>
+                    <div className="payment-header">
+                      <h3 className="payment-title">
+                        <span className="emphasis">Safe Exchange </span> 
+                        <span className="normal">Recommendations</span>
+                      </h3>
                     </div>
-                    <div className="payment-button-container">
-                      <PayFastTest amount={listing.price} itemName={listing.title} />
+                    
+                    <div className="exchange-options">
+                      <div className="exchange-option">
+                        <div className="option-header">
+                          <div className="option-number">1</div>
+                          <h4>Arrange Meeting</h4>
+                        </div>
+                        <p>Use the in-app chat to arrange a meeting in a safe, public location on campus</p>
+                        <div className="option-buttons">
+                          <button 
+                            className="action-button chat-action" 
+                            onClick={handleStartChat}
+                          >
+                            <FaComment /> Start Chat
+                          </button>
+                          <button 
+                            className="action-button location-action" 
+                            onClick={() => setShowLocationShare(true)}
+                          >
+                            <FaMapMarkerAlt /> Share Meeting Location
+                          </button>
+                        </div>
+                      </div>
+                      
+                      <div className="exchange-option">
+                        <div className="option-header">
+                          <div className="option-number">2</div>
+                          <h4>Inspect Item</h4>
+                        </div>
+                        <p>Always examine the item carefully before making any payment</p>
+                      </div>
+                      
+                      <div className="exchange-option">
+                        <div className="option-header">
+                          <div className="option-number">3</div>
+                          <h4>Payment Methods</h4>
+                        </div>
+                        <p>Recommended payment options:</p>
+                        <div className="payment-methods">
+                          <div className="payment-method">
+                            <FaMoneyBillWave className="method-icon cash" />
+                            <span>Cash</span>
+                          </div>
+                          <div className="payment-method">
+                            <img src="/snapscan-icon.png" alt="SnapScan" className="method-icon snapscan" onError={(e) => e.target.src = 'https://www.snapscan.co.za/images/logo/icon.svg'} />
+                            <span>SnapScan</span>
+                          </div>
+                          <div className="payment-method">
+                            <svg className="method-icon eft" viewBox="0 0 24 24">
+                              <path fill="currentColor" d="M4,8H8V4H20V16H16V20H4V8M16,8V14H18V6H10V8H16M6,12V18H14V12H6Z" />
+                            </svg>
+                            <span>EFT</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="safety-notice">
+                        <FaInfoCircle className="safety-icon" />
+                        <p>For your safety, all transactions should be completed in person. Never send money in advance.</p>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -399,6 +623,17 @@ const ListingDetails = () => {
           </div>
         )}
       </div>
+
+      {/* Location Share Modal */}
+      {showLocationShare && (
+        <>
+          <div className="location-share-overlay" onClick={() => setShowLocationShare(false)} />
+          <LocationShare 
+            onSelectLocation={handleShareLocation}
+            onClose={() => setShowLocationShare(false)}
+          />
+        </>
+      )}
     </div>
   );
 };

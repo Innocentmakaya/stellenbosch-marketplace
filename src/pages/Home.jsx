@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import "./Home.css";
-import { FaGraduationCap, FaExchangeAlt, FaShieldAlt, FaMobileAlt, FaAngleDown, FaArrowRight } from "react-icons/fa";
+import { FaGraduationCap, FaExchangeAlt, FaShieldAlt, FaMobileAlt, FaAngleDown, FaArrowRight, FaCar } from "react-icons/fa";
 
 function Home() {
   const featuresRef = useRef(null);
@@ -66,7 +66,8 @@ function Home() {
           <h2>What is Matie Market?</h2>
           <p>Matie Market is a dedicated online marketplace exclusively for Stellenbosch University students. 
             Buy and sell textbooks, electronics, furniture, and more with fellow students in a safe, 
-            convenient platform designed specifically for the Matie community.</p>
+            convenient platform designed specifically for the Matie community. Now with our new ride sharing feature, 
+            you can also find or offer rides to share travel costs and reduce your carbon footprint!</p>
             
           <button 
             className="discover-more-btn"
@@ -113,6 +114,14 @@ function Home() {
             <h3>Mobile Friendly</h3>
             <p>Access Matie Market anywhere on campus from any device</p>
           </div>
+
+          <div className="feature-card highlight-card">
+            <div className="feature-icon">
+              <FaCar />
+            </div>
+            <h3>Share Rides</h3>
+            <p>Find or offer rides with fellow students to save money and reduce carbon emissions</p>
+          </div>
         </div>
       </section>
       
@@ -129,7 +138,7 @@ function Home() {
           <div className="step">
             <div className="step-number">2</div>
             <h3>Browse Listings</h3>
-            <p>Find what you need or list items you want to sell</p>
+            <p>Find what you need, list items you want to sell, or share/book rides</p>
           </div>
           
           <div className="step">
@@ -161,7 +170,7 @@ function Home() {
           </div>
           
           <div className="testimonial">
-            <p className="quote">"As an international student, Matie Market made it so easy to get settled with everything I needed for my apartment."</p>
+            <p className="quote">"The ride sharing feature saved me so much on transportation costs when going home for the holidays!"</p>
             <p className="student">- Arts & Social Sciences Student, 1st Year</p>
           </div>
         </div>
@@ -171,7 +180,7 @@ function Home() {
       <section className="bottom-cta animate-on-scroll">
         <div className="cta-content">
           <h2>Ready to join the Matie Market community?</h2>
-          <p>Start buying and selling with fellow Stellenbosch students today!</p>
+          <p>Start buying, selling, and sharing rides with fellow Stellenbosch students today!</p>
           <div className="cta-buttons">
             <Link to="/signup" className="cta-button primary">Create Account</Link>
             <Link to="/login" className="cta-button secondary">Log In</Link>

@@ -1,0 +1,210 @@
+.ride-card {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  padding: 18px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: var(--text-primary, #333);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #f0f0f0;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.ride-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  border-color: var(--primary, #8B0000);
+}
+
+.ride-card-badge {
+  position: absolute;
+  top: 15px;
+  right: 0;
+  background-color: var(--primary, #8B0000);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  box-shadow: 0 2px 4px rgba(139, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.ride-card-header {
+  margin-bottom: 15px;
+  padding-right: 60px; /* Make space for the badge */
+}
+
+.ride-route {
+  display: flex;
+  align-items: center;
+  font-size: 1.25rem;
+  margin: 0;
+  font-weight: 600;
+  color: var(--text-primary, #333);
+  flex-wrap: wrap;
+}
+
+.from, .to {
+  display: inline-block;
+  max-width: 40%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.route-arrow {
+  margin: 0 8px;
+  color: var(--primary, #8B0000);
+  font-weight: 700;
+}
+
+.ride-card-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.ride-detail {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--text-secondary, #666);
+}
+
+.ride-icon {
+  margin-right: 8px;
+  color: var(--primary, #8B0000);
+  font-size: 1rem;
+}
+
+.ride-price {
+  font-weight: 600;
+  color: var(--primary, #8B0000);
+}
+
+.no-seats {
+  color: var(--error, #d62828);
+  font-weight: 500;
+}
+
+.ride-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  padding-top: 15px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.driver-info {
+  display: flex;
+  align-items: center;
+}
+
+.driver-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 10px;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.driver-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  background-color: var(--primary-light, #ac1010);
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.driver-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-primary, #333);
+}
+
+.driver-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.driver-phone {
+  font-size: 0.8rem;
+  color: var(--text-secondary, #666);
+}
+
+.car-info {
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--text-secondary, #666);
+  background-color: #f8f8f8;
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+.car-icon {
+  margin-right: 6px;
+  color: var(--primary, #8B0000);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .ride-card-details {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .ride-route {
+    font-size: 1.1rem;
+  }
+  
+  .ride-card {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ride-card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .car-info {
+    align-self: flex-start;
+  }
+} 

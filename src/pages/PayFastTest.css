@@ -1,0 +1,59 @@
+.payment-button {
+  padding: 14px 24px;
+  border: none;
+  border-radius: 8px;
+  background-color: #8b0000; /* Stellenbosch Maroon */
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(139, 0, 0, 0.3);
+  width: 100%;
+  max-width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.payment-button:hover {
+  background-color: #6b0000;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(139, 0, 0, 0.4);
+}
+
+.payment-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(139, 0, 0, 0.3);
+}
+
+.payment-button.loading {
+  background-color: #9e5353;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.lock-icon {
+  font-size: 14px;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+  display: inline-block;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+} 

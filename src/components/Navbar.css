@@ -350,3 +350,9 @@
 .user-profile-link:hover .user-icon {
   transform: scale(1.1);
 }
+
+.nav-icon {
+  margin-right: 5px;
+  font-size: 0.9em;
+  vertical-align: middle;
+}

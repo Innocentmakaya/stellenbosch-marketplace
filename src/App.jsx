@@ -17,6 +17,9 @@ import Profile from "./pages/Profile";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentCancel from "./pages/PaymentCancel";
 import Chat from "./pages/Chat";
+import Rides from "./pages/Rides";
+import OfferRide from "./pages/OfferRide";
+import RideDetails from "./pages/RideDetails";
 
 function App() {
   useEffect(() => {
@@ -51,6 +54,9 @@ function App() {
             <Route path="/payment-cancel" element={<PaymentCancel />} />
             <Route path="/chat" element={<Chat />} />
             <Route path="/chat/:chatId" element={<Chat />} />
+            <Route path="/rides" element={<Rides />} />
+            <Route path="/offer-ride" element={<OfferRide />} />
+            <Route path="/ride/:id" element={<RideDetails />} />
           </Routes>
         </div>
       </div>

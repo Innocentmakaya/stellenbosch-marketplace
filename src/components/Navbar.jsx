@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import supabase from "../supabaseClient";
-import { FaBars, FaTimes, FaUserCircle } from "react-icons/fa";
+import { FaBars, FaTimes, FaUserCircle, FaCar } from "react-icons/fa";
 import "./Navbar.css";
 
 function Navbar() {
@@ -84,6 +84,13 @@ function Navbar() {
               onClick={toggleMobileMenu}
             >
               <span>Browse Listings</span>
+            </Link>
+            <Link
+              to="/rides"
+              className={location.pathname.includes("/ride") ? "link active-link" : "link"}
+              onClick={toggleMobileMenu}
+            >
+              <span><FaCar className="nav-icon" /> Rides</span>
             </Link>
             <Link
               to="/my-listings"

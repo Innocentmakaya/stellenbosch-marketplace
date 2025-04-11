@@ -442,163 +442,277 @@
   padding: 0.5rem 0;
 }
 
-/* Contact Options */
-.contact-options {
-  padding: 0.5rem 0;
+/* Updated Contact & Exchange Options */
+.contact-message {
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.contact-tagline {
+  color: var(--secondary-dark);
+  font-size: 0.95rem;
+  margin: 0;
 }
 
 .contact-buttons {
   display: flex;
-  gap: 0.8rem;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 1.2rem;
 }
 
-/* Contact Buttons */
-.contact-button {
-  flex: 1;
-  padding: 0.8rem 1rem;
-  border: none;
-  border-radius: var(--radius);
-  text-decoration: none;
-  color: white;
-  font-size: 0.9rem;
+.primary-option {
+  height: 80px;
+  padding: 0 20px;
+  background-color: var(--primary);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(139, 0, 0, 0.25);
+}
+
+.primary-option::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 120px;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.1));
+  transform: skewX(-20deg) translateX(100%);
+  transition: transform 0.6s ease;
+}
+
+.primary-option:hover::before {
+  transform: skewX(-20deg) translateX(60%);
+}
+
+.primary-option:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 15px rgba(139, 0, 0, 0.35);
+}
+
+.contact-icon {
+  font-size: 1.5rem;
+}
+
+.contact-button-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 10px;
+}
+
+.contact-button-title {
+  font-size: 1.1rem;
   font-weight: 600;
+}
+
+.contact-button-desc {
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
+
+.alternative-contacts {
+  background-color: #f9f9f9;
+  border-radius: var(--radius);
+  padding: 15px;
+  border-left: 3px solid var(--secondary);
+}
+
+.alternative-heading {
+  font-size: 0.85rem;
+  color: var(--secondary-dark);
+  margin: 0 0 12px;
+  text-align: center;
+}
+
+.alternative-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.alternative-buttons .contact-button {
+  flex: 1;
+  padding: 10px;
+  min-width: 0;
+}
+
+/* Exchange Options Styling */
+.payment-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.payment-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--secondary-dark);
+  display: inline-block;
+  position: relative;
+}
+
+.payment-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background-color: var(--primary);
+  border-radius: 2px;
+}
+
+.payment-title .emphasis {
+  color: var(--primary);
+}
+
+.exchange-options {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.exchange-option {
+  background-color: white;
+  border-radius: var(--radius);
+  padding: 15px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  border-left: 3px solid var(--primary);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.exchange-option:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.option-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.option-number {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: var(--primary);
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  transition: var(--transition);
-  cursor: pointer;
-  min-width: 120px;
-  position: relative;
-  overflow: hidden;
+  font-weight: 600;
+  font-size: 0.9rem;
 }
 
-.contact-button::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: width 0.4s ease-out, height 0.4s ease-out;
-  z-index: 0;
+.option-header h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--primary);
 }
 
-.contact-button:hover::before {
-  width: 200%;
-  height: 200%;
+.exchange-option p {
+  margin: 0 0 15px;
+  font-size: 0.9rem;
+  color: var(--secondary-dark);
 }
 
-.contact-button span, .contact-button svg {
-  position: relative;
-  z-index: 1;
-}
-
-.whatsapp {
-  background-color: var(--whatsapp);
-  box-shadow: 0 4px 8px rgba(37, 211, 102, 0.3);
-}
-
-.whatsapp:hover {
-  background-color: var(--whatsapp-light);
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(37, 211, 102, 0.4);
-}
-
-.call {
-  background-color: var(--info);
-  box-shadow: 0 4px 8px rgba(13, 110, 253, 0.3);
-}
-
-.call:hover {
-  background-color: var(--info-light);
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(13, 110, 253, 0.4);
-}
-
-.chat {
-  background-color: var(--primary);
-  box-shadow: 0 4px 8px rgba(139, 0, 0, 0.3);
-}
-
-.chat:hover {
-  background-color: var(--primary-light);
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(139, 0, 0, 0.4);
-}
-
-/* Payment Options */
-.payment-options-container {
-  padding: 0.5rem 0;
-}
-
-.payment-options {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 1.5rem;
-  text-align: left;
-}
-
-.payment-label {
-  position: relative;
+.action-button {
   display: flex;
   align-items: center;
-  padding: 0.75rem 1rem;
+  justify-content: center;
+  gap: 8px;
+  background-color: var(--primary);
+  color: white;
+  border: none;
   border-radius: var(--radius);
-  transition: var(--transition);
-  cursor: pointer;
-  background-color: rgba(139, 0, 0, 0.05);
-  border: 2px solid var(--primary);
-  box-shadow: 0 2px 8px rgba(139, 0, 0, 0.1);
-}
-
-.payment-label:hover {
-  background-color: rgba(139, 0, 0, 0.08);
-}
-
-.payment-label input[type="radio"] {
-  margin-right: 0.8rem;
-  accent-color: var(--primary);
-  min-width: 20px;
-  height: 20px;
-  cursor: pointer;
-  position: relative;
-  top: -1px;
-}
-
-.payment-text {
-  font-size: 1rem;
-  color: var(--text-primary);
+  padding: 10px 16px;
+  font-size: 0.9rem;
   font-weight: 500;
-  position: relative;
-  top: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
 }
 
-/* Style for the selected radio button label */
-.payment-label input[type="radio"]:checked + .payment-text {
-  color: var(--primary);
-  font-weight: 600;
+.action-button:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
 }
 
-/* Style for the radio container when selected */
-.payment-label.selected {
-  border-color: var(--primary);
-  background-color: rgba(139, 0, 0, 0.05);
-  box-shadow: 0 2px 8px rgba(139, 0, 0, 0.15);
+.chat-action {
+  background-color: var(--primary);
 }
 
-/* Focus state for accessibility */
-.payment-label input[type="radio"]:focus {
-  outline: 2px solid rgba(139, 0, 0, 0.4);
-  outline-offset: 2px;
+.payment-methods {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
 }
 
-.payment-button-container {
-  margin-top: 1rem;
+.payment-method {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  background-color: #f9f9f9;
+  padding: 12px;
+  border-radius: var(--radius);
+  flex: 1;
+  transition: transform 0.2s ease;
+}
+
+.payment-method:hover {
+  transform: translateY(-3px);
+}
+
+.method-icon {
+  font-size: 1.8rem;
+  margin-bottom: 5px;
+}
+
+.method-icon.cash {
+  color: #2e7d32;
+}
+
+.method-icon.snapscan {
+  width: 30px;
+  height: 30px;
+}
+
+.method-icon.eft {
+  color: #1565c0;
+}
+
+.payment-method span {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--secondary-dark);
+}
+
+.safety-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background-color: rgba(255, 152, 0, 0.1);
+  padding: 12px;
+  border-radius: var(--radius);
+  border-left: 3px solid var(--warning);
+}
+
+.safety-icon {
+  color: var(--warning);
+  font-size: 1.2rem;
+  margin-top: 2px;
+}
+
+.safety-notice p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--secondary-dark);
 }
 
 /* Loading and Error States */
@@ -970,8 +1084,31 @@
     gap: 0.8rem;
   }
 
-  .contact-button {
-    width: 100%;
+  .alternative-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .payment-methods {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .payment-method {
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 10px;
+  }
+  
+  .method-icon {
+    font-size: 1.4rem;
+    margin-bottom: 0;
+    margin-right: 10px;
+  }
+  
+  .method-icon.snapscan {
+    width: 24px;
+    height: 24px;
   }
 
   .listing-title {
@@ -1153,4 +1290,177 @@
 
 .has-multiple-images .image-gallery-main:hover::before {
   opacity: 1;
+}
+
+/* Payment Info Styles */
+.payment-info {
+  margin-top: 20px;
+  background-color: #f9f9f9;
+  border-radius: var(--radius);
+  padding: 15px;
+  border-left: 3px solid var(--primary);
+}
+
+.payment-info p {
+  margin: 0 0 10px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--secondary-dark);
+}
+
+.payment-info strong {
+  color: var(--primary);
+}
+
+.arrange-meeting-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 15px;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  width: 100%;
+}
+
+.arrange-meeting-button:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.arrange-meeting-button:active {
+  transform: translateY(0);
+}
+
+/* Contact Button Original Styles (still needed) */
+.contact-button {
+  flex: 1;
+  padding: 0.8rem 1rem;
+  border: none;
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: var(--transition);
+  cursor: pointer;
+  min-width: 120px;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease-out, height 0.4s ease-out;
+  z-index: 0;
+}
+
+.contact-button:hover::before {
+  width: 200%;
+  height: 200%;
+}
+
+.contact-button span, .contact-button svg {
+  position: relative;
+  z-index: 1;
+}
+
+.whatsapp {
+  background-color: var(--whatsapp);
+  box-shadow: 0 4px 8px rgba(37, 211, 102, 0.3);
+}
+
+.whatsapp:hover {
+  background-color: var(--whatsapp-light);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(37, 211, 102, 0.4);
+}
+
+.call {
+  background-color: var(--info);
+  box-shadow: 0 4px 8px rgba(13, 110, 253, 0.3);
+}
+
+.call:hover {
+  background-color: var(--info-light);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(13, 110, 253, 0.4);
+}
+
+.chat {
+  background-color: var(--primary);
+  box-shadow: 0 4px 8px rgba(139, 0, 0, 0.3);
+}
+
+.chat:hover {
+  background-color: var(--primary-light);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(139, 0, 0, 0.4);
+}
+
+/* Option buttons container */
+.option-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+/* Action buttons styling */
+.action-button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 50px;
+  background-color: #f0f0f0;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.action-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.action-button.chat-action {
+  background-color: var(--primary, #8B0000);
+  color: white;
+}
+
+.action-button.location-action {
+  background-color: var(--secondary, #003366);
+  color: white;
+}
+
+.action-button.chat-action:hover {
+  background-color: var(--primary-dark, #6b0000);
+}
+
+.action-button.location-action:hover {
+  background-color: var(--secondary-dark, #002548);
 }

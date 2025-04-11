@@ -1,3 +1,9 @@
+import { useState, useEffect } from "react";
+import './PayFastTest.css';
+import supabase from "../supabaseClient";
+import { useNavigate } from "react-router-dom";
+import { FaLock } from "react-icons/fa";
+
 const PayFastTest = ({ amount, itemName }) => {
   // Sandbox Credentials
   const merchantId = "10037747";
@@ -11,7 +17,7 @@ const PayFastTest = ({ amount, itemName }) => {
 
   // ✅ Fix Amount Format (e.g., 100.00)
   const formattedAmount = parseFloat(amount).toFixed(2);
-
+  
   // ✅ Encode Item Name (avoids breaking special characters)
   const encodedItemName = encodeURIComponent(itemName);
 
@@ -23,11 +29,11 @@ const PayFastTest = ({ amount, itemName }) => {
       <input type="hidden" name="return_url" value={returnUrl} />
       <input type="hidden" name="cancel_url" value={cancelUrl} />
       <input type="hidden" name="notify_url" value={notifyUrl} />
-
+      
       {/* Payment Information */}
       <input type="hidden" name="amount" value={formattedAmount} />
       <input type="hidden" name="item_name" value={encodedItemName} />
-
+      
       {/* Optional: Auto-select Payment Method (Credit Card, EFT, etc.) */}
       {/* <input type="hidden" name="payment_method" value="cc" /> */}
 
