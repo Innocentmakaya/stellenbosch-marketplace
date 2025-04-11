@@ -152,6 +152,36 @@ const OfferRide = () => {
         throw error;
       }
       
+      // Add code to send notification:
+      try {
+        // Format date for notification
+        const displayDate = new Date(formData.departureDate).toLocaleDateString('en-ZA', {
+          weekday: 'short',
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric'
+        });
+
+        // Send notification
+        const response = await fetch("/api/sendRideNotification", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            from: formData.departureLocation,
+            to: formData.destination,
+            date: displayDate
+          }),
+        });
+
+        const result = await response.json();
+        console.log("Ride notification sent:", result);
+      } catch (notificationError) {
+        console.error("Error sending ride notification:", notificationError);
+        // Continue with redirect even if notification fails
+      }
+      
       // Redirect to the ride detail page
       navigate(`/ride/${data[0].id}`);
       

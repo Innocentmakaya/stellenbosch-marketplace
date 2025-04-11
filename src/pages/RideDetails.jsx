@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { FaMapMarkerAlt, FaCalendarAlt, FaClock, FaUsers, FaMoneyBillWave, 
-  FaCar, FaInfoCircle, FaChevronLeft, FaUserCircle, FaCheck, FaSpinner } from 'react-icons/fa';
+  FaCar, FaInfoCircle, FaChevronLeft, FaUserCircle, FaCheck, FaSpinner, FaShare } from 'react-icons/fa';
 import supabase from '../supabaseClient';
 import './RideDetails.css';
 
@@ -221,6 +221,37 @@ const RideDetails = () => {
   // Check if the user is the driver
   const isDriver = user && ride && user.id === ride.user_id;
 
+  // Add a new function to handle sharing the ride
+  const handleShareRide = async () => {
+    if (!ride) return;
+    
+    try {
+      const displayDate = formatDate(ride.departure_date);
+      const displayTime = formatTime(ride.departure_time);
+      
+      const response = await fetch("/api/shareRide", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: ride.departure_location,
+          to: ride.destination,
+          date: displayDate,
+          time: displayTime,
+          rideId: id
+        }),
+      });
+      
+      const result = await response.json();
+      alert("Ride shared successfully!");
+      console.log("Ride shared:", result);
+    } catch (error) {
+      console.error("Error sharing ride:", error);
+      alert("Failed to share ride. Please try again.");
+    }
+  };
+
   if (loading) {
     return (
       <div className="ride-details-container loading-container">
@@ -278,6 +309,9 @@ const RideDetails = () => {
               <FaClock className="icon" /> {formatTime(ride.departure_time)}
             </div>
           </div>
+          <button className="share-ride-button" onClick={handleShareRide}>
+            <FaShare /> Share Ride
+          </button>
         </div>
 
         <div className="ride-info-grid">

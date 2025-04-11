@@ -42,6 +42,9 @@
   background-color: var(--primary, #8B0000);
   color: white;
   position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 .ride-route-details {
@@ -577,4 +580,26 @@
 .driver-phone {
   font-size: 0.85rem;
   color: var(--text-secondary, #666);
+}
+
+.share-ride-button {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.share-ride-button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.share-ride-button svg {
+  font-size: 0.8rem;
 } 
