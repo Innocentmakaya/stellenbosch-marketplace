@@ -31,6 +31,9 @@ const Rides = () => {
       const { data: { user } } = await supabase.auth.getUser();
       setUser(user);
       
+      // Update the last checked timestamp when visiting the rides page
+      localStorage.setItem('lastRidesCheck', new Date().toISOString());
+      
       // Ensure tables exist
       await setupRidesTables();
       

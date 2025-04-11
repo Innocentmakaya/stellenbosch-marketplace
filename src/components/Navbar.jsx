@@ -1,20 +1,62 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import supabase from "../supabaseClient";
-import { FaBars, FaTimes, FaUserCircle, FaCar } from "react-icons/fa";
+import { FaBars, FaTimes, FaUserCircle, FaCar, FaBell } from "react-icons/fa";
 import "./Navbar.css";
 
 function Navbar() {
   const [user, setUser] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [newRidesCount, setNewRidesCount] = useState(0);
   const location = useLocation();
   const navigate = useNavigate();
+  
+  // Function to check for new rides
+  const checkForNewRides = async () => {
+    if (!user) return;
+    
+    try {
+      // Get the last time rides were checked from localStorage
+      const lastChecked = localStorage.getItem('lastRidesCheck') || '2000-01-01T00:00:00Z';
+      
+      // Get rides created after the last check
+      const { data: rides, error } = await supabase
+        .from('rides')
+        .select('id, created_at, user_id')
+        .gt('created_at', lastChecked)
+        .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching new rides:', error);
+        return;
+      }
+      
+      // Don't count the user's own rides as "new"
+      const otherUserRides = rides.filter(ride => ride.user_id !== user.id);
+      
+      // Update the new rides count
+      setNewRidesCount(otherUserRides.length);
+      
+      // If currently on the rides page, update the last checked time
+      if (location.pathname === '/rides') {
+        localStorage.setItem('lastRidesCheck', new Date().toISOString());
+        setNewRidesCount(0);
+      }
+    } catch (error) {
+      console.error('Error checking for new rides:', error);
+    }
+  };
   
   useEffect(() => {
     const getUser = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       setUser(user);
+      
+      // Once we have the user, check for new rides
+      if (user) {
+        checkForNewRides();
+      }
     };
     
     getUser();
@@ -30,11 +72,27 @@ function Navbar() {
     
     window.addEventListener('scroll', handleScroll);
     
+    // Set up interval to periodically check for new rides (every 2 minutes)
+    const rideCheckInterval = setInterval(() => {
+      if (user) {
+        checkForNewRides();
+      }
+    }, 120000); // 2 minutes
+    
     return () => {
       authListener?.subscription?.unsubscribe();
       window.removeEventListener('scroll', handleScroll);
+      clearInterval(rideCheckInterval);
     };
-  }, []);
+  }, [user]);
+  
+  // Reset new rides counter when navigating to the rides page
+  useEffect(() => {
+    if (location.pathname === '/rides') {
+      localStorage.setItem('lastRidesCheck', new Date().toISOString());
+      setNewRidesCount(0);
+    }
+  }, [location.pathname]);
   
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -90,7 +148,12 @@ function Navbar() {
               className={location.pathname.includes("/ride") ? "link active-link" : "link"}
               onClick={toggleMobileMenu}
             >
-              <span><FaCar className="nav-icon" /> Rides</span>
+              <div className="nav-link-with-badge">
+                <span><FaCar className="nav-icon" /> Rides</span>
+                {newRidesCount > 0 && (
+                  <span className="notification-badge">{newRidesCount}</span>
+                )}
+              </div>
             </Link>
             <Link
               to="/my-listings"
